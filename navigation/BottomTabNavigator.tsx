@@ -23,6 +23,7 @@ export default function BottomTabNavigator() {
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarVisible: false
         }}
       />
       <BottomTab.Screen
@@ -54,7 +55,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        options={{ headerTitle: 'Tab One Title'}}
       />
     </TabOneStack.Navigator>
   );
