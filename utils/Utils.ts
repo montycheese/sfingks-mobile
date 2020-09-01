@@ -21,6 +21,15 @@ export function getMockMessages(): Array<object> {
             },
         },
         {
+            _id: 6,
+            image: 'https://placekitten.com/200/300',
+            user: {
+                _id: 2,
+                name: 'React Native',
+                avatar: 'https://placeimg.com/140/140/any',
+            },
+        },
+        {
             _id: 2,
             text: 'Hello back',
             user: {
