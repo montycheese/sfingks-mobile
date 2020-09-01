@@ -3,7 +3,7 @@ import { StyleSheet, Image } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import {LinearGradient} from "expo-linear-gradient";
-import {Actions, ActionsProps, GiftedChat, MessageText} from 'react-native-gifted-chat'
+import {Actions, ActionsProps, Composer, GiftedChat, InputToolbar, MessageText, Send} from 'react-native-gifted-chat'
 import {useEffect, useState} from "react";
 import {getMockMessages} from "../utils/Utils";
 import { Entypo } from '@expo/vector-icons';
@@ -78,6 +78,9 @@ export default function TabOneScreen() {
               inverted={false}
               renderMessageText={renderMessageText}
               renderActions={renderActions}
+              renderInputToolbar={renderInputToolbar}
+              textInputStyle={{color: 'white'}}
+              renderSend={renderSend}
           />
           {imagePreview}
       </View>
@@ -92,7 +95,7 @@ export default function TabOneScreen() {
                     ['Choose Image From Camera Roll']: openImagePickerAsync, // implement pick image from gallery or take image
                 }}
                 icon={() => (
-                    <Entypo name="attachment" size={24} color="black" />
+                    <Entypo name="attachment" size={24} color="white" />
                 )}
                 onSend={args => console.log('hello', args)}
             />
@@ -122,12 +125,22 @@ export default function TabOneScreen() {
       return null;
   }
 
+  function renderInputToolbar(props) {
+      return <InputToolbar {...props} containerStyle={styles.inputToolbar} />
+  }
+
+  function renderSend(props) {
+        return (
+            <Send {...props} containerStyle={{ borderWidth: 0}} textStyle={styles.sendTextStyle}/>
+        );
+  }
+
   function onSend(newMessages = []) {
         console.log('sending', chosenImage);
         setChosenImage(null);
         setText(undefined);
         newMessages[0].image = chosenImage; // todo remove
-      setMessages(GiftedChat.append(messages, newMessages))
+        setMessages(GiftedChat.append(messages, newMessages))
   }
 }
 
@@ -164,5 +177,17 @@ const styles = StyleSheet.create({
     thumbnailWrapper: {
         flex: 0.3,
         height: 100
+    },
+    inputToolbar: {
+        marginLeft: 15,
+        marginRight: 15,
+        //marginBottom: 10,
+        borderWidth: 0.5,
+        borderColor: 'white',
+        borderRadius: 25,
+        backgroundColor: '#000'
+    },
+    sendTextStyle: {
+      color: '#fff'
     }
 });
