@@ -1,37 +1,54 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import {LinearGradient} from "expo-linear-gradient";
-import { GiftedChat } from 'react-native-gifted-chat'
+import {Actions, ActionsProps, GiftedChat, MessageText} from 'react-native-gifted-chat'
 import {useEffect, useState} from "react";
+import {getMockMessages} from "../utils/Utils";
+import { Entypo } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function TabOneScreen() {
 
     const [messages, setMessages] = useState([]);
+    const [chosenImage, setChosenImage] = useState(null);
+    const [text, setText] = useState(undefined);
+
 
     useEffect(() => {
-        setMessages([
-            {
-                _id: 1,
-                text: 'Hello developer',
-                user: {
-                    _id: 2,
-                    name: 'React Native',
-                    avatar: 'https://placeimg.com/140/140/any',
-                },
-            },
-            {
-                _id: 2,
-                text: 'Hello back',
-                user: {
-                    _id: 1,
-                    name: 'React Native',
-                    avatar: 'https://placeimg.com/140/140/any',
-                },
-            },
-        ])
+        setMessages(getMockMessages())
     }, []);
+
+    const openImagePickerAsync = async () => {
+        let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
+            return;
+        }
+
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+
+        if (pickerResult.cancelled === true) {
+            return;
+        }
+        setText('Image'); // this is a workaround https://github.com/FaridSafi/react-native-gifted-chat/issues/1366
+        setChosenImage(pickerResult.uri);
+    };
+
+
+    let imagePreview = null;
+    if (chosenImage) {
+        imagePreview = (
+            <View style={{flexDirection: 'row'}}>
+                <View style={{flex: 0.1}}/>
+                <View style={styles.thumbnailWrapper}>
+                    <Image source={{ uri: chosenImage }} style={styles.thumbnail} />
+                </View>
+            </View>
+        );
+    }
 
   return (
     <View style={styles.container}>
@@ -48,19 +65,70 @@ export default function TabOneScreen() {
       />
       <View style={styles.chatContainer}>
           <GiftedChat
+              text={text}
               messages={messages}
-              onSend={console.log}
+              onSend={onSend}
               user={{
                   _id: 1,
               }}
               showUserAvatar={false}
               renderAvatar={() => null}
               placeholder="Tell us something..."
-              alignTop={true}
+              alignTop={false}
+              inverted={false}
+              renderMessageText={renderMessageText}
+              renderActions={renderActions}
           />
+          {imagePreview}
       </View>
     </View>
   );
+
+    function renderActions(props: Readonly<ActionsProps>) {
+        return (
+            <Actions
+                {...props}
+                options={{
+                    ['Choose Image From Camera Roll']: openImagePickerAsync, // implement pick image from gallery or take image
+                }}
+                icon={() => (
+                    <Entypo name="attachment" size={24} color="black" />
+                )}
+                onSend={args => console.log('hello', args)}
+            />
+        )
+    }
+
+  function renderMessageText(props) {
+      if (props.currentMessage.text) {
+          const {
+              containerStyle,
+              wrapperStyle,
+              messageTextStyle,
+              ...messageTextProps
+          } = props;
+          return (
+              <MessageText
+                  {...messageTextProps}
+                  textStyle={{
+                      left: [
+                          {fontFamily: 'ShareTechMono_400Regular'},
+                          {fontSize: 20}
+                      ],
+                  }}
+              />
+          )
+      }
+      return null;
+  }
+
+  function onSend(newMessages = []) {
+        console.log('sending', chosenImage);
+        setChosenImage(null);
+        setText(undefined);
+        newMessages[0].image = chosenImage; // todo remove
+      setMessages(GiftedChat.append(messages, newMessages))
+  }
 }
 
 const styles = StyleSheet.create({
@@ -76,6 +144,8 @@ const styles = StyleSheet.create({
       marginLeft: '5%',
       marginRight: '5%',
       marginTop: '10%',
+      borderRadius: 15,
+      paddingTop: '5%'
   },
   title: {
     fontSize: 20,
@@ -86,4 +156,13 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+    thumbnail: {
+        width: 100,
+        height: 100,
+        resizeMode: "contain"
+    },
+    thumbnailWrapper: {
+        flex: 0.3,
+        height: 100
+    }
 });
