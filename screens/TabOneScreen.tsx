@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
       marginRight: '5%',
       marginTop: '10%',
       borderRadius: 15,
+      paddingBottom: '5%',
       paddingTop: '5%'
   },
   title: {
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     inputToolbar: {
         marginLeft: 15,
         marginRight: 15,
-        //marginBottom: 10,
+        marginTop: 10,
         borderWidth: 1,
         borderColor: 'white',
         borderRadius: 25,
