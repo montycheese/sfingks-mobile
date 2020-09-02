@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import {Alert, Image, Modal, StatusBar, StyleSheet, Text, TouchableHighlight, View} from "react-native";
+import { AntDesign } from '@expo/vector-icons';
 
-export default function ShopItemDetailsModal({ modalVisible, setModalVisible }) {
+export default function ShopItemDetailsModal({ modalVisible, setModalVisible, item }) {
 
     return (
         <Modal
@@ -14,15 +15,19 @@ export default function ShopItemDetailsModal({ modalVisible, setModalVisible }) 
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Hello World!</Text>
-
+                    <View style={styles.thumbnailContainer}>
+                        <Image style={styles.thumbnail}
+                               source={{uri: "https://i.picsum.photos/id/908/200/200.jpg?hmac=CovMVsq4EkU03tnOxNLyxYsLlemPPHBizxcnmaHaRcU"}}/>
+                    </View>
+                    <Text style={styles.modalText}>Product Name</Text>
+                    <Text style={styles.modalText}>Product Description, lorem ipsum dolor ipset</Text>
                     <TouchableHighlight
-                        style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                        style={styles.closeButtonContainer}
                         onPress={() => {
                             setModalVisible(!modalVisible);
                         }}
                     >
-                        <Text style={styles.textStyle}>Hide Modal</Text>
+                        <AntDesign name="closecircleo" size={24} color="black" />
                     </TouchableHighlight>
                 </View>
             </View>
@@ -32,14 +37,14 @@ export default function ShopItemDetailsModal({ modalVisible, setModalVisible }) 
 
 const styles = StyleSheet.create({
     centeredView: {
-        flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        flexDirection: 'row',
+        flex: 1,
     },
     modalView: {
-        margin: 20,
-        backgroundColor: "white",
+        width: '80%',
+        backgroundColor: "#000",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -56,7 +61,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#F194FF",
         borderRadius: 20,
         padding: 10,
-        elevation: 2
+        elevation: 2,
+        flex: 0.5
     },
     textStyle: {
         color: "white",
@@ -64,7 +70,29 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     modalText: {
-        marginBottom: 15,
-        textAlign: "center"
+        textAlign: "center",
+        color: '#fff',
+    },
+    closeButtonContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        height: 24,
+        width: 24,
+        borderRadius: 24,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    thumbnailContainer: {
+        justifyContent: 'center',
+        height: 150,
+        width: 150,
+        borderRadius: 15
+    },
+    thumbnail: {
+        height: '100%',
+        width: '100%',
+        borderRadius: 15
     }
 });
