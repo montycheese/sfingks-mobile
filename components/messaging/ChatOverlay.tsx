@@ -1,4 +1,4 @@
-import {Animated, GestureResponderEvent, StyleSheet, View} from "react-native";
+import {Animated, GestureResponderEvent, StyleSheet, View, Image} from "react-native";
 import {Actions, ActionsProps, GiftedChat, InputToolbar, Message, MessageText, Send} from "react-native-gifted-chat";
 import * as React from "react";
 import {useState} from "react";
@@ -55,7 +55,7 @@ export default function ChatOverlay(props) {
         setText('Image'); // this is a workaround https://github.com/FaridSafi/react-native-gifted-chat/issues/1366
         setChosenImage(pickerResult.uri);
     };
-
+// TODO: this no longer works...
     let imagePreview = null;
     if (chosenImage) {
         imagePreview = (

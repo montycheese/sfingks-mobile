@@ -6,6 +6,7 @@ import {LinearGradient} from "expo-linear-gradient";
 import { useState} from "react";
 
 import ChatOverlay from "../components/messaging/ChatOverlay";
+import QRScanner from "../components/QRScanner";
 
 const SFINGKS_USER_ID = 2;
 
@@ -44,14 +45,15 @@ export default function MainScreen() {
       if (activeModule) {
           switch (activeModule.type) {
               case 'test':
-                  return <Button
-                      onPress={console.log}
-                      title="Learn More"
-                      color="#fff"
-                  />
+                  return <QRScanner handleGoHome={handleGoBackToHome}/>
           }
       }
       return null;
+  }
+
+  function handleGoBackToHome() {
+      setActiveModule(null);
+      setChatOverlayVisible(true);
   }
 }
 
