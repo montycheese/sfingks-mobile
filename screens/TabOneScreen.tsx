@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Image, TouchableOpacity, GestureResponderEvent} from 'react-native';
+import {StyleSheet, Image, GestureResponderEvent, Animated} from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import {LinearGradient} from "expo-linear-gradient";
@@ -8,11 +8,11 @@ import {
     ActionsProps,
     GiftedChat,
     InputToolbar,
-    Message, MessageImage,
+    Message,
     MessageText,
     Send
 } from 'react-native-gifted-chat'
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {getMockMessages} from "../utils/Utils";
 import { Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
@@ -21,6 +21,8 @@ import SfingksMessage from "../components/messaging/SfingksMessage";
 const SFINGKS_USER_ID = 2;
 
 export default function TabOneScreen() {
+
+    const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
     const [messages, setMessages] = useState([]);
     const [hideChat, setHideChat] = useState(false);
@@ -33,6 +35,17 @@ export default function TabOneScreen() {
     useEffect(() => {
         setMessages(getMockMessages())
     }, []);
+
+    React.useEffect(() => {
+        Animated.timing(
+            fadeAnim,
+            {
+                toValue: 1,
+                duration: 2000,
+                useNativeDriver: true
+            }
+        ).start();
+    }, [fadeAnim]);
 
     const openImagePickerAsync = async () => {
         let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -82,7 +95,9 @@ export default function TabOneScreen() {
       }
 
       return (
-          <View style={styles.chatContainer}>
+          <Animated.View style={{
+              ...styles.chatContainer,
+              opacity: fadeAnim}}>
               <GiftedChat
                   text={text}
                   messages={messages}
@@ -103,7 +118,7 @@ export default function TabOneScreen() {
                   renderMessage={renderMessage}
               />
               {imagePreview}
-          </View>
+          </Animated.View>
       );
   }
 
