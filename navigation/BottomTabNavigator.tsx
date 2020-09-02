@@ -9,6 +9,7 @@ import MainScreen from '../screens/MainScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import WalletScreen from "../screens/WalletScreen";
+import ShopScreen from "../screens/ShopScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -68,6 +69,14 @@ function TabOneNavigator() {
               headerTintColor: '#000'
           }}
       />
+        <TabOneStack.Screen
+            name="ShopScreen"
+            component={ShopScreen}
+            options={{ headerTitle: 'Oasis',
+                headerTransparent: true,
+                headerTintColor: '#000'
+            }}
+        />
     </TabOneStack.Navigator>
   );
 }

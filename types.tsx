@@ -11,6 +11,7 @@ export type BottomTabParamList = {
 export type TabOneParamList = {
   MainScreen: undefined;
   WalletScreen: undefined;
+  ShopScreen: undefined;
 };
 
 export type TabTwoParamList = {

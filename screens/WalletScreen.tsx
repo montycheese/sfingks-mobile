@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import BaseView from "../components/BaseView";
 import {FlatList, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, View, Text} from "react-native";
 import Colors from '../constants/Colors';
@@ -20,13 +20,13 @@ const DATA = [
     },
     {
         id: "58694a0f-3da1-471f-bd96-145571e29d72",
-        title: "GAVE US YOUR NUMBER",
+        title: "VERIFIED ✅ PHONE NUMBER",
         numPoints: 10,
         transactionDate: new Date().toISOString()
     },
     {
         id: "58694a0f-3da1-471f-bd96-145571e29d72s",
-        title: "BOUGHT JORDANS, COOL.",
+        title: "REDEEMED JORDANS, COOL.",
         numPoints: -245,
         transactionDate: new Date().toISOString()
     },

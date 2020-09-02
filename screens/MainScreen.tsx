@@ -1,15 +1,13 @@
 import * as React from 'react';
-import {Button, StyleSheet} from 'react-native';
-
-import {  View } from '../components/Themed';
-import {LinearGradient} from "expo-linear-gradient";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 import ChatOverlay from "../components/messaging/ChatOverlay";
 import QRScanner from "../components/QRScanner";
 import Wallet from "../models/Wallet";
 import WalletBalancePreview from "../components/WalletBalancePreview";
 import BaseView from "../components/BaseView";
+import ShopIcon from "../components/ShopIcon";
+
 
 const SFINGKS_USER_ID = 2;
 
@@ -23,6 +21,7 @@ export default function MainScreen({ navigation }) {
         {chatOverlayVisible && renderChatOverlay()}
         {renderActiveModule()}
         <WalletBalancePreview wallet={wallet} onPress={() => navigation.navigate('WalletScreen')} />
+        <ShopIcon onPress={() => navigation.navigate('ShopScreen')}/>
     </BaseView>
   );
 
