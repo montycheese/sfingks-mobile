@@ -8,6 +8,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import MainScreen from '../screens/MainScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import WalletScreen from "../screens/WalletScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -50,12 +51,22 @@ const TabOneStack = createStackNavigator<TabOneParamList>();
 function TabOneNavigator() {
   return (
     <TabOneStack.Navigator screenOptions={{
-        headerShown: false
     }}>
       <TabOneStack.Screen
-        name="TabOneScreen"
+        name="MainScreen"
         component={MainScreen}
-        options={{ headerTitle: 'Tab One Title'}}
+        options={{
+            headerTransparent: true,
+            headerTitle: null
+        }}
+      />
+      <TabOneStack.Screen
+          name="WalletScreen"
+          component={WalletScreen}
+          options={{ headerTitle: 'Wallet',
+              headerTransparent: true,
+              headerTintColor: '#000'
+          }}
       />
     </TabOneStack.Navigator>
   );

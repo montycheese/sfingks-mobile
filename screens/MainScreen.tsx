@@ -9,10 +9,11 @@ import ChatOverlay from "../components/messaging/ChatOverlay";
 import QRScanner from "../components/QRScanner";
 import Wallet from "../models/Wallet";
 import WalletBalancePreview from "../components/WalletBalancePreview";
+import BaseView from "../components/BaseView";
 
 const SFINGKS_USER_ID = 2;
 
-export default function MainScreen() {
+export default function MainScreen({ navigation }) {
     const [chatOverlayVisible, setChatOverlayVisible] = useState(true);
     const [activeModule, setActiveModule] = useState(null);
     const [isBalanceLoading, setIsBalanceLoading] = useState(true);
@@ -27,22 +28,11 @@ export default function MainScreen() {
     }, [isBalanceLoading]);
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-          // Background Linear Gradient
-          colors={['#FF124F', '#FF00A0', '#FE75FE', '#7A04EB', '#120458']}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            height: '100%'
-          }}
-      />
+    <BaseView>
         {chatOverlayVisible && renderChatOverlay()}
         {renderActiveModule()}
-        {!isBalanceLoading && <WalletBalancePreview wallet={wallet} onPress={console.log} />}
-    </View>
+        {!isBalanceLoading && <WalletBalancePreview wallet={wallet} onPress={() => navigation.navigate('WalletScreen')} />}
+    </BaseView>
   );
 
   function renderChatOverlay() {
