@@ -1,23 +1,71 @@
 import React, {useEffect, useState} from "react";
 import BaseView from "../components/BaseView";
-import {StatusBar, StyleSheet, View, Text, SafeAreaView, SectionList} from "react-native";
+import {Image, StyleSheet, View, Text, SafeAreaView, SectionList, TouchableOpacity} from "react-native";
+import Colors from "../constants/Colors";
 
 const DATA = [
     {
-        title: "Redeem for prizes",
-        data: ["Pizza", "Burger", "Risotto"]
+        title: "Redeem for Prizes",
+        data: [{
+            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+            title: "WE FOLLOW YOU ON TWITTER",
+            cost: 100,
+            imgUrl: ''
+        },
+        {
+            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2",
+            title: "KING OF OUR DISCORD FOR 1 DAY",
+            cost: 800,
+            imgUrl: ''
+        },
+        {
+            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b1",
+            title: "DIGITAL COPY OF CYBERPUNK 2077",
+            cost: 7000,
+            imgUrl: ''
+        }]
     },
     {
-        title: "Sides",
-        data: ["French Fries", "Onion Rings", "Fried Shrimps"]
+        title: "Upcoming Deals",
+        data: [{
+            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bza",
+            title: "WE FOLLOW YOU ON TWITTER",
+            cost: 100,
+            imgUrl: ''
+        },
+            {
+                id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2s",
+                title: "KING OF OUR DISCORD FOR 1 DAY",
+                cost: 800,
+                imgUrl: ''
+            },
+            {
+                id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b13",
+                title: "DIGITAL COPY OF CYBERPUNK 2077",
+                cost: 7000,
+                imgUrl: ''
+            }]
     },
     {
-        title: "Drinks",
-        data: ["Water", "Coke", "Beer"]
-    },
-    {
-        title: "Desserts",
-        data: ["Cheese Cake", "Ice Cream"]
+        title: "Past Prizes",
+        data: [{
+            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bavb",
+            title: "WE FOLLOW YOU ON TWITTER",
+            cost: 100,
+            imgUrl: ''
+        },
+            {
+                id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2dd",
+                title: "KING OF OUR DISCORD FOR 1 DAY",
+                cost: 800,
+                imgUrl: ''
+            },
+            {
+                id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b1a",
+                title: "DIGITAL COPY OF CYBERPUNK 2077",
+                cost: 7000,
+                imgUrl: ''
+            }]
     }
 ];
 
@@ -37,7 +85,7 @@ export default function ShopScreen({ navigation }) {
                     stickySectionHeadersEnabled={false}
                     sections={DATA}
                     keyExtractor={(item, index) => item + index}
-                    renderItem={({ item }) => <Item title={item} />}
+                    renderItem={({ item }) => <Item item={item} />}
                     renderSectionHeader={({ section: { title } }) => (
                         <Text style={styles.header}>{title}</Text>
                     )}
@@ -47,10 +95,19 @@ export default function ShopScreen({ navigation }) {
     );
 }
 
-const Item = ({ title }) => (
-    <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
-    </View>
+const Item = ({ item }) => (
+
+    <TouchableOpacity onPress={console.log} style={[styles.item]} key={item.id}>
+        <View style={{flexDirection: 'row', flex: 1}}>
+            <Image style={styles.thumbnail} source={{uri: "https://i.picsum.photos/id/908/200/200.jpg?hmac=CovMVsq4EkU03tnOxNLyxYsLlemPPHBizxcnmaHaRcU"}} />
+            <View style={styles.titleContainer}>
+                <Text style={styles.title}>{item.title}</Text>
+            </View>
+            <View style={styles.pointsContainer}>
+                <Text style={styles.points}>{item.cost}</Text>
+            </View>
+        </View>
+    </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
@@ -90,12 +147,34 @@ const styles = StyleSheet.create({
     },
     item: {
         backgroundColor: "#f9c2ff",
-        padding: 20,
+        padding: 5,
         borderBottomColor: '#000',
         borderWidth: 3
     },
     title: {
-        fontSize: 24,
-        fontFamily: 'ShareTechMono_400Regular'
+        fontSize: 16,
+        fontFamily: 'ShareTechMono_400Regular',
+    },
+    titleContainer: {
+        flex: 0.4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 10
+    },
+    points: {
+        fontSize: 32,
+        fontFamily: 'ShareTechMono_400Regular',
+        color: Colors.cpHotPink
+    },
+    pointsContainer: {
+        flex: 0.3,
+        alignItems: 'flex-end',
+        justifyContent: 'center'
+    },
+    thumbnail: {
+        height: 100,
+        width: 100,
+        flex: 0.3,
+        borderRadius: 15
     }
 });
