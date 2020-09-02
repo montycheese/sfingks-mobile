@@ -30,6 +30,15 @@ export function getMockMessages(): Array<object> {
             },
         },
         {
+            _id: 7,
+            text: '%SFINGSK%_GAME-GAME_TYPE-some_uuid',
+            user: {
+                _id: 2,
+                name: 'React Native',
+                avatar: 'https://placeimg.com/140/140/any',
+            },
+        },
+        {
             _id: 2,
             text: 'Hello back',
             user: {

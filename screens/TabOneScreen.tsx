@@ -1,13 +1,24 @@
 import * as React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import {StyleSheet, Image, TouchableOpacity, GestureResponderEvent} from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import {LinearGradient} from "expo-linear-gradient";
-import {Actions, ActionsProps, Composer, GiftedChat, InputToolbar, MessageText, Send} from 'react-native-gifted-chat'
+import {
+    Actions,
+    ActionsProps,
+    GiftedChat,
+    InputToolbar,
+    Message, MessageImage,
+    MessageText,
+    Send
+} from 'react-native-gifted-chat'
 import {useEffect, useState} from "react";
 import {getMockMessages} from "../utils/Utils";
 import { Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import SfingksMessage from "../components/messaging/SfingksMessage";
+
+const SFINGKS_USER_ID = 2;
 
 export default function TabOneScreen() {
 
@@ -81,26 +92,38 @@ export default function TabOneScreen() {
               renderInputToolbar={renderInputToolbar}
               textInputStyle={{color: 'white'}}
               renderSend={renderSend}
+              renderMessage={renderMessage}
           />
           {imagePreview}
       </View>
     </View>
   );
 
-    function renderActions(props: Readonly<ActionsProps>) {
+  function renderActions(props: Readonly<ActionsProps>) {
         return (
-            <Actions
-                {...props}
-                options={{
-                    ['Choose Image From Camera Roll']: openImagePickerAsync, // implement pick image from gallery or take image
-                }}
-                icon={() => (
-                    <Entypo name="attachment" size={24} color="white" />
-                )}
-                onSend={args => console.log('hello', args)}
-            />
-        )
-    }
+        <Actions
+            {...props}
+            options={{
+                ['Choose Image From Camera Roll']: openImagePickerAsync, // implement pick image from gallery or take image
+            }}
+            icon={() => (
+                <Entypo name="attachment" size={24} color="white" />
+            )}
+            onSend={args => console.log('hello', args)}
+        />
+    );
+  }
+
+  function renderMessage(props) {
+      // trying to make it so taht we can send users to different experiences via signals from backend
+      // mobile interprets it as an image, and once user clicks on image, it takes them somewhere in app where they can play or do.,,
+      if (props.currentMessage.text && props.currentMessage.text.startsWith('%SFINGSK%')) {
+          const newMsg = Object.assign(props.currentMessage, {image: 'https://i.pinimg.com/originals/ff/16/82/ff168216b60f1091e7a346e138e694c9.gif'});
+          //return <MessageImage {...props} currentMessage={newMsg} />;
+          return <SfingksMessage message={newMsg} onPress={onPressSfingksMessage}/>
+      }
+      return <Message {...props} />
+  }
 
   function renderMessageText(props) {
       if (props.currentMessage.text) {
@@ -142,6 +165,10 @@ export default function TabOneScreen() {
         newMessages[0].image = chosenImage; // todo remove
         setMessages(GiftedChat.append(messages, newMessages))
   }
+
+  function onPressSfingksMessage(event: GestureResponderEvent, message: object) {
+      console.log('Clicked on message: ', message);
+  }
 }
 
 const styles = StyleSheet.create({
@@ -164,11 +191,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
     thumbnail: {
         width: 100,
