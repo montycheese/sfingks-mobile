@@ -27,15 +27,15 @@ export default function ChatOverlay(props) {
         let to = 0;
         if (props.chatOverlayVisible) {
             to = 1;
+            Animated.timing(
+                fadeAnim,
+                {
+                    toValue: to,
+                    duration: 2000,
+                    useNativeDriver: true
+                }
+            ).start();
         }
-        Animated.timing(
-            fadeAnim,
-            {
-                toValue: to,
-                duration: 2000,
-                useNativeDriver: true
-            }
-        ).start();
     }, [props.chatOverlayVisible]);
 
 
@@ -164,7 +164,17 @@ export default function ChatOverlay(props) {
 
     function onPressSfingksMessage(event: GestureResponderEvent, message: object) {
         console.log('Clicked on message: ', message);
-        props.setChatOverlayVisible(false);
+        Animated.timing(
+            fadeAnim,
+            {
+                toValue: 0,
+                duration: 2000,
+                useNativeDriver: true
+            }
+        ).start(({ finished }) => {
+            props.setChatOverlayVisible(false);
+            props.setActiveModule({ type: 'test'})
+        });
     }
 }
 

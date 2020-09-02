@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
+import {Button, StyleSheet} from 'react-native';
 
 import {  View } from '../components/Themed';
 import {LinearGradient} from "expo-linear-gradient";
@@ -12,6 +12,7 @@ const SFINGKS_USER_ID = 2;
 export default function MainScreen() {
 
     const [chatOverlayVisible, setChatOverlayVisible] = useState(true);
+    const [activeModule, setActiveModule] = useState(null);
 
 
   return (
@@ -27,12 +28,30 @@ export default function MainScreen() {
             height: '100%'
           }}
       />
-        {renderChatOverlay()}
+        {chatOverlayVisible && renderChatOverlay()}
+        {renderActiveModule()}
     </View>
   );
 
   function renderChatOverlay() {
-     return <ChatOverlay chatOverlayVisible={chatOverlayVisible} setChatOverlayVisible={setChatOverlayVisible}/>
+     return <ChatOverlay chatOverlayVisible={chatOverlayVisible}
+                         setChatOverlayVisible={setChatOverlayVisible}
+                         setActiveModule={setActiveModule}
+     />
+  }
+
+  function renderActiveModule() {
+      if (activeModule) {
+          switch (activeModule.type) {
+              case 'test':
+                  return <Button
+                      onPress={console.log}
+                      title="Learn More"
+                      color="#fff"
+                  />
+          }
+      }
+      return null;
   }
 }
 
