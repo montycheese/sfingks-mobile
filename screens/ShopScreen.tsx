@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import BaseView from "../components/BaseView";
 import {Image, StyleSheet, View, Text, SafeAreaView, SectionList, TouchableOpacity} from "react-native";
 import Colors from "../constants/Colors";
+import ShopItemDetailsModal from "../components/ShopItemDetailsModal";
 
 const DATA = [
     {
@@ -70,6 +71,8 @@ const DATA = [
 ];
 
 export default function ShopScreen({ navigation }) {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
 
     return (
         <BaseView>
@@ -85,30 +88,41 @@ export default function ShopScreen({ navigation }) {
                     stickySectionHeadersEnabled={false}
                     sections={DATA}
                     keyExtractor={(item, index) => item + index}
-                    renderItem={({ item }) => <Item item={item} />}
+                    renderItem={(element) => renderItem(element.item)}
                     renderSectionHeader={({ section: { title } }) => (
                         <Text style={styles.header}>{title}</Text>
                     )}
                 />
             </SafeAreaView>
+            <ShopItemDetailsModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
         </BaseView>
     );
+
+
+    function renderItem(item) {
+
+        const handleOnPress = () => {
+            setSelectedItem(item);
+            setModalVisible(true);
+        };
+
+        return (
+            <TouchableOpacity onPress={handleOnPress} style={[styles.item]} key={item.id}>
+                <View style={{flexDirection: 'row', flex: 1}}>
+                    <Image style={styles.thumbnail}
+                           source={{uri: "https://i.picsum.photos/id/908/200/200.jpg?hmac=CovMVsq4EkU03tnOxNLyxYsLlemPPHBizxcnmaHaRcU"}}/>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>{item.title}</Text>
+                    </View>
+                    <View style={styles.pointsContainer}>
+                        <Text style={styles.points}>{item.cost}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
+    }
 }
 
-const Item = ({ item }) => (
-
-    <TouchableOpacity onPress={console.log} style={[styles.item]} key={item.id}>
-        <View style={{flexDirection: 'row', flex: 1}}>
-            <Image style={styles.thumbnail} source={{uri: "https://i.picsum.photos/id/908/200/200.jpg?hmac=CovMVsq4EkU03tnOxNLyxYsLlemPPHBizxcnmaHaRcU"}} />
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>{item.title}</Text>
-            </View>
-            <View style={styles.pointsContainer}>
-                <Text style={styles.points}>{item.cost}</Text>
-            </View>
-        </View>
-    </TouchableOpacity>
-);
 
 const styles = StyleSheet.create({
     container: {
