@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: "#f9c2ff",
         padding: 20,
-        marginVertical: 8
+        borderBottomColor: '#000',
+        borderWidth: 3
     },
     title: {
         fontSize: 24,
