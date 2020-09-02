@@ -9,22 +9,26 @@ const DATA = [
     {
         id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
         title: "GOT JIGGY WITH NINJA",
-        numPoints: 100
+        numPoints: 100,
+        transactionDate: new Date().toISOString()
     },
     {
         id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
         title: "JOINED THE CULT",
-        numPoints: 666
+        numPoints: 666,
+        transactionDate: new Date().toISOString()
     },
     {
         id: "58694a0f-3da1-471f-bd96-145571e29d72",
         title: "GAVE US YOUR NUMBER",
-        numPoints: 10
+        numPoints: 10,
+        transactionDate: new Date().toISOString()
     },
     {
         id: "58694a0f-3da1-471f-bd96-145571e29d72s",
         title: "BOUGHT JORDANS, COOL.",
-        numPoints: -245
+        numPoints: -245,
+        transactionDate: new Date().toISOString()
     },
 ];
 
@@ -69,6 +73,9 @@ const Item = ({ item, onPress, style }) => (
                 <Text style={styles.points}>{item.numPoints}</Text>
             </View>
         </View>
+        <View style={styles.dateContainer}>
+            <Text style={styles.date}>{new Date(item.transactionDate).toLocaleDateString()}</Text>
+        </View>
     </TouchableOpacity>
 );
 
@@ -103,4 +110,13 @@ const styles = StyleSheet.create({
         flex: 0.4,
         alignItems: 'flex-end'
     },
+    dateContainer: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        margin: 10
+    },
+    date: {
+        fontFamily: 'ShareTechMono_400Regular',
+    }
 });
