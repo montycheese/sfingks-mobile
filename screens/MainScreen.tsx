@@ -3,18 +3,28 @@ import {Button, StyleSheet} from 'react-native';
 
 import {  View } from '../components/Themed';
 import {LinearGradient} from "expo-linear-gradient";
-import { useState} from "react";
+import {useEffect, useState} from "react";
 
 import ChatOverlay from "../components/messaging/ChatOverlay";
 import QRScanner from "../components/QRScanner";
+import Wallet from "../models/Wallet";
+import WalletBalancePreview from "../components/WalletBalancePreview";
 
 const SFINGKS_USER_ID = 2;
 
 export default function MainScreen() {
-
     const [chatOverlayVisible, setChatOverlayVisible] = useState(true);
     const [activeModule, setActiveModule] = useState(null);
+    const [isBalanceLoading, setIsBalanceLoading] = useState(true);
+    const wallet = Wallet.empty();
 
+    useEffect(() => {
+        // TODO: Fetch balance from backend.
+        setTimeout(() => {
+            wallet.balance = 100;
+            setIsBalanceLoading(false);
+        }, 1000);
+    }, [isBalanceLoading]);
 
   return (
     <View style={styles.container}>
@@ -31,6 +41,7 @@ export default function MainScreen() {
       />
         {chatOverlayVisible && renderChatOverlay()}
         {renderActiveModule()}
+        {!isBalanceLoading && <WalletBalancePreview wallet={wallet} onPress={console.log} />}
     </View>
   );
 
