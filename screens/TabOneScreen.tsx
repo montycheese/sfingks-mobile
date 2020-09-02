@@ -23,9 +23,12 @@ const SFINGKS_USER_ID = 2;
 export default function TabOneScreen() {
 
     const [messages, setMessages] = useState([]);
+    const [hideChat, setHideChat] = useState(false);
+
+    // START Required for Image picking
     const [chosenImage, setChosenImage] = useState(null);
     const [text, setText] = useState(undefined);
-
+    // END Required for Image picking
 
     useEffect(() => {
         setMessages(getMockMessages())
@@ -48,19 +51,6 @@ export default function TabOneScreen() {
         setChosenImage(pickerResult.uri);
     };
 
-
-    let imagePreview = null;
-    if (chosenImage) {
-        imagePreview = (
-            <View style={{flexDirection: 'row'}}>
-                <View style={{flex: 0.1}}/>
-                <View style={styles.thumbnailWrapper}>
-                    <Image source={{ uri: chosenImage }} style={styles.thumbnail} />
-                </View>
-            </View>
-        );
-    }
-
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -74,30 +64,48 @@ export default function TabOneScreen() {
             height: '100%'
           }}
       />
-      <View style={styles.chatContainer}>
-          <GiftedChat
-              text={text}
-              messages={messages}
-              onSend={onSend}
-              user={{
-                  _id: 1,
-              }}
-              showUserAvatar={false}
-              renderAvatar={() => null}
-              placeholder="Tell us something..."
-              alignTop={false}
-              inverted={false}
-              renderMessageText={renderMessageText}
-              renderActions={renderActions}
-              renderInputToolbar={renderInputToolbar}
-              textInputStyle={{color: 'white'}}
-              renderSend={renderSend}
-              renderMessage={renderMessage}
-          />
-          {imagePreview}
-      </View>
+        {!hideChat && renderChatOverlay()}
     </View>
   );
+
+  function renderChatOverlay() {
+      let imagePreview = null;
+      if (chosenImage) {
+          imagePreview = (
+              <View style={{flexDirection: 'row'}}>
+                  <View style={{flex: 0.1}}/>
+                  <View style={styles.thumbnailWrapper}>
+                      <Image source={{ uri: chosenImage }} style={styles.thumbnail} />
+                  </View>
+              </View>
+          );
+      }
+
+      return (
+          <View style={styles.chatContainer}>
+              <GiftedChat
+                  text={text}
+                  messages={messages}
+                  onSend={onSend}
+                  user={{
+                      _id: 1,
+                  }}
+                  showUserAvatar={false}
+                  renderAvatar={() => null}
+                  placeholder="Tell us something..."
+                  alignTop={false}
+                  inverted={false}
+                  renderMessageText={renderMessageText}
+                  renderActions={renderActions}
+                  renderInputToolbar={renderInputToolbar}
+                  textInputStyle={{color: 'white'}}
+                  renderSend={renderSend}
+                  renderMessage={renderMessage}
+              />
+              {imagePreview}
+          </View>
+      );
+  }
 
   function renderActions(props: Readonly<ActionsProps>) {
         return (
@@ -168,14 +176,13 @@ export default function TabOneScreen() {
 
   function onPressSfingksMessage(event: GestureResponderEvent, message: object) {
       console.log('Clicked on message: ', message);
+      setHideChat(true);
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    //alignItems: 'center',
-    //justifyContent: 'center',
+    flex: 1
   },
   chatContainer: {
       flex: 1,

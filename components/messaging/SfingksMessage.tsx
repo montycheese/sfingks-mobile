@@ -3,7 +3,7 @@ import {View} from "../Themed";
 import * as React from "react";
 
 
-export default function SfingksMessage({message, onPress}: { message: any, onPress: any}) {
+export default function SfingksMessage({message, onPress}: { message: object, onPress: any}) {
     return (
         <TouchableOpacity onPress={(event) => onPress(event, message)} style={styles.sfingksMessageContainerWrapper}>
             <View style={styles.sfingsMessageContainer}>
