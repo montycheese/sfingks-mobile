@@ -1,7 +1,18 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {View, Text, StyleSheet, TouchableOpacity} from "react-native";
 
 export default function WalletBalancePreview(props) {
+    const [balance, setBalance] = useState(props.wallet.balance);
+
+    useEffect(() => {
+        let subscriberId = null;
+        subscriberId = props.wallet.subscribeToBalanceChanges((newBalance: number, delta: number) => {
+            setBalance(newBalance);
+        });
+        return () => {
+            props.wallet.unsubscribe(subscriberId);
+        };
+    });
 
     return (
         <TouchableOpacity onPress={props.onPress}>
@@ -9,7 +20,7 @@ export default function WalletBalancePreview(props) {
                 ...props.style,
                 ...styles.container
             }}>
-                <Text style={styles.text}>{props.wallet.balance}</Text>
+                <Text style={styles.text}>{balance}</Text>
             </View>
         </TouchableOpacity>
     );

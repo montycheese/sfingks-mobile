@@ -16,22 +16,13 @@ const SFINGKS_USER_ID = 2;
 export default function MainScreen({ navigation }) {
     const [chatOverlayVisible, setChatOverlayVisible] = useState(true);
     const [activeModule, setActiveModule] = useState(null);
-    const [isBalanceLoading, setIsBalanceLoading] = useState(true);
-    const wallet = Wallet.empty();
-
-    useEffect(() => {
-        // TODO: Fetch balance from backend.
-        setTimeout(() => {
-            wallet.balance = 100;
-            setIsBalanceLoading(false);
-        }, 1000);
-    }, [isBalanceLoading]);
+    const wallet = Wallet.getInstance();
 
   return (
     <BaseView>
         {chatOverlayVisible && renderChatOverlay()}
         {renderActiveModule()}
-        {!isBalanceLoading && <WalletBalancePreview wallet={wallet} onPress={() => navigation.navigate('WalletScreen')} />}
+        <WalletBalancePreview wallet={wallet} onPress={() => navigation.navigate('WalletScreen')} />
     </BaseView>
   );
 
@@ -57,9 +48,3 @@ export default function MainScreen({ navigation }) {
       setChatOverlayVisible(true);
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
