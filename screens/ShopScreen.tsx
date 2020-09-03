@@ -1,8 +1,20 @@
 import React, {useState} from "react";
 import BaseView from "../components/BaseView";
-import {Image, StyleSheet, View, Text, SafeAreaView, SectionList, TouchableOpacity} from "react-native";
+import {
+    Image,
+    StyleSheet,
+    View,
+    Text,
+    SafeAreaView,
+    SectionList,
+    TouchableOpacity,
+    TouchableHighlight
+} from "react-native";
 import Colors from "../constants/Colors";
+import { Entypo } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import ShopItemDetailsModal from "../components/ShopItemDetailsModal";
+import ShareInviteLinkPane from "../components/ShareInviteLinkPane";
 
 const DATA = [
     {
@@ -73,6 +85,7 @@ const DATA = [
 export default function ShopScreen({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [shareInvitePaneVisible, setShareInvitePaneVisible] = useState(true);
 
     return (
         <BaseView>
@@ -83,6 +96,7 @@ export default function ShopScreen({ navigation }) {
                     <Text style={styles.balance}>{100}</Text>
                 </View>
             </View>
+            {shareInvitePaneVisible && <ShareInviteLinkPane onPress={console.log} onClose={() => setShareInvitePaneVisible(false)} />}
             <SafeAreaView style={styles.container}>
                 <SectionList
                     stickySectionHeadersEnabled={false}
@@ -94,7 +108,7 @@ export default function ShopScreen({ navigation }) {
                     )}
                 />
             </SafeAreaView>
-            <ShopItemDetailsModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+            <ShopItemDetailsModal modalVisible={modalVisible} setModalVisible={setModalVisible} item={selectedItem} />
         </BaseView>
     );
 
@@ -123,10 +137,12 @@ export default function ShopScreen({ navigation }) {
     }
 }
 
+const textMargin = 10;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: 10
     },
     separator: {
         height: 1,
@@ -135,12 +151,11 @@ const styles = StyleSheet.create({
         marginTop: 70
     },
     balanceContainer: {
-        flexDirection: 'row',
-        marginBottom: 50
+        flexDirection: 'row'
     },
     balanceTextWrapper: {
         flex: 0.4,
-        marginLeft: 10,
+        marginLeft: textMargin,
         marginTop: 10
     },
     balanceLabel: {
