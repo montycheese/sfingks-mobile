@@ -80,7 +80,7 @@ export default function ChatOverlay(props) {
                     _id: 1,
                 }}
                 showUserAvatar={false}
-                renderAvatar={() => null}
+                renderAvatar={null}
                 placeholder="Tell us something..."
                 alignTop={false}
                 inverted={false}
@@ -155,15 +155,13 @@ export default function ChatOverlay(props) {
     }
 
     function onSend(newMessages = []) {
-        console.log('sending', chosenImage);
         setChosenImage(null);
         setText(undefined);
         newMessages[0].image = chosenImage; // todo remove
-        setMessages(GiftedChat.append(messages, newMessages))
+        setMessages(GiftedChat.prepend(messages, newMessages))
     }
 
     function onPressSfingksMessage(event: GestureResponderEvent, message: object) {
-        console.log('Clicked on message: ', message);
         Animated.timing(
             fadeAnim,
             {

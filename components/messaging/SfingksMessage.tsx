@@ -17,7 +17,7 @@ export default function SfingksMessage({message, onPress}: { message: object, on
 
 const styles = StyleSheet.create({
     sfingksMessageContainerWrapper: {
-        paddingLeft: 18,
+        paddingLeft: 8,
         borderRadius: 15,
     },
     sfingsMessageContainer: {

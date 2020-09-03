@@ -1,6 +1,7 @@
 
 
 export function getMockMessages(): Array<object> {
+    const now = Date.now();
     return [
         {
             _id: 1,
@@ -10,6 +11,7 @@ export function getMockMessages(): Array<object> {
                 name: 'React Native',
                 avatar: 'https://placeimg.com/140/140/any',
             },
+            createdAt: new Date(now + 100)
         },
         {
             _id: 4,
@@ -19,6 +21,7 @@ export function getMockMessages(): Array<object> {
                 name: 'React Native',
                 avatar: 'https://placeimg.com/140/140/any',
             },
+            createdAt: new Date(now + 105)
         },
         {
             _id: 6,
@@ -28,6 +31,7 @@ export function getMockMessages(): Array<object> {
                 name: 'React Native',
                 avatar: 'https://placeimg.com/140/140/any',
             },
+            createdAt: new Date(now + 106)
         },
         {
             _id: 7,
@@ -37,6 +41,7 @@ export function getMockMessages(): Array<object> {
                 name: 'React Native',
                 avatar: 'https://placeimg.com/140/140/any',
             },
+            createdAt: new Date(now + 107)
         },
         {
             _id: 2,
@@ -46,6 +51,7 @@ export function getMockMessages(): Array<object> {
                 name: 'React Native',
                 avatar: 'https://placeimg.com/140/140/any',
             },
+            createdAt: new Date(now + 108)
         },
         {
             _id: 3,
@@ -55,8 +61,8 @@ export function getMockMessages(): Array<object> {
                 name: 'React Native',
                 avatar: 'https://placeimg.com/140/140/any',
             },
+            createdAt: new Date(now + 50000)
         },
-
         {
             _id: 5,
             text: 'https://www.sengage.io',
@@ -65,6 +71,7 @@ export function getMockMessages(): Array<object> {
                 name: 'React Native',
                 avatar: 'https://placeimg.com/140/140/any',
             },
+            createdAt: new Date(now + 500000)
         }
     ]
 }
