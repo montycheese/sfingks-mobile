@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 export default function SfingksHomeIcon(props) {
 
     return (
-        <TouchableOpacity onPress={props.onPress}>
+        <TouchableOpacity onPressIn={props.onPress}>
             <View style={{
                 ...props.style,
                 ...styles.container

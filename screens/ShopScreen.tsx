@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
         height: 1,
         width: '100%',
         backgroundColor: '#000',
-        marginTop: 70
+        marginTop: '25%'
     },
     balanceContainer: {
         flexDirection: 'row'

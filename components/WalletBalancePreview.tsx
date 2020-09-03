@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, StyleSheet, TouchableOpacity} from "react-native";
+import {View, Text, StyleSheet, TouchableHighlight} from "react-native";
 
 export default function WalletBalancePreview(props) {
     const [balance, setBalance] = useState(props.wallet.balance);
@@ -15,14 +15,14 @@ export default function WalletBalancePreview(props) {
     });
 
     return (
-        <TouchableOpacity onPress={props.onPress}>
+        <TouchableHighlight onPressIn={props.onPress}>
             <View style={{
                 ...props.style,
                 ...styles.container
             }}>
                 <Text style={styles.text}>{balance}</Text>
             </View>
-        </TouchableOpacity>
+        </TouchableHighlight>
     );
 };
 const styles = StyleSheet.create({
@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 0,
         bottom: 0,
-        zIndex: 1,
         height: 30,
         width: 60,
         backgroundColor: '#FF124F',
