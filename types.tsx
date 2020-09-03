@@ -12,6 +12,7 @@ export type TabOneParamList = {
   MainScreen: undefined;
   WalletScreen: undefined;
   ShopScreen: undefined;
+  SfingksScreen: undefined;
 };
 
 export type TabTwoParamList = {

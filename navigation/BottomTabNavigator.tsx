@@ -10,6 +10,7 @@ import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import WalletScreen from "../screens/WalletScreen";
 import ShopScreen from "../screens/ShopScreen";
+import SfingksScreen from "../screens/SfingksScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -73,6 +74,14 @@ function TabOneNavigator() {
             name="ShopScreen"
             component={ShopScreen}
             options={{ headerTitle: 'Oasis',
+                headerTransparent: true,
+                headerTintColor: '#000'
+            }}
+        />
+        <TabOneStack.Screen
+            name="SfingksScreen"
+            component={SfingksScreen}
+            options={{ headerTitle: null,
                 headerTransparent: true,
                 headerTintColor: '#000'
             }}

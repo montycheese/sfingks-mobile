@@ -11,8 +11,6 @@ import {
     TouchableHighlight
 } from "react-native";
 import Colors from "../constants/Colors";
-import { Entypo } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
 import ShopItemDetailsModal from "../components/ShopItemDetailsModal";
 import ShareInviteLinkPane from "../components/ShareInviteLinkPane";
 

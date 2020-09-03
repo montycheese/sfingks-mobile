@@ -7,9 +7,7 @@ import Wallet from "../models/Wallet";
 import WalletBalancePreview from "../components/WalletBalancePreview";
 import BaseView from "../components/BaseView";
 import ShopIcon from "../components/ShopIcon";
-
-
-const SFINGKS_USER_ID = 2;
+import SfingksHomeIcon from "../components/SfingksHomeIcon";
 
 export default function MainScreen({ navigation }) {
     const [chatOverlayVisible, setChatOverlayVisible] = useState(true);
@@ -21,6 +19,7 @@ export default function MainScreen({ navigation }) {
         {chatOverlayVisible && renderChatOverlay()}
         {renderActiveModule()}
         <WalletBalancePreview wallet={wallet} onPress={() => navigation.navigate('WalletScreen')} />
+        <SfingksHomeIcon onPress={() => navigation.navigate('SfingksScreen')}/>
         <ShopIcon onPress={() => navigation.navigate('ShopScreen')}/>
     </BaseView>
   );
