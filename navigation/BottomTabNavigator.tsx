@@ -1,4 +1,5 @@
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { SimpleLineIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
@@ -7,7 +8,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import MainScreen from '../screens/MainScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import {BottomTabParamList, TabOneParamList, TabThreeParamList, TabTwoParamList} from '../types';
 import WalletScreen from "../screens/WalletScreen";
 import ShopScreen from "../screens/ShopScreen";
 import SfingksScreen from "../screens/SfingksScreen";
@@ -19,31 +20,44 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Home"
+      tabBarOptions={{
+          keyboardHidesTabBar: true,
+          activeTintColor: Colors.cpRed,
+          inactiveTintColor: '#fff',
+          activeBackgroundColor: '#000',
+          inactiveBackgroundColor: '#000'
+      }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="Home"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-          tabBarVisible: false
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} icon={AntDesign} />
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Quests"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="play" color={color} icon={AntDesign} />,
         }}
       />
+        <BottomTab.Screen
+            name="Rewards"
+            component={TabThreeNavigator}
+            options={{
+                tabBarIcon: ({ color }) => <TabBarIcon name="present" color={color} icon={SimpleLineIcons} />,
+            }}
+        />
     </BottomTab.Navigator>
   );
 }
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: string; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+function TabBarIcon(props: { name: string; color: string; icon: any }) {
+    const Icon = props.icon;
+  return <Icon size={30} style={{ marginBottom: -3 }} name={props.iconName} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
@@ -52,8 +66,7 @@ const TabOneStack = createStackNavigator<TabOneParamList>();
 
 function TabOneNavigator() {
   return (
-    <TabOneStack.Navigator screenOptions={{
-    }}>
+    <TabOneStack.Navigator screenOptions={{}}>
       <TabOneStack.Screen
         name="MainScreen"
         component={MainScreen}
@@ -70,14 +83,6 @@ function TabOneNavigator() {
               headerTintColor: '#000'
           }}
       />
-        <TabOneStack.Screen
-            name="ShopScreen"
-            component={ShopScreen}
-            options={{ headerTitle: 'Oasis',
-                headerTransparent: true,
-                headerTintColor: '#000'
-            }}
-        />
         <TabOneStack.Screen
             name="SfingksScreen"
             component={SfingksScreen}
@@ -102,4 +107,29 @@ function TabTwoNavigator() {
       />
     </TabTwoStack.Navigator>
   );
+}
+
+const TabThreeStack = createStackNavigator<TabThreeParamList>();
+
+function TabThreeNavigator() {
+    return (
+        <TabThreeStack.Navigator>
+            <TabThreeStack.Screen
+                name="ShopScreen"
+                component={ShopScreen}
+                options={{ headerTitle: 'Oasis',
+                    headerTransparent: true,
+                    headerTintColor: '#000'
+                }}
+            />
+            <TabThreeStack.Screen
+                name="WalletScreen"
+                component={WalletScreen}
+                options={{ headerTitle: 'Wallet',
+                    headerTransparent: true,
+                    headerTintColor: '#000'
+                }}
+            />
+        </TabThreeStack.Navigator>
+    );
 }
