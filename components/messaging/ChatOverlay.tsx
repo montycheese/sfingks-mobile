@@ -183,11 +183,11 @@ const styles = StyleSheet.create({
         opacity: 0.8,
         marginLeft: '5%',
         marginRight: '5%',
-        marginTop: '10%',
-        marginBottom: '15%',
+        marginTop: '5%',
+        marginBottom: '2%',
         borderRadius: 15,
         paddingBottom: '5%',
-        paddingTop: '5%'
+        paddingTop: '5%',
     },
     title: {
         fontSize: 20,

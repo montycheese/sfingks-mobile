@@ -6,8 +6,6 @@ import QRScanner from "../components/QRScanner";
 import Wallet from "../models/Wallet";
 import WalletBalancePreview from "../components/WalletBalancePreview";
 import BaseView from "../components/BaseView";
-import ShopIcon from "../components/ShopIcon";
-import SfingksHomeIcon from "../components/SfingksHomeIcon";
 
 export default function MainScreen({ navigation }) {
     const [chatOverlayVisible, setChatOverlayVisible] = useState(true);
@@ -16,11 +14,9 @@ export default function MainScreen({ navigation }) {
 
   return (
     <BaseView>
+        {chatOverlayVisible && <WalletBalancePreview wallet={wallet} onPress={() => navigation.navigate('WalletScreen')} />}
         {chatOverlayVisible && renderChatOverlay()}
         {renderActiveModule()}
-        <WalletBalancePreview wallet={wallet} onPress={() => navigation.navigate('WalletScreen')} />
-        <SfingksHomeIcon onPress={() => navigation.navigate('SfingksScreen')}/>
-        <ShopIcon onPress={() => navigation.navigate('ShopScreen')}/>
     </BaseView>
   );
 
