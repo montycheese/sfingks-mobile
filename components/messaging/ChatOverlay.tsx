@@ -55,7 +55,7 @@ export default function ChatOverlay(props) {
         setText('Image'); // this is a workaround https://github.com/FaridSafi/react-native-gifted-chat/issues/1366
         setChosenImage(pickerResult.uri);
     };
-// TODO: this no longer works...
+// TODO: this doesn't work on iPhone X...
     let imagePreview = null;
     if (chosenImage) {
         imagePreview = (
@@ -196,11 +196,11 @@ const styles = StyleSheet.create({
     thumbnail: {
         width: 100,
         height: 100,
-        resizeMode: "contain"
+        resizeMode: "contain",
     },
     thumbnailWrapper: {
         flex: 0.3,
-        height: 100
+        height: 100,
     },
     inputToolbar: {
         marginLeft: 15,
