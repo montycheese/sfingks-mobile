@@ -6,6 +6,8 @@ import QRScanner from "../components/QRScanner";
 import Wallet from "../models/Wallet";
 import WalletBalancePreview from "../components/WalletBalancePreview";
 import BaseView from "../components/BaseView";
+import Onboarding from 'react-native-onboarding-swiper';
+
 
 export default function MainScreen({ navigation }) {
     const [chatOverlayVisible, setChatOverlayVisible] = useState(true);

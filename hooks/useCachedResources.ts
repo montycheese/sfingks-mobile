@@ -5,7 +5,7 @@ import * as React from 'react';
 import {ShareTechMono_400Regular} from "@expo-google-fonts/share-tech-mono";
 import Wallet from "../models/Wallet";
 
-export default function u1seCachedResources() {
+export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
 
   // Load any resources or data that we need prior to rendering the app
