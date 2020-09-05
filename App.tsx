@@ -5,7 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-import Onboarding from 'react-native-onboarding-swiper';
+import Onboarding from 'sengage-onboarding-swiper';
 import {getOnboardingPages} from "./utils/Utils";
 
 export default function App() {

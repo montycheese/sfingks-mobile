@@ -6739,13 +6739,6 @@ react-native-lightbox@^0.8.1:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-onboarding-swiper@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/react-native-onboarding-swiper/-/react-native-onboarding-swiper-1.1.4.tgz#cb2d97c769542228d3904a9da13e02359ed6e3f5"
-  integrity sha512-dG2J6giQpt5kKlU+Xe68E9xy+OkmC9Yf5XD7S1mJQ5VvwySfCIXnPojai0PEQ9NmbbH06k9lqN5Ik1PGYnIdVA==
-  dependencies:
-    tinycolor2 "^1.4.1"
-
 react-native-parsed-text@0.0.22:
   version "0.0.22"
   resolved "https://registry.yarnpkg.com/react-native-parsed-text/-/react-native-parsed-text-0.0.22.tgz#a23c756eaa5d6724296814755085127f9072e5f5"
@@ -7221,6 +7214,13 @@ send@0.17.1:
     on-finished "~2.3.0"
     range-parser "~1.2.1"
     statuses "~1.5.0"
+
+sengage-onboarding-swiper@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/sengage-onboarding-swiper/-/sengage-onboarding-swiper-1.1.4.tgz#aa32b084e431125a418220048920edca0aaed1e6"
+  integrity sha512-2FC7qsBUtDHgovAM3+yRfijaVNaB5Ja62eTAEHDCOfJfe3ZEplH7LXVaJguEQGCX4Qbb8iF2tZtAT2YI+Xdk2Q==
+  dependencies:
+    tinycolor2 "^1.4.1"
 
 serialize-error@^2.1.0:
   version "2.1.0"
