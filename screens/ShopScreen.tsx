@@ -7,12 +7,12 @@ import {
     Text,
     SafeAreaView,
     SectionList,
-    TouchableOpacity,
-    TouchableHighlight
+    TouchableOpacity
 } from "react-native";
 import Colors from "../constants/Colors";
 import ShopItemDetailsModal from "../components/ShopItemDetailsModal";
 import ShareInviteLinkPane from "../components/ShareInviteLinkPane";
+import {FontAwesome5} from "@expo/vector-icons";
 
 const DATA = [
     {
@@ -127,7 +127,10 @@ export default function ShopScreen({ navigation }) {
                         <Text style={styles.title}>{item.title}</Text>
                     </View>
                     <View style={styles.pointsContainer}>
-                        <Text style={styles.points}>{item.cost}</Text>
+                        <Text>
+                            <FontAwesome5 name="gem" size={25} color="#000" />
+                            <Text style={styles.points}>{item.cost}</Text>
+                        </Text>
                     </View>
                 </View>
             </TouchableOpacity>
