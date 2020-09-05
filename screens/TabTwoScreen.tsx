@@ -52,7 +52,10 @@ export default function TabTwoScreen() {
   function renderSideScrollList(title, items) {
       return (
           <View style={styles.rowContainer}>
-              <Text style={styles.rowHeaderTitle}>{title}</Text>
+              <View style={{flexDirection: "row", flex: 1, alignItems: 'center'}}>
+                  <Text style={styles.rowHeaderTitle}>{title}</Text>
+                  <Text style={styles.rowSeeAllTitle}>See All</Text>
+              </View>
               <FlatList horizontal={true} data={items} renderItem={renderItem}
                         ItemSeparatorComponent={renderSeparator}
                         keyExtractor={(item, index) => item.id}
@@ -97,6 +100,14 @@ const styles = StyleSheet.create({
     rowHeaderTitle: {
         fontSize: 32,
         color: '#fff',
+        fontFamily: 'ShareTechMono_400Regular',
+        flex: 0.8
+    },
+    rowSeeAllTitle: {
+        fontSize: 12,
+        color: '#fff',
+        flex: 0.2,
+        justifyContent: 'flex-end',
         fontFamily: 'ShareTechMono_400Regular'
     },
     carouselItemContainer: {
