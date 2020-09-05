@@ -122,7 +122,7 @@ export default function ShopScreen({ navigation }) {
             <TouchableOpacity onPress={handleOnPress} style={[styles.item]} key={item.id}>
                 <View style={{flexDirection: 'row', flex: 1}}>
                     <Image style={styles.thumbnail}
-                           source={{uri: "https://i.picsum.photos/id/908/200/200.jpg?hmac=CovMVsq4EkU03tnOxNLyxYsLlemPPHBizxcnmaHaRcU"}}/>
+                           source={{uri: "https://picsum.photos/200/200"}}/>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>{item.title}</Text>
                     </View>
