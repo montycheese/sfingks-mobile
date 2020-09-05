@@ -87,7 +87,6 @@ export default function ShopScreen({ navigation }) {
 
     return (
         <BaseView>
-            <View style={styles.separator}/>
             <View style={styles.balanceContainer}>
                 <View style={styles.balanceTextWrapper}>
                     <Text style={styles.balanceLabel}>Point Balance</Text>
@@ -152,7 +151,8 @@ const styles = StyleSheet.create({
         marginTop: '25%'
     },
     balanceContainer: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginTop: '20%'
     },
     balanceTextWrapper: {
         flex: 0.4,
