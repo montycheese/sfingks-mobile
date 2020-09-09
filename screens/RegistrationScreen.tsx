@@ -2,7 +2,7 @@ import {getOnboardingPages} from "../utils/Utils";
 import React, {useState} from "react";
 import Onboarding from 'sengage-onboarding-swiper';
 import * as Notifications from "expo-notifications";
-import {Platform} from "react-native";
+import {Platform, TouchableOpacity, View, Text} from "react-native";
 
 
 const NOTIFICATION_PAGE_INDEX = 4;
@@ -15,6 +15,8 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
     const [isTermsAccepted, setIsTermsAccepted] = useState(false);
     const [isPhoneNumberInputValid, setIsPhoneNumberInputValid] = useState(false);
     const [isPhoneNumberVerified, setIsPhoneNumberVerified] = useState(false);
+
+    // TODO: Fix issue where if they put the wrong phone number, you can't scroll back. Maybe combine both pages into 1?
     return (
         <Onboarding pages={
             getOnboardingPages({
@@ -29,6 +31,7 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
                     showNext={showNext()}
                     showDone={isTermsAccepted}
                     onDone={onOnboardingComplete}
+                    flatlistProps={{ scrollEnabled: showNext() }}
 
         />
     );
@@ -57,8 +60,8 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
                 allowAnnouncements: true
             }
         }).then(resp => {
-            if (Platform.OS === 'ios' && resp.ios.allowAlert) {
-                isNotificationsAllowed(true);
+            if (Platform.OS === 'ios' && resp.ios.allowsAlert) {
+                setIsNotificationsAllowed(true);
             }
             // TODO android.
             /**

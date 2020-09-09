@@ -206,14 +206,16 @@ function Verify ({ setIsPhoneNumberVerified, isPhoneNumberVerified }: { setIsPho
     );
 };
 
-export function getOnboardingPages(props): Array<object> {
+function NotificationsRequester({ isNotificationsAllowed }: {isNotificationsAllowed: boolean}) {
+    return (
+        <View>
+            {isNotificationsAllowed === true && <Text style={styles.notificationText}>Notifications Granted ✅</Text>}
+        </View>
+    );
+};
 
-    const NotificationsRequester = (props) => {
-        return (
-            <View>
-            </View>
-        );
-    };
+
+export function getOnboardingPages(props): Array<object> {
 
     const AcceptTerms = ({isTermsAccepted, setIsTermsAccepted }: { isTermsAccepted: boolean, setIsTermsAccepted: any}) => {
         const [isModalOpen, setIsModalOpen] = useState(false);
@@ -303,7 +305,7 @@ export function getOnboardingPages(props): Array<object> {
         },
         {
             backgroundColor: Colors.cpBlue,
-            image: <NotificationsRequester />,
+            image: <NotificationsRequester {...props} />,
             title: 'Grant notifications',
             subtitle: 'Stay up to date on the latest quests and rewards',
         },
@@ -381,5 +383,8 @@ const styles = StyleSheet.create({
     },
     modalDeclineTermsButton: {
         backgroundColor: "#2196F3"
+    },
+    notificationText: {
+        fontSize: 25
     }
 });
