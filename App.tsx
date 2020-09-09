@@ -5,8 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-import Onboarding from 'sengage-onboarding-swiper';
-import {getOnboardingPages} from "./utils/Utils";
+import RegistrationScreen from "./screens/RegistrationScreen";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -14,6 +13,7 @@ export default function App() {
   // get from cache?
   const [userData, setUserData] = useState(null);
   const [userDataFetched, setUserDataFetched] = useState(false);
+  const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -26,14 +26,10 @@ export default function App() {
 
   if (!isLoadingComplete) {
     return null;
-  } else if (userDataFetched && userData === null) {
+  } else if (userDataFetched && userData === null && !isOnboardingComplete) {
     return (
         <SafeAreaProvider>
-          <Onboarding pages={getOnboardingPages()}
-                      titleStyles={{fontFamily: 'ShareTechMono_400Regular'}}
-                      subTitleStyles={{fontFamily: 'ShareTechMono_400Regular'}}
-
-          />
+            <RegistrationScreen onOnboardingComplete={() => setIsOnboardingComplete(true)} />
           <StatusBar />
         </SafeAreaProvider>
     );
