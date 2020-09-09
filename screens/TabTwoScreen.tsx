@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, FlatList, Image, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, FlatList, Image, ScrollView, TouchableOpacity} from 'react-native';
 
 import BaseView from "../components/BaseView";
-import {FontAwesome5} from "@expo/vector-icons";
+import PointsBadge from "../components/PointsBadge";
 
-export default function TabTwoScreen() {
+export default function TabTwoScreen({ navigation }) {
 
   // TODO: Fetch from backend.
 
@@ -66,16 +66,13 @@ export default function TabTwoScreen() {
 
   function renderItem({item, separators}) {
     return (
-        <View style={styles.carouselItemContainer}>
-            <Image source={{uri : item.imageUrl}} style={styles.carouselItemBackground} />
-            <Text style={styles.carouselItemTitle}>{item.title}</Text>
-            <View style={styles.pointsContainer}>
-                <Text style={{textAlign: 'center'}}>
-                    <FontAwesome5 name="gem" size={15} color="#fff" />
-                    <Text style={styles.pointsText}>{item.totalPoints}</Text>
-                </Text>
+        <TouchableOpacity onPress={() => handlePressItem(item.id)} key={item.id}>
+            <View style={styles.carouselItemContainer}>
+                <Image source={{uri : item.imageUrl}} style={styles.carouselItemBackground} />
+                <Text style={styles.carouselItemTitle}>{item.title}</Text>
+                <PointsBadge points={item.totalPoints}  style={{ marginTop: '5%' }}/>
             </View>
-        </View>
+        </TouchableOpacity>
     );
   }
 
@@ -83,6 +80,10 @@ export default function TabTwoScreen() {
       return (
           <View style={{width: '5%'}}/>
       );
+  }
+
+  function handlePressItem(id) {
+      navigation.navigate('QuestDetailsScreen', { questId: id });
   }
 }
 
@@ -124,18 +125,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'ShareTechMono_400Regular',
         marginTop: '5%'
-    },
-    pointsText: {
-        color: '#fff',
-        fontFamily: 'ShareTechMono_400Regular',
-    },
-    pointsContainer: {
-        backgroundColor: '#000',
-        width: 50,
-        height: 25,
-        borderRadius: 4,
-        justifyContent: 'center',
-        marginTop: '5%',
-        padding: '5%'
     }
 });

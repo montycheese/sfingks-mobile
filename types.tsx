@@ -18,6 +18,7 @@ export type TabOneParamList = {
 
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
+  QuestDetailsScreen: undefined;
 };
 
 export type TabThreeParamList = {

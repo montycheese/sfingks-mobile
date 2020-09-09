@@ -18,7 +18,7 @@ export default function App() {
   useEffect(() => {
     setTimeout(() => {
       // TODO; replace wit get from cache
-      setUserData(null);
+      setUserData({});
       setUserDataFetched(true);
     }, 1000)
   }, []);

@@ -12,6 +12,7 @@ import {BottomTabParamList, TabOneParamList, TabThreeParamList, TabTwoParamList}
 import WalletScreen from "../screens/WalletScreen";
 import ShopScreen from "../screens/ShopScreen";
 import SfingksScreen from "../screens/SfingksScreen";
+import QuestDetailsScreen from "../screens/QuestDetailsScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -108,6 +109,14 @@ function TabTwoNavigator() {
             headerTintColor: '#000'
         }}
       />
+        <TabTwoStack.Screen
+            name="QuestDetailsScreen"
+            component={QuestDetailsScreen}
+            options={{ headerTitle: null,
+                headerTransparent: true,
+                headerTintColor: '#000'
+            }}
+        />
     </TabTwoStack.Navigator>
   );
 }
