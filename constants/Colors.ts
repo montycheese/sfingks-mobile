@@ -20,5 +20,6 @@ export default {
   cpHotPink: '#FF00A0',
   cpPink: '#FE75FE',
   cpPurple: '#7A04EB',
-  cpBlue: '#120458'
+  cpBlue: '#120458',
+  grayedOut: '#aba4a4'
 };

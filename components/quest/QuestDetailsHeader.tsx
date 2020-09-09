@@ -3,6 +3,7 @@ import PointsBadge from "../PointsBadge";
 import CountdownTimer from "../CountdownTimer";
 import {Entypo} from "@expo/vector-icons";
 import React from "react";
+import Colors from "../../constants/Colors";
 
 export default function QuestDetailsHeader({ quest }) {
     return (
@@ -18,7 +19,7 @@ export default function QuestDetailsHeader({ quest }) {
                 <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 25}}>{quest.title}</Text>
             </View>
             <View style={{ flexDirection: "row", backgroundColor: '#fff', justifyContent: 'center'}}>
-                <View style={{flex: 0.5, alignItems: 'center', borderWidth: '2%', borderColor: '#aba4a4'}}>
+                <View style={{flex: 0.5, alignItems: 'center', borderWidth: '2%', borderColor: Colors.grayedOut}}>
                     <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 25}}>{quest.slotsRemaining}</Text>
                     <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 15, color: '#5e5b5b' }}>{`Slots Remaining`}</Text>
                 </View>
