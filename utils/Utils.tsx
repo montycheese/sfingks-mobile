@@ -114,9 +114,9 @@ export function getMockMessages(): Array<object> {
 
 export function getMockTasks() {
     return [
-        { id: 123, position: 1, module: 'TWITTER', submodule: 'FOLLOW', points: 15, remaining: 100, moduleSpecificMetadata: { username: 'montana_wong'}},
-        { id: 124, position: 2, module: 'TWITTER', submodule: 'RETWEET', points: 5, remaining: 55, moduleSpecificMetadata: { username: 'montana_wong', tweetId: 1}},
-        { id: 125, position: 3, module: 'INSTAGRAM', submodule: 'FOLLOW', points: 15, remaining: 100, moduleSpecificMetadata: { username: 'montycheese'}},
+        { id: 123, position: 1, module: 'TWITTER', submodule: 'FOLLOW', points: 15, remaining: 100, moduleSpecificMetadata: { username: 'SengageHQ'}},
+        { id: 124, position: 2, module: 'TWITTER', submodule: 'RETWEET', points: 5, remaining: 55, moduleSpecificMetadata: { username: 'SengageHQ', tweetId: 1}},
+        { id: 125, position: 3, module: 'INSTAGRAM', submodule: 'FOLLOW', points: 15, remaining: 100, moduleSpecificMetadata: { username: 'SengageHQ'}},
         { id: 126, position: 4, module: 'WEBPAGE', submodule: 'VIEW', points: 100, remaining: 5, moduleSpecificMetadata: { name: 'SFINGKS' , url: 'https://www.sengage.io'}},
         { id: 127, position: 5, module: 'APP_STORE', submodule: 'DOWNLOAD', points: 15, remaining: 100, moduleSpecificMetadata: { name: 'Candy Crush', iosURL: 'https://www.sengage.io', android: 'https://www.sengage.io'}}
     ];

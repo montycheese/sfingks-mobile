@@ -7,7 +7,10 @@ import QuestDetailsHeader from "../components/quest/QuestDetailsHeader";
 import {FontAwesome5} from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import {getMockTasks, mapTaskToDescription} from "../utils/Utils";
+import WalletBalancePreview from "../components/WalletBalancePreview";
+import Wallet from "../models/Wallet";
 
+const wallet = Wallet.getInstance();
 export default function QuestDetailsScreen({ route, navigation }) {
     const { questId } = route.params;
     const [quest, setQuest] = useState(null);
@@ -45,6 +48,7 @@ export default function QuestDetailsScreen({ route, navigation }) {
 
     return (
         <BaseView>
+            <WalletBalancePreview wallet={wallet} onPress={() => navigation.navigate('WalletScreen')} />
             <FlatList
                 ListHeaderComponent={<QuestDetailsHeader quest={quest}/>}
                 data={tasks}
