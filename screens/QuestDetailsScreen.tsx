@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from "react";
 import BaseView from "../components/BaseView";
 import CenteredLoadingSpinner from "../components/CenteredLoadingSpinner";
-import {View, Text, ImageBackground} from "react-native";
-import PointsBadge from "../components/PointsBadge";
-import CountdownTimer from "../components/CountdownTimer";
+import {StyleSheet, FlatList, TouchableOpacity, View, Image, Text} from "react-native";
+
+import QuestDetailsHeader from "../components/quest/QuestDetailsHeader";
+import {FontAwesome5} from "@expo/vector-icons";
+import Colors from "../constants/Colors";
+import {getMockTasks, mapTaskToDescription} from "../utils/Utils";
 
 export default function QuestDetailsScreen({ route, navigation }) {
     const { questId } = route.params;
     const [quest, setQuest] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [tasks, setTasks] = useState([]);
 
 
     useEffect(() => {
@@ -21,9 +25,11 @@ export default function QuestDetailsScreen({ route, navigation }) {
                totalPoints: 500,
                endDate: new Date(Date.now() + 5000000),
                imageUrl: 'https://picsum.photos/300/200',
-               slotsRemaining: 99
+               slotsRemaining: 99,
+               description: 'Complete the tasks in today\'s Daily Challenge to accumulate points'
            };
            setQuest(questResp);
+           setTasks(getMockTasks());
        }, 500);
 
     }, [questId]);
@@ -39,28 +45,69 @@ export default function QuestDetailsScreen({ route, navigation }) {
 
     return (
         <BaseView>
-            <View style={{  marginTop: '20%', flexDirection: "row", justifyContent: 'center'}}>
-                <ImageBackground source={{ uri: quest.imageUrl}} style={{width: '100%', height: 200, resizeMode: 'cover'}}>
-                    <View style={{ position: 'absolute', right: 0, bottom: '50%'}}>
-                        <PointsBadge points={quest.totalPoints} iconColor="#000" style={{backgroundColor: '#fff'}} textStyle={{ color: '#000'}} />
-                    </View>
-                </ImageBackground>
-            </View>
-            <View style={{ flexDirection: "row", backgroundColor: '#fff', justifyContent: 'center', padding: 5}}>
-                <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 25}}>{quest.title}</Text>
-            </View>
-            <View style={{ flexDirection: "row", backgroundColor: '#fff', justifyContent: 'center'}}>
-                <View style={{flex: 0.5, alignItems: 'center'}}>
-                    <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 25}}>{quest.slotsRemaining}</Text>
-                    <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 15, color: '#5e5b5b' }}>{`Slots Remaining`}</Text>
-                </View>
-                <View style={{flex: 0.5, alignItems: 'center'}}>
-                    <CountdownTimer style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 25}} endDate={quest.endDate} />
-                    <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 15, color: '#5e5b5b'}}>Time Remaining</Text>
-                </View>
-            </View>
+            <FlatList
+                ListHeaderComponent={<QuestDetailsHeader quest={quest}/>}
+                data={tasks}
+                renderItem={renderItem}
+                keyExtractor={i => i.id}
+            />
         </BaseView>
     );
+    // view more quests on footer
 
-
+    function renderItem(item) {
+        const task = item.item;
+        return (
+            <TouchableOpacity onPress={console.log}>
+                <View style={{flexDirection: 'row', flex: 1, backgroundColor: '#fff', borderBottomWidth: '2%', marginHorizontal: '3%'}}>
+                    <Image style={styles.thumbnail}
+                           source={{uri: "https://picsum.photos/200/200"}}/>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>{mapTaskToDescription(task)}</Text>
+                    </View>
+                    <View style={styles.pointsContainer}>
+                        <View style={{backgroundColor: Colors.cpHotPink, borderRadius: 5, padding: '5%', alignItems: 'center', width: '75%', marginRight: '10%'}}>
+                            <Text style={styles.points}>{`+${task.points}`}</Text>
+                            <FontAwesome5 name="gem" size={20} color="#000" />
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
+    }
 }
+
+const styles = StyleSheet.create({
+    item: {
+        backgroundColor: "#f9c2ff",
+        padding: 5,
+        borderBottomColor: '#000',
+        borderWidth: 3
+    },
+    title: {
+        fontSize: 16,
+        fontFamily: 'ShareTechMono_400Regular',
+    },
+    titleContainer: {
+        flex: 0.5,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        paddingHorizontal: 10,
+        //backgroundColor: '#5e5b5b'
+    },
+    points: {
+        fontSize: 20,
+        fontFamily: 'ShareTechMono_400Regular',
+        color: '#000'
+    },
+    pointsContainer: {
+        flex: 0.2,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+    },
+    thumbnail: {
+        height: 75,
+        width: '100%',
+        flex: 0.3
+    }
+});
