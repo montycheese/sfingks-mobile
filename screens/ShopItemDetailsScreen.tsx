@@ -5,6 +5,8 @@ import {View, Text, ImageBackground, Dimensions, StyleSheet, TouchableHighlight,
 import Colors from "../constants/Colors";
 import CenteredLoadingSpinner from "../components/CenteredLoadingSpinner";
 import {FontAwesome5} from "@expo/vector-icons";
+import Wallet from "../models/Wallet";
+import WalletBalancePreview from "../components/WalletBalancePreview";
 
 const data = [
     {
@@ -24,6 +26,9 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [item, setItem] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+
+    const wallet = Wallet.getInstance();
+
     let carousel = null;
 
     useEffect(() => {
@@ -33,7 +38,7 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
             setItem({
             id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
             title: "WE FOLLOW YOU ON TWITTER",
-            cost: 100,
+            cost: 1011,
             imageUrl: "https://picsum.photos/200/200",
             inventoryRemaining: 5,
                 description: 'You will be rewarded with a follow from our official Twitter account @Sfingks! Woohoo!'
@@ -51,8 +56,12 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
         );
     }
 
+    const hasSufficientBalance = wallet.balance - item.cost >= 0;
+    const purchaseButtonColor = hasSufficientBalance ?  "#2196F3" : Colors.darkGray;
+
     return (
         <BaseView>
+            <WalletBalancePreview wallet={wallet} onPress={() => navigation.navigate('WalletScreen')} />
             <View style={{marginTop: '20%'}}/>
             <Carousel
                 ref={(c) => { carousel = c; }}
@@ -90,10 +99,10 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
                 </View>
             </ScrollView>
             <TouchableHighlight
-                style={styles.modalAcceptTermsButton}
+                style={[styles.modalAcceptTermsButton, { backgroundColor: purchaseButtonColor}]}
                 onPress={console.log}
             >
-                <Text style={styles.modalAcceptTermsText}>Redeem</Text>
+                <Text style={styles.modalAcceptTermsText}>{hasSufficientBalance ? 'Redeem' : 'Insufficient Funds'}</Text>
             </TouchableHighlight>
         </BaseView>
     );
@@ -138,7 +147,6 @@ const styles = StyleSheet.create({
         bottom: 0
     },
     modalAcceptTermsButton: {
-        backgroundColor: "#2196F3",
         position: 'absolute',
         bottom: 0,
         width: '100%',
