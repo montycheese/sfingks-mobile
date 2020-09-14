@@ -81,8 +81,8 @@ const DATA = [
 ];
 
 export default function ShopScreen({ navigation }) {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null);
+    //const [modalVisible, setModalVisible] = useState(false);
+    //const [selectedItem, setSelectedItem] = useState(null);
     const [shareInvitePaneVisible, setShareInvitePaneVisible] = useState(true);
 
     return (
@@ -99,22 +99,23 @@ export default function ShopScreen({ navigation }) {
                     stickySectionHeadersEnabled={false}
                     sections={DATA}
                     keyExtractor={(item, index) => item + index}
-                    renderItem={(element) => renderItem(element.item)}
+                    renderItem={(element) => renderItem(element.item, navigation)}
                     renderSectionHeader={({ section: { title } }) => (
                         <Text style={styles.header}>{title}</Text>
                     )}
                 />
             </SafeAreaView>
-            <ShopItemDetailsModal modalVisible={modalVisible} setModalVisible={setModalVisible} item={selectedItem} />
+            {/*<ShopItemDetailsModal modalVisible={modalVisible} setModalVisible={setModalVisible} item={selectedItem} />*/}
         </BaseView>
     );
 
 
-    function renderItem(item) {
+    function renderItem(item, navigation) {
 
         const handleOnPress = () => {
-            setSelectedItem(item);
-            setModalVisible(true);
+            //setSelectedItem(item);
+            navigation.navigate('ShopItemDetailsScreen');
+            //setModalVisible(true);
         };
 
         return (

@@ -1,3 +1,11 @@
+import ShopItemDetailsScreen from "./screens/ShopItemDetailsScreen";
+import WalletScreen from "./screens/WalletScreen";
+import ShopScreen from "./screens/ShopScreen";
+import MainScreen from "./screens/MainScreen";
+import SfingksScreen from "./screens/SfingksScreen";
+import TabTwoScreen from "./screens/TabTwoScreen";
+import QuestDetailsScreen from "./screens/QuestDetailsScreen";
+
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -10,18 +18,18 @@ export type BottomTabParamList = {
 };
 
 export type TabOneParamList = {
-  MainScreen: undefined;
-  WalletScreen: undefined;
-  ShopScreen: undefined;
-  SfingksScreen: undefined;
+  MainScreen: typeof MainScreen;
+  WalletScreen: typeof WalletScreen;
+  SfingksScreen: typeof SfingksScreen;
 };
 
 export type TabTwoParamList = {
-  TabTwoScreen: undefined;
-  QuestDetailsScreen: undefined;
+  TabTwoScreen: typeof TabTwoScreen;
+  QuestDetailsScreen: typeof QuestDetailsScreen;
 };
 
 export type TabThreeParamList = {
-  ShopScreen: undefined;
-  WalletScreen: undefined;
+  ShopScreen: typeof ShopScreen;
+  WalletScreen: typeof WalletScreen;
+  ShopItemDetailsScreen: typeof ShopItemDetailsScreen;
 };

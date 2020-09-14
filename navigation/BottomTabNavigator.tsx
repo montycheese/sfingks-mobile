@@ -13,6 +13,7 @@ import WalletScreen from "../screens/WalletScreen";
 import ShopScreen from "../screens/ShopScreen";
 import SfingksScreen from "../screens/SfingksScreen";
 import QuestDetailsScreen from "../screens/QuestDetailsScreen";
+import ShopItemDetailsScreen from "../screens/ShopItemDetailsScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -138,6 +139,14 @@ function TabThreeNavigator() {
                 name="WalletScreen"
                 component={WalletScreen}
                 options={{ headerTitle: 'Wallet',
+                    headerTransparent: true,
+                    headerTintColor: '#000'
+                }}
+            />
+            <TabThreeStack.Screen
+                name="ShopItemDetailsScreen"
+                component={ShopItemDetailsScreen}
+                options={{ headerTitle: 'Details',
                     headerTransparent: true,
                     headerTintColor: '#000'
                 }}
