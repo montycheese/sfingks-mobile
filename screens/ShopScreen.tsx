@@ -21,19 +21,22 @@ const DATA = [
             id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
             title: "WE FOLLOW YOU ON TWITTER",
             cost: 100,
-            imgUrl: ''
+            imageUrl: "https://picsum.photos/200/200",
+            inventoryRemaining: 5
         },
         {
             id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2",
             title: "KING OF OUR DISCORD FOR 1 DAY",
             cost: 800,
-            imgUrl: ''
+            imageUrl: "https://picsum.photos/200/200",
+            inventoryRemaining: 5000
         },
         {
             id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b1",
             title: "DIGITAL COPY OF CYBERPUNK 2077",
             cost: 7000,
-            imgUrl: ''
+            imageUrl: "https://picsum.photos/200/200",
+            inventoryRemaining: -1
         }]
     },
     {
@@ -42,19 +45,22 @@ const DATA = [
             id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bza",
             title: "WE FOLLOW YOU ON TWITTER",
             cost: 100,
-            imgUrl: ''
+            imageUrl: "https://picsum.photos/200/200",
+            inventoryRemaining: -1
         },
             {
                 id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2s",
                 title: "KING OF OUR DISCORD FOR 1 DAY",
                 cost: 800,
-                imgUrl: ''
+                imageUrl: "https://picsum.photos/200/200",
+                inventoryRemaining: 5
             },
             {
                 id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b13",
                 title: "DIGITAL COPY OF CYBERPUNK 2077",
                 cost: 7000,
-                imgUrl: ''
+                imageUrl: "https://picsum.photos/200/200",
+                inventoryRemaining: 5
             }]
     },
     {
@@ -63,19 +69,22 @@ const DATA = [
             id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bavb",
             title: "WE FOLLOW YOU ON TWITTER",
             cost: 100,
-            imgUrl: ''
+            imageUrl: "https://picsum.photos/200/200",
+            inventoryRemaining: -1
         },
             {
                 id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2dd",
                 title: "KING OF OUR DISCORD FOR 1 DAY",
                 cost: 800,
-                imgUrl: ''
+                imageUrl: "https://picsum.photos/200/200",
+                inventoryRemaining: 5
             },
             {
                 id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b1a",
                 title: "DIGITAL COPY OF CYBERPUNK 2077",
                 cost: 7000,
-                imgUrl: ''
+                imageUrl: "https://picsum.photos/200/200",
+                inventoryRemaining: 5
             }]
     }
 ];
@@ -118,19 +127,38 @@ export default function ShopScreen({ navigation }) {
             //setModalVisible(true);
         };
 
+        let remainingText = (
+            <Text style={styles.inventoryRemainingText}>{`${item.inventoryRemaining} LEFT`}</Text>
+        );
+        // count -1 as infinity
+        if (item.inventoryRemaining === -1) {
+           /*remainingText = (
+               <Text>
+                   <FontAwesome5 name="infinity" size={24} color="black" />
+                   <Text style={styles.inventoryRemainingText}> LEFT</Text>
+               </Text>
+           );*/
+           remainingText = null;
+        }
+
         return (
             <TouchableOpacity onPress={handleOnPress} style={[styles.item]} key={item.id}>
                 <View style={{flexDirection: 'row', flex: 1}}>
                     <Image style={styles.thumbnail}
-                           source={{uri: "https://picsum.photos/200/200"}}/>
+                           source={{uri: item.imageUrl}}/>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>{item.title}</Text>
                     </View>
                     <View style={styles.pointsContainer}>
-                        <Text>
-                            <FontAwesome5 name="gem" size={25} color="#000" />
-                            <Text style={styles.points}>{item.cost}</Text>
-                        </Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text>
+                                <FontAwesome5 name="gem" size={25} color="#000" />
+                                <Text style={styles.points}>{item.cost}</Text>
+                            </Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                            {remainingText}
+                        </View>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -207,5 +235,9 @@ const styles = StyleSheet.create({
         width: 100,
         flex: 0.3,
         borderRadius: 15
+    },
+    inventoryRemainingText: {
+        fontSize: 20,
+        fontFamily: 'ShareTechMono_400Regular',
     }
 });
