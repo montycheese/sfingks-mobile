@@ -18,21 +18,21 @@ const DATA = [
     {
         title: "Redeem for Prizes",
         data: [{
-            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+            itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
             title: "WE FOLLOW YOU ON TWITTER",
             cost: 100,
             imageUrl: "https://picsum.photos/200/200",
             inventoryRemaining: 5
         },
         {
-            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2",
+            itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2",
             title: "KING OF OUR DISCORD FOR 1 DAY",
             cost: 800,
             imageUrl: "https://picsum.photos/200/200",
             inventoryRemaining: 5000
         },
         {
-            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b1",
+            itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b1",
             title: "DIGITAL COPY OF CYBERPUNK 2077",
             cost: 7000,
             imageUrl: "https://picsum.photos/200/200",
@@ -42,21 +42,21 @@ const DATA = [
     {
         title: "Upcoming Deals",
         data: [{
-            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bza",
+            itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bza",
             title: "WE FOLLOW YOU ON TWITTER",
             cost: 100,
             imageUrl: "https://picsum.photos/200/200",
             inventoryRemaining: -1
         },
             {
-                id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2s",
+                itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2s",
                 title: "KING OF OUR DISCORD FOR 1 DAY",
                 cost: 800,
                 imageUrl: "https://picsum.photos/200/200",
                 inventoryRemaining: 5
             },
             {
-                id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b13",
+                itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b13",
                 title: "DIGITAL COPY OF CYBERPUNK 2077",
                 cost: 7000,
                 imageUrl: "https://picsum.photos/200/200",
@@ -66,21 +66,21 @@ const DATA = [
     {
         title: "Past Prizes",
         data: [{
-            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bavb",
+            itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bavb",
             title: "WE FOLLOW YOU ON TWITTER",
             cost: 100,
             imageUrl: "https://picsum.photos/200/200",
             inventoryRemaining: -1
         },
             {
-                id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2dd",
+                itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b2dd",
                 title: "KING OF OUR DISCORD FOR 1 DAY",
                 cost: 800,
                 imageUrl: "https://picsum.photos/200/200",
                 inventoryRemaining: 5
             },
             {
-                id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b1a",
+                itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28b1a",
                 title: "DIGITAL COPY OF CYBERPUNK 2077",
                 cost: 7000,
                 imageUrl: "https://picsum.photos/200/200",
@@ -107,7 +107,7 @@ export default function ShopScreen({ navigation }) {
                 <SectionList
                     stickySectionHeadersEnabled={false}
                     sections={DATA}
-                    keyExtractor={(item, index) => item + index}
+                    keyExtractor={(item, index) => item.itemId}
                     renderItem={(element) => renderItem(element.item, navigation)}
                     renderSectionHeader={({ section: { title } }) => (
                         <Text style={styles.header}>{title}</Text>
@@ -123,7 +123,7 @@ export default function ShopScreen({ navigation }) {
 
         const handleOnPress = () => {
             //setSelectedItem(item);
-            navigation.navigate('ShopItemDetailsScreen');
+            navigation.navigate('ShopItemDetailsScreen', { itemId: item.itemId });
             //setModalVisible(true);
         };
 

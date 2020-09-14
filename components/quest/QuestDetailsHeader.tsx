@@ -21,11 +21,11 @@ export default function QuestDetailsHeader({ quest }) {
             <View style={{ flexDirection: "row", backgroundColor: '#fff', justifyContent: 'center'}}>
                 <View style={{flex: 0.5, alignItems: 'center', borderWidth: '2%', borderColor: Colors.grayedOut}}>
                     <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 25}}>{quest.slotsRemaining}</Text>
-                    <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 15, color: '#5e5b5b' }}>{`Slots Remaining`}</Text>
+                    <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 15, color: Colors.darkGray }}>{`Slots Remaining`}</Text>
                 </View>
                 <View style={{flex: 0.5, alignItems: 'center', borderWidth: '2%', borderColor: '#aba4a4'}}>
                     <CountdownTimer style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 25}} endDate={quest.endDate} />
-                    <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 15, color: '#5e5b5b'}}>Time Remaining</Text>
+                    <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 15, color: Colors.darkGray}}>Time Remaining</Text>
                 </View>
             </View>
             <View style={{ flexDirection: "row", backgroundColor: '#fff', justifyContent: 'center', padding: 5}}>

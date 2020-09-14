@@ -155,7 +155,7 @@ function TabThreeNavigator() {
             <TabThreeStack.Screen
                 name="ShopItemDetailsScreen"
                 component={ShopItemDetailsScreen}
-                options={{ headerTitle: 'Details',
+                options={{ headerTitle: 'Product Details',
                     headerTransparent: true,
                     headerTintColor: '#000'
                 }}

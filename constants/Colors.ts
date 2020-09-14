@@ -21,5 +21,6 @@ export default {
   cpPink: '#FE75FE',
   cpPurple: '#7A04EB',
   cpBlue: '#120458',
-  grayedOut: '#aba4a4'
+  grayedOut: '#aba4a4',
+  darkGray: '#5e5b5b'
 };
