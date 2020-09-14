@@ -10,7 +10,7 @@ export default function QuestSectionListScreen({ route, navigation }) {
     const [quests, setQuests] = useState([]);
 
     useEffect(() => {
-        navigation.setOptions({headerTitle: sectionId});
+        navigation.setOptions({headerTitle: `${sectionId} Quests`});
         // TODO: fetch section by ID
         setTimeout(() => {
             setIsLoading(false);
