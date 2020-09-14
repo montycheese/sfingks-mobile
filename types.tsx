@@ -5,6 +5,7 @@ import MainScreen from "./screens/MainScreen";
 import SfingksScreen from "./screens/SfingksScreen";
 import TabTwoScreen from "./screens/TabTwoScreen";
 import QuestDetailsScreen from "./screens/QuestDetailsScreen";
+import QuestSectionListScreen from "./screens/QuestSectionListScreen";
 
 export type RootStackParamList = {
   Root: undefined;
@@ -26,6 +27,7 @@ export type TabOneParamList = {
 export type TabTwoParamList = {
   TabTwoScreen: typeof TabTwoScreen;
   QuestDetailsScreen: typeof QuestDetailsScreen;
+  QuestSectionListScreen: typeof QuestSectionListScreen;
 };
 
 export type TabThreeParamList = {

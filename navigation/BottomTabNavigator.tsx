@@ -14,6 +14,7 @@ import ShopScreen from "../screens/ShopScreen";
 import SfingksScreen from "../screens/SfingksScreen";
 import QuestDetailsScreen from "../screens/QuestDetailsScreen";
 import ShopItemDetailsScreen from "../screens/ShopItemDetailsScreen";
+import QuestSectionListScreen from "../screens/QuestSectionListScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -114,6 +115,14 @@ function TabTwoNavigator() {
             name="QuestDetailsScreen"
             component={QuestDetailsScreen}
             options={{ headerTitle: null,
+                headerTransparent: true,
+                headerTintColor: '#000'
+            }}
+        />
+        <TabTwoStack.Screen
+            name="QuestSectionListScreen"
+            component={QuestSectionListScreen}
+            options={{ headerTitle: 'All Quests',
                 headerTransparent: true,
                 headerTintColor: '#000'
             }}

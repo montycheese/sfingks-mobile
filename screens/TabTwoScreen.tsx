@@ -54,7 +54,9 @@ export default function TabTwoScreen({ navigation }) {
           <View style={styles.rowContainer}>
               <View style={{flexDirection: "row", flex: 1, alignItems: 'center'}}>
                   <Text style={styles.rowHeaderTitle}>{title}</Text>
-                  <Text style={styles.rowSeeAllTitle}>See All</Text>
+                  <TouchableOpacity onPress={() => handlePressSeeAll(title)} style={styles.rowSeeAllTitleContainer}>
+                    <Text style={styles.rowSeeAllTitle}>See All</Text>
+                  </TouchableOpacity>
               </View>
               <FlatList horizontal={true} data={items} renderItem={renderItem}
                         ItemSeparatorComponent={renderSeparator}
@@ -82,8 +84,12 @@ export default function TabTwoScreen({ navigation }) {
       );
   }
 
-  function handlePressItem(id) {
+  function handlePressItem(id: string) {
       navigation.navigate('QuestDetailsScreen', { questId: id });
+  }
+
+  function handlePressSeeAll(sectionId: string) {
+      navigation.navigate('QuestSectionListScreen', { sectionId });
   }
 }
 
@@ -107,9 +113,11 @@ const styles = StyleSheet.create({
     rowSeeAllTitle: {
         fontSize: 12,
         color: '#fff',
-        flex: 0.2,
         justifyContent: 'flex-end',
         fontFamily: 'ShareTechMono_400Regular'
+    },
+    rowSeeAllTitleContainer: {
+        flex: 0.2
     },
     carouselItemContainer: {
         height: 160,
