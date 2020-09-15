@@ -1,0 +1,14 @@
+{
+    "trigger": true,
+    "modules": [
+        "boilerplate-verify"
+    ],
+    "parentResource": "sfingks111fa52b",
+    "functionName": "sfingks111fa52bVerifyAuthChallengeResponse",
+    "parentStack": "auth",
+    "triggerEnvs": "[]",
+    "triggerTemplate": "VerifyAuthChallengeResponse.json.ejs",
+    "roleName": "sfingks111fa52bVerifyAuthChallengeResponse",
+    "skipEdit": true,
+    "resourceName": "sfingks111fa52bVerifyAuthChallengeResponse"
+}

@@ -1,0 +1,14 @@
+{
+    "trigger": true,
+    "modules": [
+        "boilerplate-define-challenge"
+    ],
+    "parentResource": "sfingks111fa52b",
+    "functionName": "sfingks111fa52bDefineAuthChallenge",
+    "parentStack": "auth",
+    "triggerEnvs": "[]",
+    "triggerTemplate": "DefineAuthChallenge.json.ejs",
+    "roleName": "sfingks111fa52bDefineAuthChallenge",
+    "skipEdit": true,
+    "resourceName": "sfingks111fa52bDefineAuthChallenge"
+}

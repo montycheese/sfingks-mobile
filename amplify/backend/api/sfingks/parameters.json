@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "sfingks",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authsfingks111fa52b",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

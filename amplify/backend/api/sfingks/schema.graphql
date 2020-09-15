@@ -1,0 +1,99 @@
+type Quest @model
+    @key(fields: ["questId"])
+    @key(name: "category-createdAt-Index", fields: ["category", "createdAt"], queryField: "questByCategory")
+    @versioned{
+  questId: ID!
+  title: String!
+  totalPoints: Int
+  endDate: String!
+  imageUrl: String
+  slotsRemaining: Int
+  description: String
+  category: QuestCategory!
+  creatorId: ID!
+  createdAt: AWSDateTime!
+  tasks: [Task] @connection(fields: ["questId"])
+}
+type Task @model
+    @key(fields: ["questId", "taskId"])
+    @versioned {
+  taskId: ID!
+  questId: ID!
+  description: String
+  position: Int
+  module: Module
+  submodule: Submodule
+  points: Int
+  remaining: Int
+  moduleSpecificMetadata: ModuleSpecificMetadata
+  completed: Boolean
+}
+type RewardItem @model
+    @key(fields: ["itemId"])
+        @key(name: "category-createdAt-Index", fields: ["category", "createdAt"], queryField: "rewardItemByCategory")
+    @versioned {
+  itemId: ID!
+  title: String!
+  createdAt: AWSDateTime!
+  cost: Int
+  images: [String]!
+  inventoryRemaining: Int
+  description: String
+  tags: [String]
+  category: RewardItemCategory!
+  availableAt: String
+}
+
+type ModuleSpecificMetadata {
+    username: String
+    name: String
+    completed: Boolean
+    url: String
+    iosUrl: String
+    androidUrl: String
+}
+
+type WalletBalance @model
+    @versioned
+    @auth(rules: [{ allow: owner }]) {
+    id: ID!
+    balance: Int
+}
+
+type Transaction @model
+    @auth(rules: [{ allow: owner }]) {
+    transactionId: ID!
+    userId: ID!
+    transactionAmount: Int
+    rewardItemId: ID
+    taskId: ID
+}
+
+enum Module {
+    TWITTER
+    INSTAGRAM
+    WEBPAGE
+    FACEBOOK
+    APP_STORE
+}
+
+enum Submodule {
+    FOLLOW
+    RETWEET
+    LIKE
+    VIEW
+    DOWNLOAD
+}
+
+enum QuestCategory {
+    FEATURED
+    NEW
+    HOT
+    RECOMMENDED
+}
+
+enum RewardItemCategory {
+    UPCOMING,
+    FEATURED,
+    NEW
+}

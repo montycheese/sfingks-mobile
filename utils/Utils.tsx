@@ -114,11 +114,11 @@ export function getMockMessages(): Array<object> {
 
 export function getMockTasks() {
     return [
-        { id: 123, position: 1, module: 'TWITTER', submodule: 'FOLLOW', points: 15, remaining: 100, moduleSpecificMetadata: { username: 'SengageHQ'}, completed: true},
-        { id: 124, position: 2, module: 'TWITTER', submodule: 'RETWEET', points: 5, remaining: 55, moduleSpecificMetadata: { username: 'SengageHQ', tweetId: 1}, completed: true},
-        { id: 125, position: 3, module: 'INSTAGRAM', submodule: 'FOLLOW', points: 15, remaining: 100, moduleSpecificMetadata: { username: 'SengageHQ'}, completed: false},
-        { id: 126, position: 4, module: 'WEBPAGE', submodule: 'VIEW', points: 100, remaining: 5, moduleSpecificMetadata: { name: 'SFINGKS' , url: 'https://www.sengage.io'}, completed: false},
-        { id: 127, position: 5, module: 'APP_STORE', submodule: 'DOWNLOAD', points: 15, remaining: 100, moduleSpecificMetadata: { name: 'Candy Crush', iosURL: 'https://www.sengage.io', android: 'https://www.sengage.io'}, completed: false}
+        { taskId: 123, position: 1, module: 'TWITTER', submodule: 'FOLLOW', points: 15, remaining: 100, moduleSpecificMetadata: { username: 'SengageHQ'}, completed: true},
+        { taskId: 124, position: 2, module: 'TWITTER', submodule: 'RETWEET', points: 5, remaining: 55, moduleSpecificMetadata: { username: 'SengageHQ', tweetId: 1}, completed: true},
+        { taskId: 125, position: 3, module: 'INSTAGRAM', submodule: 'FOLLOW', points: 15, remaining: 100, moduleSpecificMetadata: { username: 'SengageHQ'}, completed: false},
+        { taskId: 126, position: 4, module: 'WEBPAGE', submodule: 'VIEW', points: 100, remaining: 5, moduleSpecificMetadata: { name: 'SFINGKS' , url: 'https://www.sengage.io'}, completed: false},
+        { taskId: 127, position: 5, module: 'APP_STORE', submodule: 'DOWNLOAD', points: 15, remaining: 100, moduleSpecificMetadata: { name: 'Candy Crush', iosUrl: 'https://www.sengage.io', andriodUrl: 'https://www.sengage.io'}, completed: false}
     ];
 }
 

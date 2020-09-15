@@ -7,6 +7,11 @@ import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import RegistrationScreen from "./screens/RegistrationScreen";
 
+import Amplify from 'aws-amplify'
+import config from './aws-exports'
+
+Amplify.configure(config);
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();

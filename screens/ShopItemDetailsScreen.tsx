@@ -36,7 +36,7 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
         setTimeout(() => {
             setIsLoading(false);
             setItem({
-            id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+            itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
             title: "WE FOLLOW YOU ON TWITTER",
             cost: 1011,
             imageUrl: "https://picsum.photos/200/200",

@@ -1,0 +1,27 @@
+{
+    "beta": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-sfingks-beta-172658-authRole",
+            "UnauthRoleArn": "arn:aws:iam::859597192772:role/amplify-sfingks-beta-172658-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::859597192772:role/amplify-sfingks-beta-172658-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-sfingks-beta-172658-deployment",
+            "UnauthRoleName": "amplify-sfingks-beta-172658-unauthRole",
+            "StackName": "amplify-sfingks-beta-172658",
+            "StackId": "arn:aws:cloudformation:us-east-1:859597192772:stack/amplify-sfingks-beta-172658/2babf010-f6ea-11ea-b648-0e0e50fbc697",
+            "AmplifyAppId": "dlpkaz7zvwr7u"
+        },
+        "categories": {
+            "function": {
+                "sfingks111fa52bDefineAuthChallenge": {},
+                "sfingks111fa52bCreateAuthChallenge": {
+                    "CHALLENGEANSWER": "??"
+                },
+                "sfingks111fa52bVerifyAuthChallengeResponse": {}
+            },
+            "auth": {
+                "sfingks111fa52b": {}
+            }
+        }
+    }
+}

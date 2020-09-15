@@ -22,7 +22,7 @@ export default function QuestDetailsScreen({ route, navigation }) {
        setTimeout(() => {
            setIsLoading(false);
            const questResp = {
-               id: questId,
+               questId,
                title: "Sfingks Daily Challenge",
                totalPoints: 500,
                endDate: new Date(Date.now() + 5000000),
@@ -52,7 +52,7 @@ export default function QuestDetailsScreen({ route, navigation }) {
                 ListHeaderComponent={<QuestDetailsHeader quest={quest}/>}
                 data={tasks}
                 renderItem={renderItem}
-                keyExtractor={i => i.id}
+                keyExtractor={i => i.taskId}
             />
         </BaseView>
     );
