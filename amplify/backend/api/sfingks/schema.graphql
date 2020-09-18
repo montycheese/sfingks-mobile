@@ -25,11 +25,11 @@ type Task @model
   quest: Quest! @connection(fields: ["questId"])
   description: String
   position: Int
-  module: Module
-  submodule: Submodule
+  module: Module!
+  submodule: Submodule!
   points: Int
   remaining: Int
-  moduleSpecificMetadata: ModuleSpecificMetadata
+  moduleSpecificMetadata: ModuleSpecificMetadata!
   completed: Boolean
 }
 type RewardItem @model

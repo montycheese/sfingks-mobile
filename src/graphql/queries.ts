@@ -17,12 +17,33 @@ export const getQuest = `query GetQuest($questId: ID!) {
       items {
         taskId
         questId
+        quest {
+          questId
+          title
+          totalPoints
+          endDate
+          imageUrl
+          slotsRemaining
+          description
+          category
+          creatorId
+          createdAt
+          version
+        }
         description
         position
         module
         submodule
         points
         remaining
+        moduleSpecificMetadata {
+          username
+          name
+          completed
+          url
+          iosUrl
+          androidUrl
+        }
         completed
         version
       }
@@ -58,6 +79,18 @@ export const listQuests = `query ListQuests(
       creatorId
       createdAt
       tasks {
+        items {
+          taskId
+          questId
+          description
+          position
+          module
+          submodule
+          points
+          remaining
+          completed
+          version
+        }
         nextToken
       }
       version
@@ -82,6 +115,18 @@ export const getTask = `query GetTask($taskId: ID!) {
       creatorId
       createdAt
       tasks {
+        items {
+          taskId
+          questId
+          description
+          position
+          module
+          submodule
+          points
+          remaining
+          completed
+          version
+        }
         nextToken
       }
       version
@@ -133,6 +178,9 @@ export const listTasks = `query ListTasks(
         category
         creatorId
         createdAt
+        tasks {
+          nextToken
+        }
         version
       }
       description
@@ -281,6 +329,18 @@ export const questsByCategory = `query QuestsByCategory(
       creatorId
       createdAt
       tasks {
+        items {
+          taskId
+          questId
+          description
+          position
+          module
+          submodule
+          points
+          remaining
+          completed
+          version
+        }
         nextToken
       }
       version

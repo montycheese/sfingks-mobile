@@ -17,12 +17,33 @@ export const onCreateQuest = `subscription OnCreateQuest {
       items {
         taskId
         questId
+        quest {
+          questId
+          title
+          totalPoints
+          endDate
+          imageUrl
+          slotsRemaining
+          description
+          category
+          creatorId
+          createdAt
+          version
+        }
         description
         position
         module
         submodule
         points
         remaining
+        moduleSpecificMetadata {
+          username
+          name
+          completed
+          url
+          iosUrl
+          androidUrl
+        }
         completed
         version
       }
@@ -48,12 +69,33 @@ export const onUpdateQuest = `subscription OnUpdateQuest {
       items {
         taskId
         questId
+        quest {
+          questId
+          title
+          totalPoints
+          endDate
+          imageUrl
+          slotsRemaining
+          description
+          category
+          creatorId
+          createdAt
+          version
+        }
         description
         position
         module
         submodule
         points
         remaining
+        moduleSpecificMetadata {
+          username
+          name
+          completed
+          url
+          iosUrl
+          androidUrl
+        }
         completed
         version
       }
@@ -79,12 +121,33 @@ export const onDeleteQuest = `subscription OnDeleteQuest {
       items {
         taskId
         questId
+        quest {
+          questId
+          title
+          totalPoints
+          endDate
+          imageUrl
+          slotsRemaining
+          description
+          category
+          creatorId
+          createdAt
+          version
+        }
         description
         position
         module
         submodule
         points
         remaining
+        moduleSpecificMetadata {
+          username
+          name
+          completed
+          url
+          iosUrl
+          androidUrl
+        }
         completed
         version
       }
@@ -110,6 +173,18 @@ export const onCreateTask = `subscription OnCreateTask {
       creatorId
       createdAt
       tasks {
+        items {
+          taskId
+          questId
+          description
+          position
+          module
+          submodule
+          points
+          remaining
+          completed
+          version
+        }
         nextToken
       }
       version
@@ -149,6 +224,18 @@ export const onUpdateTask = `subscription OnUpdateTask {
       creatorId
       createdAt
       tasks {
+        items {
+          taskId
+          questId
+          description
+          position
+          module
+          submodule
+          points
+          remaining
+          completed
+          version
+        }
         nextToken
       }
       version
@@ -188,6 +275,18 @@ export const onDeleteTask = `subscription OnDeleteTask {
       creatorId
       createdAt
       tasks {
+        items {
+          taskId
+          questId
+          description
+          position
+          module
+          submodule
+          points
+          remaining
+          completed
+          version
+        }
         nextToken
       }
       version

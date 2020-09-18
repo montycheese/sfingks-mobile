@@ -20,12 +20,33 @@ export const createQuest = `mutation CreateQuest(
       items {
         taskId
         questId
+        quest {
+          questId
+          title
+          totalPoints
+          endDate
+          imageUrl
+          slotsRemaining
+          description
+          category
+          creatorId
+          createdAt
+          version
+        }
         description
         position
         module
         submodule
         points
         remaining
+        moduleSpecificMetadata {
+          username
+          name
+          completed
+          url
+          iosUrl
+          androidUrl
+        }
         completed
         version
       }
@@ -54,12 +75,33 @@ export const updateQuest = `mutation UpdateQuest(
       items {
         taskId
         questId
+        quest {
+          questId
+          title
+          totalPoints
+          endDate
+          imageUrl
+          slotsRemaining
+          description
+          category
+          creatorId
+          createdAt
+          version
+        }
         description
         position
         module
         submodule
         points
         remaining
+        moduleSpecificMetadata {
+          username
+          name
+          completed
+          url
+          iosUrl
+          androidUrl
+        }
         completed
         version
       }
@@ -88,12 +130,33 @@ export const deleteQuest = `mutation DeleteQuest(
       items {
         taskId
         questId
+        quest {
+          questId
+          title
+          totalPoints
+          endDate
+          imageUrl
+          slotsRemaining
+          description
+          category
+          creatorId
+          createdAt
+          version
+        }
         description
         position
         module
         submodule
         points
         remaining
+        moduleSpecificMetadata {
+          username
+          name
+          completed
+          url
+          iosUrl
+          androidUrl
+        }
         completed
         version
       }
@@ -122,6 +185,18 @@ export const createTask = `mutation CreateTask(
       creatorId
       createdAt
       tasks {
+        items {
+          taskId
+          questId
+          description
+          position
+          module
+          submodule
+          points
+          remaining
+          completed
+          version
+        }
         nextToken
       }
       version
@@ -164,6 +239,18 @@ export const updateTask = `mutation UpdateTask(
       creatorId
       createdAt
       tasks {
+        items {
+          taskId
+          questId
+          description
+          position
+          module
+          submodule
+          points
+          remaining
+          completed
+          version
+        }
         nextToken
       }
       version
@@ -206,6 +293,18 @@ export const deleteTask = `mutation DeleteTask(
       creatorId
       createdAt
       tasks {
+        items {
+          taskId
+          questId
+          description
+          position
+          module
+          submodule
+          points
+          remaining
+          completed
+          version
+        }
         nextToken
       }
       version
