@@ -3,6 +3,7 @@ import {Text} from "react-native";
 
 export default function CountdownTimer({ endDate, style}) {
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+    endDate = new Date(endDate);
 
     useEffect(() => {
         const timer = setTimeout(() => {
