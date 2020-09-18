@@ -24,17 +24,10 @@ export const onCreateQuest = `subscription OnCreateQuest {
         points
         remaining
         completed
-        _version
-        _deleted
-        _lastChangedAt
         version
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -62,17 +55,10 @@ export const onUpdateQuest = `subscription OnUpdateQuest {
         points
         remaining
         completed
-        _version
-        _deleted
-        _lastChangedAt
         version
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -100,17 +86,10 @@ export const onDeleteQuest = `subscription OnDeleteQuest {
         points
         remaining
         completed
-        _version
-        _deleted
-        _lastChangedAt
         version
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -119,6 +98,22 @@ export const onCreateTask = `subscription OnCreateTask {
   onCreateTask {
     taskId
     questId
+    quest {
+      questId
+      title
+      totalPoints
+      endDate
+      imageUrl
+      slotsRemaining
+      description
+      category
+      creatorId
+      createdAt
+      tasks {
+        nextToken
+      }
+      version
+    }
     description
     position
     module
@@ -134,9 +129,6 @@ export const onCreateTask = `subscription OnCreateTask {
       androidUrl
     }
     completed
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -145,6 +137,22 @@ export const onUpdateTask = `subscription OnUpdateTask {
   onUpdateTask {
     taskId
     questId
+    quest {
+      questId
+      title
+      totalPoints
+      endDate
+      imageUrl
+      slotsRemaining
+      description
+      category
+      creatorId
+      createdAt
+      tasks {
+        nextToken
+      }
+      version
+    }
     description
     position
     module
@@ -160,9 +168,6 @@ export const onUpdateTask = `subscription OnUpdateTask {
       androidUrl
     }
     completed
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -171,6 +176,22 @@ export const onDeleteTask = `subscription OnDeleteTask {
   onDeleteTask {
     taskId
     questId
+    quest {
+      questId
+      title
+      totalPoints
+      endDate
+      imageUrl
+      slotsRemaining
+      description
+      category
+      creatorId
+      createdAt
+      tasks {
+        nextToken
+      }
+      version
+    }
     description
     position
     module
@@ -186,9 +207,6 @@ export const onDeleteTask = `subscription OnDeleteTask {
       androidUrl
     }
     completed
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -205,9 +223,6 @@ export const onCreateRewardItem = `subscription OnCreateRewardItem {
     tags
     category
     availableAt
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -224,9 +239,6 @@ export const onUpdateRewardItem = `subscription OnUpdateRewardItem {
     tags
     category
     availableAt
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -243,88 +255,61 @@ export const onDeleteRewardItem = `subscription OnDeleteRewardItem {
     tags
     category
     availableAt
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
 `;
-export const onCreateWalletBalance = `subscription OnCreateWalletBalance($owner: String!) {
-  onCreateWalletBalance(owner: $owner) {
+export const onCreateWalletBalance = `subscription OnCreateWalletBalance {
+  onCreateWalletBalance {
     id
     balance
-    _version
-    _deleted
-    _lastChangedAt
     version
-    owner
   }
 }
 `;
-export const onUpdateWalletBalance = `subscription OnUpdateWalletBalance($owner: String!) {
-  onUpdateWalletBalance(owner: $owner) {
+export const onUpdateWalletBalance = `subscription OnUpdateWalletBalance {
+  onUpdateWalletBalance {
     id
     balance
-    _version
-    _deleted
-    _lastChangedAt
     version
-    owner
   }
 }
 `;
-export const onDeleteWalletBalance = `subscription OnDeleteWalletBalance($owner: String!) {
-  onDeleteWalletBalance(owner: $owner) {
+export const onDeleteWalletBalance = `subscription OnDeleteWalletBalance {
+  onDeleteWalletBalance {
     id
     balance
-    _version
-    _deleted
-    _lastChangedAt
     version
-    owner
   }
 }
 `;
-export const onCreateTransaction = `subscription OnCreateTransaction($owner: String!) {
-  onCreateTransaction(owner: $owner) {
+export const onCreateTransaction = `subscription OnCreateTransaction {
+  onCreateTransaction {
     transactionId
     userId
     transactionAmount
     rewardItemId
     taskId
-    _version
-    _deleted
-    _lastChangedAt
-    owner
   }
 }
 `;
-export const onUpdateTransaction = `subscription OnUpdateTransaction($owner: String!) {
-  onUpdateTransaction(owner: $owner) {
+export const onUpdateTransaction = `subscription OnUpdateTransaction {
+  onUpdateTransaction {
     transactionId
     userId
     transactionAmount
     rewardItemId
     taskId
-    _version
-    _deleted
-    _lastChangedAt
-    owner
   }
 }
 `;
-export const onDeleteTransaction = `subscription OnDeleteTransaction($owner: String!) {
-  onDeleteTransaction(owner: $owner) {
+export const onDeleteTransaction = `subscription OnDeleteTransaction {
+  onDeleteTransaction {
     transactionId
     userId
     transactionAmount
     rewardItemId
     taskId
-    _version
-    _deleted
-    _lastChangedAt
-    owner
   }
 }
 `;

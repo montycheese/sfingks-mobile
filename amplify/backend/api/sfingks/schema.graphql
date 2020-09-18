@@ -1,7 +1,8 @@
 type Quest @model
-    @key(fields: ["questId"])
-    @key(name: "category-createdAt-Index", fields: ["category", "createdAt"], queryField: "questByCategory")
-    @versioned{
+@key(fields: ["questId"])
+@key(name: "byCategoryByDate", fields: ["category", "createdAt"], queryField: "questsByCategory")
+@versioned
+@auth(rules: [{ allow: public, provider: apiKey }]) {
   questId: ID!
   title: String!
   totalPoints: Int
@@ -12,13 +13,16 @@ type Quest @model
   category: QuestCategory!
   creatorId: ID!
   createdAt: AWSDateTime!
-  tasks: [Task] @connection(fields: ["questId"])
+  tasks: [Task] @connection(keyName: "byQuestId", fields: ["questId"])
 }
 type Task @model
-    @key(fields: ["questId", "taskId"])
-    @versioned {
+@key(fields: ["taskId"])
+@key(name: "byQuestId",fields: ["questId"])
+@versioned
+@auth(rules: [{ allow: public, provider: apiKey }]) {
   taskId: ID!
   questId: ID!
+  quest: Quest! @connection(fields: ["questId"])
   description: String
   position: Int
   module: Module
@@ -29,9 +33,10 @@ type Task @model
   completed: Boolean
 }
 type RewardItem @model
-    @key(fields: ["itemId"])
-        @key(name: "category-createdAt-Index", fields: ["category", "createdAt"], queryField: "rewardItemByCategory")
-    @versioned {
+@key(fields: ["itemId"])
+@key(name: "byCategoryByDate", fields: ["category", "createdAt"], queryField: "rewardItemsByCategory")
+@versioned
+@auth(rules: [{ allow: public, provider: apiKey }]) {
   itemId: ID!
   title: String!
   createdAt: AWSDateTime!
@@ -45,55 +50,55 @@ type RewardItem @model
 }
 
 type ModuleSpecificMetadata {
-    username: String
-    name: String
-    completed: Boolean
-    url: String
-    iosUrl: String
-    androidUrl: String
+  username: String
+  name: String
+  completed: Boolean
+  url: String
+  iosUrl: String
+  androidUrl: String
 }
 
 type WalletBalance @model
-    @versioned
-    @auth(rules: [{ allow: owner }]) {
-    id: ID!
-    balance: Int
+@versioned
+@auth(rules: [{ allow: public, provider: apiKey }]) {
+  id: ID!
+  balance: Int
 }
 
 type Transaction @model
-    @auth(rules: [{ allow: owner }]) {
-    transactionId: ID!
-    userId: ID!
-    transactionAmount: Int
-    rewardItemId: ID
-    taskId: ID
+@auth(rules: [{ allow: public, provider: apiKey }]) {
+  transactionId: ID!
+  userId: ID!
+  transactionAmount: Int
+  rewardItemId: ID
+  taskId: ID
 }
 
 enum Module {
-    TWITTER
-    INSTAGRAM
-    WEBPAGE
-    FACEBOOK
-    APP_STORE
+  TWITTER
+  INSTAGRAM
+  WEBPAGE
+  FACEBOOK
+  APP_STORE
 }
 
 enum Submodule {
-    FOLLOW
-    RETWEET
-    LIKE
-    VIEW
-    DOWNLOAD
+  FOLLOW
+  RETWEET
+  LIKE
+  VIEW
+  DOWNLOAD
 }
 
 enum QuestCategory {
-    FEATURED
-    NEW
-    HOT
-    RECOMMENDED
+  FEATURED
+  NEW
+  HOT
+  RECOMMENDED
 }
 
 enum RewardItemCategory {
-    UPCOMING,
-    FEATURED,
-    NEW
+  UPCOMING,
+  FEATURED,
+  NEW
 }

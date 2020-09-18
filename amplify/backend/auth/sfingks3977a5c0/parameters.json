@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "sfingks111fa52b_identitypool_111fa52b",
+    "identityPoolName": "sfingks3977a5c0_identitypool_3977a5c0",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "sfingk111fa52b",
-    "userPoolName": "sfingks111fa52b_userpool_111fa52b",
+    "resourceNameTruncated": "sfingk3977a5c0",
+    "userPoolName": "sfingks3977a5c0_userpool_3977a5c0",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,9 +28,9 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "sfingk111fa52b_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "sfingk3977a5c0_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "resourceName": "sfingks111fa52b",
+    "resourceName": "sfingks3977a5c0",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -49,7 +49,9 @@
         "phone_number"
     ],
     "triggers": "{\"DefineAuthChallenge\":[\"boilerplate-define-challenge\"],\"CreateAuthChallenge\":[\"boilerplate-create-challenge\"],\"VerifyAuthChallengeResponse\":[\"boilerplate-verify\"]}",
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+        "owner"
+    ],
     "parentStack": {
         "Ref": "AWS::StackId"
     },
@@ -57,7 +59,7 @@
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "sfingks111fa52bDefineAuthChallenge",
+            "resourceName": "sfingks3977a5c0DefineAuthChallenge",
             "triggerProvider": "Cognito",
             "attributes": [
                 "Arn",
@@ -66,7 +68,7 @@
         },
         {
             "category": "function",
-            "resourceName": "sfingks111fa52bCreateAuthChallenge",
+            "resourceName": "sfingks3977a5c0CreateAuthChallenge",
             "triggerProvider": "Cognito",
             "attributes": [
                 "Arn",
@@ -75,7 +77,7 @@
         },
         {
             "category": "function",
-            "resourceName": "sfingks111fa52bVerifyAuthChallengeResponse",
+            "resourceName": "sfingks3977a5c0VerifyAuthChallengeResponse",
             "triggerProvider": "Cognito",
             "attributes": [
                 "Arn",

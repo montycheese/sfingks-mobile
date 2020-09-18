@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import Onboarding from 'sengage-onboarding-swiper';
 import * as Notifications from "expo-notifications";
 import {Platform, TouchableOpacity, View, Text} from "react-native";
-
+import { Auth } from 'aws-amplify'
 
 const NOTIFICATION_PAGE_INDEX = 4;
 const PHONE_NUMBER_INPUT_INDEX = 2;
@@ -22,7 +22,7 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
             getOnboardingPages({
                 isNotificationsAllowed, isTermsAccepted,
                 setIsTermsAccepted, isPhoneNumberVerified, setIsPhoneNumberVerified,
-                isPhoneNumberInputValid, setIsPhoneNumberInputValid
+                isPhoneNumberInputValid, setIsPhoneNumberInputValid, signUp
             })}
                     titleStyles={{fontFamily: 'ShareTechMono_400Regular'}}
                     subTitleStyles={{fontFamily: 'ShareTechMono_400Regular'}}
@@ -84,5 +84,17 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
 }
              */
         });
+    }
+
+    async function signUp() {
+        try {
+            const { user } = await Auth.signUp({
+                username: '+18086333680',
+                password: 'password',
+            });
+            console.log(user);
+        } catch (error) {
+            console.log('error signing up:', error);
+        }
     }
 }

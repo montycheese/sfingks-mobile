@@ -6,13 +6,14 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import RegistrationScreen from "./screens/RegistrationScreen";
-
 import Amplify from 'aws-amplify'
+
 import config from './aws-exports'
+import { Auth } from 'aws-amplify'
 
 Amplify.configure(config);
 
-export default function App() {
+function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
   // get from cache?
@@ -21,11 +22,22 @@ export default function App() {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      // TODO; replace wit get from cache
-      setUserData({});
-      setUserDataFetched(true);
-    }, 1000)
+
+    async function checkUserState() {
+
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        // https://github.com/aws-amplify/amplify-js/issues/3640 reference later
+        setUserData(user);
+        setUserDataFetched(true);
+      } catch (error) {
+        console.debug(error);
+        setUserDataFetched(true);
+        setUserData({});//TODO remove
+      }
+    }
+    checkUserState();
+
   }, []);
 
 
@@ -47,3 +59,5 @@ export default function App() {
     );
   }
 }
+
+export default App;

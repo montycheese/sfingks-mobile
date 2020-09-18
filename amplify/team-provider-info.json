@@ -13,14 +13,14 @@
         },
         "categories": {
             "function": {
-                "sfingks111fa52bDefineAuthChallenge": {},
-                "sfingks111fa52bCreateAuthChallenge": {
-                    "CHALLENGEANSWER": "??"
+                "sfingks3977a5c0DefineAuthChallenge": {},
+                "sfingks3977a5c0CreateAuthChallenge": {
+                    "CHALLENGEANSWER": "blah"
                 },
-                "sfingks111fa52bVerifyAuthChallengeResponse": {}
+                "sfingks3977a5c0VerifyAuthChallengeResponse": {}
             },
             "auth": {
-                "sfingks111fa52b": {}
+                "sfingks3977a5c0": {}
             }
         }
     }

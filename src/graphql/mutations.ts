@@ -27,17 +27,10 @@ export const createQuest = `mutation CreateQuest(
         points
         remaining
         completed
-        _version
-        _deleted
-        _lastChangedAt
         version
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -68,17 +61,10 @@ export const updateQuest = `mutation UpdateQuest(
         points
         remaining
         completed
-        _version
-        _deleted
-        _lastChangedAt
         version
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -109,17 +95,10 @@ export const deleteQuest = `mutation DeleteQuest(
         points
         remaining
         completed
-        _version
-        _deleted
-        _lastChangedAt
         version
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -131,6 +110,22 @@ export const createTask = `mutation CreateTask(
   createTask(input: $input, condition: $condition) {
     taskId
     questId
+    quest {
+      questId
+      title
+      totalPoints
+      endDate
+      imageUrl
+      slotsRemaining
+      description
+      category
+      creatorId
+      createdAt
+      tasks {
+        nextToken
+      }
+      version
+    }
     description
     position
     module
@@ -146,9 +141,6 @@ export const createTask = `mutation CreateTask(
       androidUrl
     }
     completed
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -160,6 +152,22 @@ export const updateTask = `mutation UpdateTask(
   updateTask(input: $input, condition: $condition) {
     taskId
     questId
+    quest {
+      questId
+      title
+      totalPoints
+      endDate
+      imageUrl
+      slotsRemaining
+      description
+      category
+      creatorId
+      createdAt
+      tasks {
+        nextToken
+      }
+      version
+    }
     description
     position
     module
@@ -175,9 +183,6 @@ export const updateTask = `mutation UpdateTask(
       androidUrl
     }
     completed
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -189,6 +194,22 @@ export const deleteTask = `mutation DeleteTask(
   deleteTask(input: $input, condition: $condition) {
     taskId
     questId
+    quest {
+      questId
+      title
+      totalPoints
+      endDate
+      imageUrl
+      slotsRemaining
+      description
+      category
+      creatorId
+      createdAt
+      tasks {
+        nextToken
+      }
+      version
+    }
     description
     position
     module
@@ -204,9 +225,6 @@ export const deleteTask = `mutation DeleteTask(
       androidUrl
     }
     completed
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -226,9 +244,6 @@ export const createRewardItem = `mutation CreateRewardItem(
     tags
     category
     availableAt
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -248,9 +263,6 @@ export const updateRewardItem = `mutation UpdateRewardItem(
     tags
     category
     availableAt
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -270,9 +282,6 @@ export const deleteRewardItem = `mutation DeleteRewardItem(
     tags
     category
     availableAt
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -284,11 +293,7 @@ export const createWalletBalance = `mutation CreateWalletBalance(
   createWalletBalance(input: $input, condition: $condition) {
     id
     balance
-    _version
-    _deleted
-    _lastChangedAt
     version
-    owner
   }
 }
 `;
@@ -299,11 +304,7 @@ export const updateWalletBalance = `mutation UpdateWalletBalance(
   updateWalletBalance(input: $input, condition: $condition) {
     id
     balance
-    _version
-    _deleted
-    _lastChangedAt
     version
-    owner
   }
 }
 `;
@@ -314,11 +315,7 @@ export const deleteWalletBalance = `mutation DeleteWalletBalance(
   deleteWalletBalance(input: $input, condition: $condition) {
     id
     balance
-    _version
-    _deleted
-    _lastChangedAt
     version
-    owner
   }
 }
 `;
@@ -332,10 +329,6 @@ export const createTransaction = `mutation CreateTransaction(
     transactionAmount
     rewardItemId
     taskId
-    _version
-    _deleted
-    _lastChangedAt
-    owner
   }
 }
 `;
@@ -349,10 +342,6 @@ export const updateTransaction = `mutation UpdateTransaction(
     transactionAmount
     rewardItemId
     taskId
-    _version
-    _deleted
-    _lastChangedAt
-    owner
   }
 }
 `;
@@ -366,10 +355,6 @@ export const deleteTransaction = `mutation DeleteTransaction(
     transactionAmount
     rewardItemId
     taskId
-    _version
-    _deleted
-    _lastChangedAt
-    owner
   }
 }
 `;

@@ -156,7 +156,7 @@ export function mapTaskToDescription(task) {
     }
 }
 
-function PhoneNumberInput({ isPhoneNumberInputValid, setIsPhoneNumberInputValid }: {isPhoneNumberInputValid: boolean, setIsPhoneNumberInputValid: any}) {
+function PhoneNumberInput({ isPhoneNumberInputValid, setIsPhoneNumberInputValid, signUp }: {isPhoneNumberInputValid: boolean, setIsPhoneNumberInputValid: any}) {
     const [input, setInput] = useState('');
 
     useEffect(() => {

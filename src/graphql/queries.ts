@@ -1,43 +1,6 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
-export const syncQuests = `query SyncQuests(
-  $filter: ModelQuestFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncQuests(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      questId
-      title
-      totalPoints
-      endDate
-      imageUrl
-      slotsRemaining
-      description
-      category
-      creatorId
-      createdAt
-      tasks {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      version
-    }
-    nextToken
-    startedAt
-  }
-}
-`;
 export const getQuest = `query GetQuest($questId: ID!) {
   getQuest(questId: $questId) {
     questId
@@ -61,17 +24,10 @@ export const getQuest = `query GetQuest($questId: ID!) {
         points
         remaining
         completed
-        _version
-        _deleted
-        _lastChangedAt
         version
       }
       nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -103,62 +59,33 @@ export const listQuests = `query ListQuests(
       createdAt
       tasks {
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       version
     }
     nextToken
-    startedAt
   }
 }
 `;
-export const syncTasks = `query SyncTasks(
-  $filter: ModelTaskFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncTasks(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      taskId
-      questId
-      description
-      position
-      module
-      submodule
-      points
-      remaining
-      moduleSpecificMetadata {
-        username
-        name
-        completed
-        url
-        iosUrl
-        androidUrl
-      }
-      completed
-      _version
-      _deleted
-      _lastChangedAt
-      version
-    }
-    nextToken
-    startedAt
-  }
-}
-`;
-export const getTask = `query GetTask($questId: ID!, $taskId: ID!) {
-  getTask(questId: $questId, taskId: $taskId) {
+export const getTask = `query GetTask($taskId: ID!) {
+  getTask(taskId: $taskId) {
     taskId
     questId
+    quest {
+      questId
+      title
+      totalPoints
+      endDate
+      imageUrl
+      slotsRemaining
+      description
+      category
+      creatorId
+      createdAt
+      tasks {
+        nextToken
+      }
+      version
+    }
     description
     position
     module
@@ -174,23 +101,18 @@ export const getTask = `query GetTask($questId: ID!, $taskId: ID!) {
       androidUrl
     }
     completed
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
 `;
 export const listTasks = `query ListTasks(
-  $questId: ID
-  $taskId: ModelIDKeyConditionInput
+  $taskId: ID
   $filter: ModelTaskFilterInput
   $limit: Int
   $nextToken: String
   $sortDirection: ModelSortDirection
 ) {
   listTasks(
-    questId: $questId
     taskId: $taskId
     filter: $filter
     limit: $limit
@@ -200,6 +122,19 @@ export const listTasks = `query ListTasks(
     items {
       taskId
       questId
+      quest {
+        questId
+        title
+        totalPoints
+        endDate
+        imageUrl
+        slotsRemaining
+        description
+        category
+        creatorId
+        createdAt
+        version
+      }
       description
       position
       module
@@ -215,46 +150,9 @@ export const listTasks = `query ListTasks(
         androidUrl
       }
       completed
-      _version
-      _deleted
-      _lastChangedAt
       version
     }
     nextToken
-    startedAt
-  }
-}
-`;
-export const syncRewardItems = `query SyncRewardItems(
-  $filter: ModelRewardItemFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncRewardItems(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      itemId
-      title
-      createdAt
-      cost
-      images
-      inventoryRemaining
-      description
-      tags
-      category
-      availableAt
-      _version
-      _deleted
-      _lastChangedAt
-      version
-    }
-    nextToken
-    startedAt
   }
 }
 `;
@@ -270,9 +168,6 @@ export const getRewardItem = `query GetRewardItem($itemId: ID!) {
     tags
     category
     availableAt
-    _version
-    _deleted
-    _lastChangedAt
     version
   }
 }
@@ -302,39 +197,9 @@ export const listRewardItems = `query ListRewardItems(
       tags
       category
       availableAt
-      _version
-      _deleted
-      _lastChangedAt
       version
     }
     nextToken
-    startedAt
-  }
-}
-`;
-export const syncWalletBalances = `query SyncWalletBalances(
-  $filter: ModelWalletBalanceFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncWalletBalances(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      id
-      balance
-      _version
-      _deleted
-      _lastChangedAt
-      version
-      owner
-    }
-    nextToken
-    startedAt
   }
 }
 `;
@@ -342,11 +207,7 @@ export const getWalletBalance = `query GetWalletBalance($id: ID!) {
   getWalletBalance(id: $id) {
     id
     balance
-    _version
-    _deleted
-    _lastChangedAt
     version
-    owner
   }
 }
 `;
@@ -359,42 +220,9 @@ export const listWalletBalances = `query ListWalletBalances(
     items {
       id
       balance
-      _version
-      _deleted
-      _lastChangedAt
       version
-      owner
     }
     nextToken
-    startedAt
-  }
-}
-`;
-export const syncTransactions = `query SyncTransactions(
-  $filter: ModelTransactionFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncTransactions(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      transactionId
-      userId
-      transactionAmount
-      rewardItemId
-      taskId
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-    nextToken
-    startedAt
   }
 }
 `;
@@ -405,10 +233,6 @@ export const getTransaction = `query GetTransaction($id: ID!) {
     transactionAmount
     rewardItemId
     taskId
-    _version
-    _deleted
-    _lastChangedAt
-    owner
   }
 }
 `;
@@ -424,17 +248,12 @@ export const listTransactions = `query ListTransactions(
       transactionAmount
       rewardItemId
       taskId
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
     nextToken
-    startedAt
   }
 }
 `;
-export const questByCategory = `query QuestByCategory(
+export const questsByCategory = `query QuestsByCategory(
   $category: QuestCategory
   $createdAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
@@ -442,7 +261,7 @@ export const questByCategory = `query QuestByCategory(
   $limit: Int
   $nextToken: String
 ) {
-  questByCategory(
+  questsByCategory(
     category: $category
     createdAt: $createdAt
     sortDirection: $sortDirection
@@ -463,19 +282,14 @@ export const questByCategory = `query QuestByCategory(
       createdAt
       tasks {
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       version
     }
     nextToken
-    startedAt
   }
 }
 `;
-export const rewardItemByCategory = `query RewardItemByCategory(
+export const rewardItemsByCategory = `query RewardItemsByCategory(
   $category: RewardItemCategory
   $createdAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
@@ -483,7 +297,7 @@ export const rewardItemByCategory = `query RewardItemByCategory(
   $limit: Int
   $nextToken: String
 ) {
-  rewardItemByCategory(
+  rewardItemsByCategory(
     category: $category
     createdAt: $createdAt
     sortDirection: $sortDirection
@@ -502,13 +316,9 @@ export const rewardItemByCategory = `query RewardItemByCategory(
       tags
       category
       availableAt
-      _version
-      _deleted
-      _lastChangedAt
       version
     }
     nextToken
-    startedAt
   }
 }
 `;

@@ -1,12 +1,12 @@
 {
 	"auth": {
-		"sfingks111fa52b": {
+		"sfingks3977a5c0": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [
 				{
 					"category": "function",
-					"resourceName": "sfingks111fa52bDefineAuthChallenge",
+					"resourceName": "sfingks3977a5c0DefineAuthChallenge",
 					"triggerProvider": "Cognito",
 					"attributes": [
 						"Arn",
@@ -15,7 +15,7 @@
 				},
 				{
 					"category": "function",
-					"resourceName": "sfingks111fa52bCreateAuthChallenge",
+					"resourceName": "sfingks3977a5c0CreateAuthChallenge",
 					"triggerProvider": "Cognito",
 					"attributes": [
 						"Arn",
@@ -24,7 +24,7 @@
 				},
 				{
 					"category": "function",
-					"resourceName": "sfingks111fa52bVerifyAuthChallengeResponse",
+					"resourceName": "sfingks3977a5c0VerifyAuthChallengeResponse",
 					"triggerProvider": "Cognito",
 					"attributes": [
 						"Arn",
@@ -32,20 +32,36 @@
 					]
 				}
 			]
+		},
+		"userPoolGroups": {
+			"service": "Cognito-UserPool-Groups",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "auth",
+					"resourceName": "sfingks3977a5c0",
+					"attributes": [
+						"UserPoolId",
+						"AppClientIDWeb",
+						"AppClientID",
+						"IdentityPoolId"
+					]
+				}
+			]
 		}
 	},
 	"function": {
-		"sfingks111fa52bDefineAuthChallenge": {
+		"sfingks3977a5c0DefineAuthChallenge": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true
 		},
-		"sfingks111fa52bCreateAuthChallenge": {
+		"sfingks3977a5c0CreateAuthChallenge": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true
 		},
-		"sfingks111fa52bVerifyAuthChallengeResponse": {
+		"sfingks3977a5c0VerifyAuthChallengeResponse": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true
@@ -59,9 +75,10 @@
 				"authConfig": {
 					"additionalAuthenticationProviders": [],
 					"defaultAuthentication": {
-						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
-						"userPoolConfig": {
-							"userPoolId": "authsfingks111fa52b"
+						"authenticationType": "API_KEY",
+						"apiKeyConfig": {
+							"description": "beta",
+							"apiKeyExpirationDays": "365"
 						}
 					}
 				}

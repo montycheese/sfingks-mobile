@@ -12,7 +12,6 @@ export type CreateQuestInput = {
   category: QuestCategory,
   creatorId: string,
   createdAt: string,
-  _version?: number | null,
 };
 
 export enum QuestCategory {
@@ -140,13 +139,11 @@ export type UpdateQuestInput = {
   category?: QuestCategory | null,
   creatorId?: string | null,
   createdAt?: string | null,
-  _version?: number | null,
   expectedVersion: number,
 };
 
 export type DeleteQuestInput = {
   questId: string,
-  _version?: number | null,
   expectedVersion: number,
 };
 
@@ -161,7 +158,6 @@ export type CreateTaskInput = {
   remaining?: number | null,
   moduleSpecificMetadata?: ModuleSpecificMetadataInput | null,
   completed?: boolean | null,
-  _version?: number | null,
 };
 
 export type ModuleSpecificMetadataInput = {
@@ -174,6 +170,7 @@ export type ModuleSpecificMetadataInput = {
 };
 
 export type ModelTaskConditionInput = {
+  questId?: ModelIDInput | null,
   description?: ModelStringInput | null,
   position?: ModelIntInput | null,
   module?: ModelModuleInput | null,
@@ -205,7 +202,7 @@ export type ModelBooleanInput = {
 
 export type UpdateTaskInput = {
   taskId: string,
-  questId: string,
+  questId?: string | null,
   description?: string | null,
   position?: number | null,
   module?: Module | null,
@@ -214,14 +211,11 @@ export type UpdateTaskInput = {
   remaining?: number | null,
   moduleSpecificMetadata?: ModuleSpecificMetadataInput | null,
   completed?: boolean | null,
-  _version?: number | null,
   expectedVersion: number,
 };
 
 export type DeleteTaskInput = {
-  questId: string,
   taskId: string,
-  _version?: number | null,
   expectedVersion: number,
 };
 
@@ -236,7 +230,6 @@ export type CreateRewardItemInput = {
   tags?: Array< string | null > | null,
   category: RewardItemCategory,
   availableAt?: string | null,
-  _version?: number | null,
 };
 
 export enum RewardItemCategory {
@@ -277,20 +270,17 @@ export type UpdateRewardItemInput = {
   tags?: Array< string | null > | null,
   category?: RewardItemCategory | null,
   availableAt?: string | null,
-  _version?: number | null,
   expectedVersion: number,
 };
 
 export type DeleteRewardItemInput = {
   itemId: string,
-  _version?: number | null,
   expectedVersion: number,
 };
 
 export type CreateWalletBalanceInput = {
   id?: string | null,
   balance?: number | null,
-  _version?: number | null,
 };
 
 export type ModelWalletBalanceConditionInput = {
@@ -303,13 +293,11 @@ export type ModelWalletBalanceConditionInput = {
 export type UpdateWalletBalanceInput = {
   id: string,
   balance?: number | null,
-  _version?: number | null,
   expectedVersion: number,
 };
 
 export type DeleteWalletBalanceInput = {
   id?: string | null,
-  _version?: number | null,
   expectedVersion: number,
 };
 
@@ -319,7 +307,6 @@ export type CreateTransactionInput = {
   transactionAmount?: number | null,
   rewardItemId?: string | null,
   taskId?: string | null,
-  _version?: number | null,
 };
 
 export type ModelTransactionConditionInput = {
@@ -339,12 +326,10 @@ export type UpdateTransactionInput = {
   transactionAmount?: number | null,
   rewardItemId?: string | null,
   taskId?: string | null,
-  _version?: number | null,
 };
 
 export type DeleteTransactionInput = {
   id?: string | null,
-  _version?: number | null,
 };
 
 export type ModelQuestFilterInput = {
@@ -382,16 +367,6 @@ export type ModelTaskFilterInput = {
   and?: Array< ModelTaskFilterInput | null > | null,
   or?: Array< ModelTaskFilterInput | null > | null,
   not?: ModelTaskFilterInput | null,
-};
-
-export type ModelIDKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
 };
 
 export type ModelRewardItemFilterInput = {
@@ -470,17 +445,10 @@ export type CreateQuestMutation = {
         points: number | null,
         remaining: number | null,
         completed: boolean | null,
-        _version: number,
-        _deleted: boolean | null,
-        _lastChangedAt: number,
         version: number,
       } | null > | null,
       nextToken: string | null,
-      startedAt: number | null,
     } | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -516,17 +484,10 @@ export type UpdateQuestMutation = {
         points: number | null,
         remaining: number | null,
         completed: boolean | null,
-        _version: number,
-        _deleted: boolean | null,
-        _lastChangedAt: number,
         version: number,
       } | null > | null,
       nextToken: string | null,
-      startedAt: number | null,
     } | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -562,17 +523,10 @@ export type DeleteQuestMutation = {
         points: number | null,
         remaining: number | null,
         completed: boolean | null,
-        _version: number,
-        _deleted: boolean | null,
-        _lastChangedAt: number,
         version: number,
       } | null > | null,
       nextToken: string | null,
-      startedAt: number | null,
     } | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -587,6 +541,24 @@ export type CreateTaskMutation = {
     __typename: "Task",
     taskId: string,
     questId: string,
+    quest:  {
+      __typename: "Quest",
+      questId: string,
+      title: string,
+      totalPoints: number | null,
+      endDate: string,
+      imageUrl: string | null,
+      slotsRemaining: number | null,
+      description: string | null,
+      category: QuestCategory,
+      creatorId: string,
+      createdAt: string,
+      tasks:  {
+        __typename: "ModelTaskConnection",
+        nextToken: string | null,
+      } | null,
+      version: number,
+    },
     description: string | null,
     position: number | null,
     module: Module | null,
@@ -603,9 +575,6 @@ export type CreateTaskMutation = {
       androidUrl: string | null,
     } | null,
     completed: boolean | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -620,6 +589,24 @@ export type UpdateTaskMutation = {
     __typename: "Task",
     taskId: string,
     questId: string,
+    quest:  {
+      __typename: "Quest",
+      questId: string,
+      title: string,
+      totalPoints: number | null,
+      endDate: string,
+      imageUrl: string | null,
+      slotsRemaining: number | null,
+      description: string | null,
+      category: QuestCategory,
+      creatorId: string,
+      createdAt: string,
+      tasks:  {
+        __typename: "ModelTaskConnection",
+        nextToken: string | null,
+      } | null,
+      version: number,
+    },
     description: string | null,
     position: number | null,
     module: Module | null,
@@ -636,9 +623,6 @@ export type UpdateTaskMutation = {
       androidUrl: string | null,
     } | null,
     completed: boolean | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -653,6 +637,24 @@ export type DeleteTaskMutation = {
     __typename: "Task",
     taskId: string,
     questId: string,
+    quest:  {
+      __typename: "Quest",
+      questId: string,
+      title: string,
+      totalPoints: number | null,
+      endDate: string,
+      imageUrl: string | null,
+      slotsRemaining: number | null,
+      description: string | null,
+      category: QuestCategory,
+      creatorId: string,
+      createdAt: string,
+      tasks:  {
+        __typename: "ModelTaskConnection",
+        nextToken: string | null,
+      } | null,
+      version: number,
+    },
     description: string | null,
     position: number | null,
     module: Module | null,
@@ -669,9 +671,6 @@ export type DeleteTaskMutation = {
       androidUrl: string | null,
     } | null,
     completed: boolean | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -694,9 +693,6 @@ export type CreateRewardItemMutation = {
     tags: Array< string | null > | null,
     category: RewardItemCategory,
     availableAt: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -719,9 +715,6 @@ export type UpdateRewardItemMutation = {
     tags: Array< string | null > | null,
     category: RewardItemCategory,
     availableAt: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -744,9 +737,6 @@ export type DeleteRewardItemMutation = {
     tags: Array< string | null > | null,
     category: RewardItemCategory,
     availableAt: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -761,11 +751,7 @@ export type CreateWalletBalanceMutation = {
     __typename: "WalletBalance",
     id: string,
     balance: number | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
-    owner: string | null,
   } | null,
 };
 
@@ -779,11 +765,7 @@ export type UpdateWalletBalanceMutation = {
     __typename: "WalletBalance",
     id: string,
     balance: number | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
-    owner: string | null,
   } | null,
 };
 
@@ -797,11 +779,7 @@ export type DeleteWalletBalanceMutation = {
     __typename: "WalletBalance",
     id: string,
     balance: number | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
-    owner: string | null,
   } | null,
 };
 
@@ -818,10 +796,6 @@ export type CreateTransactionMutation = {
     transactionAmount: number | null,
     rewardItemId: string | null,
     taskId: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
-    owner: string | null,
   } | null,
 };
 
@@ -838,10 +812,6 @@ export type UpdateTransactionMutation = {
     transactionAmount: number | null,
     rewardItemId: string | null,
     taskId: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
-    owner: string | null,
   } | null,
 };
 
@@ -858,47 +828,6 @@ export type DeleteTransactionMutation = {
     transactionAmount: number | null,
     rewardItemId: string | null,
     taskId: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
-    owner: string | null,
-  } | null,
-};
-
-export type SyncQuestsQueryVariables = {
-  filter?: ModelQuestFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncQuestsQuery = {
-  syncQuests:  {
-    __typename: "ModelQuestConnection",
-    items:  Array< {
-      __typename: "Quest",
-      questId: string,
-      title: string,
-      totalPoints: number | null,
-      endDate: string,
-      imageUrl: string | null,
-      slotsRemaining: number | null,
-      description: string | null,
-      category: QuestCategory,
-      creatorId: string,
-      createdAt: string,
-      tasks:  {
-        __typename: "ModelTaskConnection",
-        nextToken: string | null,
-        startedAt: number | null,
-      } | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
-      version: number,
-    } | null > | null,
-    nextToken: string | null,
-    startedAt: number | null,
   } | null,
 };
 
@@ -932,17 +861,10 @@ export type GetQuestQuery = {
         points: number | null,
         remaining: number | null,
         completed: boolean | null,
-        _version: number,
-        _deleted: boolean | null,
-        _lastChangedAt: number,
         version: number,
       } | null > | null,
       nextToken: string | null,
-      startedAt: number | null,
     } | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -973,60 +895,14 @@ export type ListQuestsQuery = {
       tasks:  {
         __typename: "ModelTaskConnection",
         nextToken: string | null,
-        startedAt: number | null,
       } | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
       version: number,
     } | null > | null,
     nextToken: string | null,
-    startedAt: number | null,
-  } | null,
-};
-
-export type SyncTasksQueryVariables = {
-  filter?: ModelTaskFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncTasksQuery = {
-  syncTasks:  {
-    __typename: "ModelTaskConnection",
-    items:  Array< {
-      __typename: "Task",
-      taskId: string,
-      questId: string,
-      description: string | null,
-      position: number | null,
-      module: Module | null,
-      submodule: Submodule | null,
-      points: number | null,
-      remaining: number | null,
-      moduleSpecificMetadata:  {
-        __typename: "ModuleSpecificMetadata",
-        username: string | null,
-        name: string | null,
-        completed: boolean | null,
-        url: string | null,
-        iosUrl: string | null,
-        androidUrl: string | null,
-      } | null,
-      completed: boolean | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
-      version: number,
-    } | null > | null,
-    nextToken: string | null,
-    startedAt: number | null,
   } | null,
 };
 
 export type GetTaskQueryVariables = {
-  questId: string,
   taskId: string,
 };
 
@@ -1035,6 +911,24 @@ export type GetTaskQuery = {
     __typename: "Task",
     taskId: string,
     questId: string,
+    quest:  {
+      __typename: "Quest",
+      questId: string,
+      title: string,
+      totalPoints: number | null,
+      endDate: string,
+      imageUrl: string | null,
+      slotsRemaining: number | null,
+      description: string | null,
+      category: QuestCategory,
+      creatorId: string,
+      createdAt: string,
+      tasks:  {
+        __typename: "ModelTaskConnection",
+        nextToken: string | null,
+      } | null,
+      version: number,
+    },
     description: string | null,
     position: number | null,
     module: Module | null,
@@ -1051,16 +945,12 @@ export type GetTaskQuery = {
       androidUrl: string | null,
     } | null,
     completed: boolean | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
 
 export type ListTasksQueryVariables = {
-  questId?: string | null,
-  taskId?: ModelIDKeyConditionInput | null,
+  taskId?: string | null,
   filter?: ModelTaskFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
@@ -1074,6 +964,20 @@ export type ListTasksQuery = {
       __typename: "Task",
       taskId: string,
       questId: string,
+      quest:  {
+        __typename: "Quest",
+        questId: string,
+        title: string,
+        totalPoints: number | null,
+        endDate: string,
+        imageUrl: string | null,
+        slotsRemaining: number | null,
+        description: string | null,
+        category: QuestCategory,
+        creatorId: string,
+        createdAt: string,
+        version: number,
+      },
       description: string | null,
       position: number | null,
       module: Module | null,
@@ -1090,45 +994,9 @@ export type ListTasksQuery = {
         androidUrl: string | null,
       } | null,
       completed: boolean | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
       version: number,
     } | null > | null,
     nextToken: string | null,
-    startedAt: number | null,
-  } | null,
-};
-
-export type SyncRewardItemsQueryVariables = {
-  filter?: ModelRewardItemFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncRewardItemsQuery = {
-  syncRewardItems:  {
-    __typename: "ModelRewardItemConnection",
-    items:  Array< {
-      __typename: "RewardItem",
-      itemId: string,
-      title: string,
-      createdAt: string,
-      cost: number | null,
-      images: Array< string | null >,
-      inventoryRemaining: number | null,
-      description: string | null,
-      tags: Array< string | null > | null,
-      category: RewardItemCategory,
-      availableAt: string | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
-      version: number,
-    } | null > | null,
-    nextToken: string | null,
-    startedAt: number | null,
   } | null,
 };
 
@@ -1149,9 +1017,6 @@ export type GetRewardItemQuery = {
     tags: Array< string | null > | null,
     category: RewardItemCategory,
     availableAt: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -1179,38 +1044,9 @@ export type ListRewardItemsQuery = {
       tags: Array< string | null > | null,
       category: RewardItemCategory,
       availableAt: string | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
       version: number,
     } | null > | null,
     nextToken: string | null,
-    startedAt: number | null,
-  } | null,
-};
-
-export type SyncWalletBalancesQueryVariables = {
-  filter?: ModelWalletBalanceFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncWalletBalancesQuery = {
-  syncWalletBalances:  {
-    __typename: "ModelWalletBalanceConnection",
-    items:  Array< {
-      __typename: "WalletBalance",
-      id: string,
-      balance: number | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
-      version: number,
-      owner: string | null,
-    } | null > | null,
-    nextToken: string | null,
-    startedAt: number | null,
   } | null,
 };
 
@@ -1223,11 +1059,7 @@ export type GetWalletBalanceQuery = {
     __typename: "WalletBalance",
     id: string,
     balance: number | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
-    owner: string | null,
   } | null,
 };
 
@@ -1244,41 +1076,9 @@ export type ListWalletBalancesQuery = {
       __typename: "WalletBalance",
       id: string,
       balance: number | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
       version: number,
-      owner: string | null,
     } | null > | null,
     nextToken: string | null,
-    startedAt: number | null,
-  } | null,
-};
-
-export type SyncTransactionsQueryVariables = {
-  filter?: ModelTransactionFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncTransactionsQuery = {
-  syncTransactions:  {
-    __typename: "ModelTransactionConnection",
-    items:  Array< {
-      __typename: "Transaction",
-      transactionId: string,
-      userId: string,
-      transactionAmount: number | null,
-      rewardItemId: string | null,
-      taskId: string | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
-      owner: string | null,
-    } | null > | null,
-    nextToken: string | null,
-    startedAt: number | null,
   } | null,
 };
 
@@ -1294,10 +1094,6 @@ export type GetTransactionQuery = {
     transactionAmount: number | null,
     rewardItemId: string | null,
     taskId: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
-    owner: string | null,
   } | null,
 };
 
@@ -1317,17 +1113,12 @@ export type ListTransactionsQuery = {
       transactionAmount: number | null,
       rewardItemId: string | null,
       taskId: string | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
-      owner: string | null,
     } | null > | null,
     nextToken: string | null,
-    startedAt: number | null,
   } | null,
 };
 
-export type QuestByCategoryQueryVariables = {
+export type QuestsByCategoryQueryVariables = {
   category?: QuestCategory | null,
   createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
@@ -1336,8 +1127,8 @@ export type QuestByCategoryQueryVariables = {
   nextToken?: string | null,
 };
 
-export type QuestByCategoryQuery = {
-  questByCategory:  {
+export type QuestsByCategoryQuery = {
+  questsByCategory:  {
     __typename: "ModelQuestConnection",
     items:  Array< {
       __typename: "Quest",
@@ -1354,19 +1145,14 @@ export type QuestByCategoryQuery = {
       tasks:  {
         __typename: "ModelTaskConnection",
         nextToken: string | null,
-        startedAt: number | null,
       } | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
       version: number,
     } | null > | null,
     nextToken: string | null,
-    startedAt: number | null,
   } | null,
 };
 
-export type RewardItemByCategoryQueryVariables = {
+export type RewardItemsByCategoryQueryVariables = {
   category?: RewardItemCategory | null,
   createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
@@ -1375,8 +1161,8 @@ export type RewardItemByCategoryQueryVariables = {
   nextToken?: string | null,
 };
 
-export type RewardItemByCategoryQuery = {
-  rewardItemByCategory:  {
+export type RewardItemsByCategoryQuery = {
+  rewardItemsByCategory:  {
     __typename: "ModelRewardItemConnection",
     items:  Array< {
       __typename: "RewardItem",
@@ -1390,13 +1176,9 @@ export type RewardItemByCategoryQuery = {
       tags: Array< string | null > | null,
       category: RewardItemCategory,
       availableAt: string | null,
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
       version: number,
     } | null > | null,
     nextToken: string | null,
-    startedAt: number | null,
   } | null,
 };
 
@@ -1426,17 +1208,10 @@ export type OnCreateQuestSubscription = {
         points: number | null,
         remaining: number | null,
         completed: boolean | null,
-        _version: number,
-        _deleted: boolean | null,
-        _lastChangedAt: number,
         version: number,
       } | null > | null,
       nextToken: string | null,
-      startedAt: number | null,
     } | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -1467,17 +1242,10 @@ export type OnUpdateQuestSubscription = {
         points: number | null,
         remaining: number | null,
         completed: boolean | null,
-        _version: number,
-        _deleted: boolean | null,
-        _lastChangedAt: number,
         version: number,
       } | null > | null,
       nextToken: string | null,
-      startedAt: number | null,
     } | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -1508,17 +1276,10 @@ export type OnDeleteQuestSubscription = {
         points: number | null,
         remaining: number | null,
         completed: boolean | null,
-        _version: number,
-        _deleted: boolean | null,
-        _lastChangedAt: number,
         version: number,
       } | null > | null,
       nextToken: string | null,
-      startedAt: number | null,
     } | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -1528,6 +1289,24 @@ export type OnCreateTaskSubscription = {
     __typename: "Task",
     taskId: string,
     questId: string,
+    quest:  {
+      __typename: "Quest",
+      questId: string,
+      title: string,
+      totalPoints: number | null,
+      endDate: string,
+      imageUrl: string | null,
+      slotsRemaining: number | null,
+      description: string | null,
+      category: QuestCategory,
+      creatorId: string,
+      createdAt: string,
+      tasks:  {
+        __typename: "ModelTaskConnection",
+        nextToken: string | null,
+      } | null,
+      version: number,
+    },
     description: string | null,
     position: number | null,
     module: Module | null,
@@ -1544,9 +1323,6 @@ export type OnCreateTaskSubscription = {
       androidUrl: string | null,
     } | null,
     completed: boolean | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -1556,6 +1332,24 @@ export type OnUpdateTaskSubscription = {
     __typename: "Task",
     taskId: string,
     questId: string,
+    quest:  {
+      __typename: "Quest",
+      questId: string,
+      title: string,
+      totalPoints: number | null,
+      endDate: string,
+      imageUrl: string | null,
+      slotsRemaining: number | null,
+      description: string | null,
+      category: QuestCategory,
+      creatorId: string,
+      createdAt: string,
+      tasks:  {
+        __typename: "ModelTaskConnection",
+        nextToken: string | null,
+      } | null,
+      version: number,
+    },
     description: string | null,
     position: number | null,
     module: Module | null,
@@ -1572,9 +1366,6 @@ export type OnUpdateTaskSubscription = {
       androidUrl: string | null,
     } | null,
     completed: boolean | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -1584,6 +1375,24 @@ export type OnDeleteTaskSubscription = {
     __typename: "Task",
     taskId: string,
     questId: string,
+    quest:  {
+      __typename: "Quest",
+      questId: string,
+      title: string,
+      totalPoints: number | null,
+      endDate: string,
+      imageUrl: string | null,
+      slotsRemaining: number | null,
+      description: string | null,
+      category: QuestCategory,
+      creatorId: string,
+      createdAt: string,
+      tasks:  {
+        __typename: "ModelTaskConnection",
+        nextToken: string | null,
+      } | null,
+      version: number,
+    },
     description: string | null,
     position: number | null,
     module: Module | null,
@@ -1600,9 +1409,6 @@ export type OnDeleteTaskSubscription = {
       androidUrl: string | null,
     } | null,
     completed: boolean | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -1620,9 +1426,6 @@ export type OnCreateRewardItemSubscription = {
     tags: Array< string | null > | null,
     category: RewardItemCategory,
     availableAt: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -1640,9 +1443,6 @@ export type OnUpdateRewardItemSubscription = {
     tags: Array< string | null > | null,
     category: RewardItemCategory,
     availableAt: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
 };
@@ -1660,15 +1460,8 @@ export type OnDeleteRewardItemSubscription = {
     tags: Array< string | null > | null,
     category: RewardItemCategory,
     availableAt: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
   } | null,
-};
-
-export type OnCreateWalletBalanceSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnCreateWalletBalanceSubscription = {
@@ -1676,16 +1469,8 @@ export type OnCreateWalletBalanceSubscription = {
     __typename: "WalletBalance",
     id: string,
     balance: number | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
-    owner: string | null,
   } | null,
-};
-
-export type OnUpdateWalletBalanceSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnUpdateWalletBalanceSubscription = {
@@ -1693,16 +1478,8 @@ export type OnUpdateWalletBalanceSubscription = {
     __typename: "WalletBalance",
     id: string,
     balance: number | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
-    owner: string | null,
   } | null,
-};
-
-export type OnDeleteWalletBalanceSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnDeleteWalletBalanceSubscription = {
@@ -1710,16 +1487,8 @@ export type OnDeleteWalletBalanceSubscription = {
     __typename: "WalletBalance",
     id: string,
     balance: number | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
     version: number,
-    owner: string | null,
   } | null,
-};
-
-export type OnCreateTransactionSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnCreateTransactionSubscription = {
@@ -1730,15 +1499,7 @@ export type OnCreateTransactionSubscription = {
     transactionAmount: number | null,
     rewardItemId: string | null,
     taskId: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
-    owner: string | null,
   } | null,
-};
-
-export type OnUpdateTransactionSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnUpdateTransactionSubscription = {
@@ -1749,15 +1510,7 @@ export type OnUpdateTransactionSubscription = {
     transactionAmount: number | null,
     rewardItemId: string | null,
     taskId: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
-    owner: string | null,
   } | null,
-};
-
-export type OnDeleteTransactionSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnDeleteTransactionSubscription = {
@@ -1768,9 +1521,5 @@ export type OnDeleteTransactionSubscription = {
     transactionAmount: number | null,
     rewardItemId: string | null,
     taskId: string | null,
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
-    owner: string | null,
   } | null,
 };

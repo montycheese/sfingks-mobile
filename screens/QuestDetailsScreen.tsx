@@ -8,6 +8,8 @@ import {getMockTasks} from "../utils/Utils";
 import WalletBalancePreview from "../components/WalletBalancePreview";
 import Wallet from "../models/Wallet";
 import TaskListItem from "../components/quest/TaskListItem";
+import API, { graphqlOperation } from '@aws-amplify/api'
+import {getQuest} from "../src/graphql/queries";
 
 const wallet = Wallet.getInstance();
 export default function QuestDetailsScreen({ route, navigation }) {
@@ -18,10 +20,25 @@ export default function QuestDetailsScreen({ route, navigation }) {
 
 
     useEffect(() => {
+
+        async function fetchData() {
+            try {
+                const graphqldata = await API.graphql(graphqlOperation(getQuest, { questId: '123' }));
+                console.log(graphqldata);
+                setIsLoading(false);
+                setQuest(graphqldata.data.getQuest);
+                setTasks(graphqldata.data.getQuest.tasks.items);
+            } catch (error) {
+                console.error('Failed to get quest', error);
+            }
+
+        }
+        fetchData();
+
        // TODO: fetch quest by ID
        setTimeout(() => {
-           setIsLoading(false);
-           const questResp = {
+           //setIsLoading(false);
+           /*const questResp = {
                questId,
                title: "Sfingks Daily Challenge",
                totalPoints: 500,
@@ -31,7 +48,7 @@ export default function QuestDetailsScreen({ route, navigation }) {
                description: 'Complete the tasks in today\'s Daily Challenge to accumulate points'
            };
            setQuest(questResp);
-           setTasks(getMockTasks());
+           setTasks(getMockTasks());*/
        }, 500);
 
     }, [questId]);
