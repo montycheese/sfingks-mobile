@@ -3,48 +3,48 @@ import {StyleSheet, View, Text, FlatList, Image, ScrollView, TouchableOpacity} f
 
 import BaseView from "../components/BaseView";
 import PointsBadge from "../components/PointsBadge";
+import {useEffect} from "react";
+import {useState} from "react";
+import CenteredLoadingSpinner from "../components/CenteredLoadingSpinner";
+import API, {graphqlOperation} from "@aws-amplify/api";
+import {getQuest, questsByCategory} from "../src/graphql/queries";
+import {QuestCategory} from "../src/API";
 
 export default function TabTwoScreen({ navigation }) {
+    const [isLoading, setIsLoading] = useState(true);
+    const [featuredQuests, setFeaturedQuests] = useState([]);
+    const [hotQuests, setHotQuests] = useState([]);
+    const [newQuests, setNewQuests] = useState([]);
 
-  // TODO: Fetch from backend.
+  useEffect(() => {
+      async function fetchData() {
+          const featuredQuests = await API.graphql(graphqlOperation(questsByCategory, { category : QuestCategory.FEATURED }));
+          setFeaturedQuests(featuredQuests.data.questsByCategory.items);
+          setIsLoading(false);
 
-  const carouselItems = [
-      {
-          title: 'Daily Challenge',
-          imageUrl: 'https://picsum.photos/200/200',
-          id: '123',
-          totalPoints: 100
-      }, {
-          title: 'McDonalds October Quest',
-          imageUrl: 'https://picsum.photos/200/200',
-          id: '124',
-          totalPoints: 200
-      }, {
-          title: 'September Showdown',
-          imageUrl: 'https://picsum.photos/200/200',
-          id: '126',
-          totalPoints: 600
-      },
-      {
-          title: 'Rock the Vote',
-          imageUrl: 'https://picsum.photos/200/200',
-          id: '127',
-          totalPoints: 50
-      },
-      {
-          title: 'Daily Challenge',
-          imageUrl: 'https://picsum.photos/200/200',
-          id: '128',
-          totalPoints: 800
+          const hotQuests = await API.graphql(graphqlOperation(questsByCategory, { category : QuestCategory.HOT }));
+          setHotQuests(hotQuests.data.questsByCategory.items);
+
+          const newQuests = await API.graphql(graphqlOperation(questsByCategory, { category : QuestCategory.NEW }));
+          setNewQuests(newQuests.data.questsByCategory.items);
       }
-  ];
+      fetchData();
+  }, []);
+
+    if (isLoading) {
+        return (
+            <BaseView>
+                <CenteredLoadingSpinner />
+            </BaseView>
+        );
+    }
 
   return (
       <BaseView>
         <ScrollView style={styles.container}>
-            {renderSideScrollList('Featured', carouselItems)}
-            {renderSideScrollList('Hot', carouselItems)}
-            {renderSideScrollList('New', carouselItems)}
+            {renderSideScrollList(QuestCategory.FEATURED, featuredQuests)}
+            {renderSideScrollList(QuestCategory.HOT, hotQuests)}
+            {renderSideScrollList(QuestCategory.NEW, newQuests)}
         </ScrollView>
       </BaseView>
   );
@@ -60,7 +60,7 @@ export default function TabTwoScreen({ navigation }) {
               </View>
               <FlatList horizontal={true} data={items} renderItem={renderItem}
                         ItemSeparatorComponent={renderSeparator}
-                        keyExtractor={(item, index) => item.id}
+                        keyExtractor={(item, index) => item.questId}
               />
           </View>
       );
@@ -68,7 +68,7 @@ export default function TabTwoScreen({ navigation }) {
 
   function renderItem({item, separators}) {
     return (
-        <TouchableOpacity onPress={() => handlePressItem(item.id)} key={item.id}>
+        <TouchableOpacity onPress={() => handlePressItem(item.questId)} key={item.questId}>
             <View style={styles.carouselItemContainer}>
                 <Image source={{uri : item.imageUrl}} style={styles.carouselItemBackground} />
                 <Text style={styles.carouselItemTitle}>{item.title}</Text>

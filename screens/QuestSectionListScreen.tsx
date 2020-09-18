@@ -3,6 +3,9 @@ import BaseView from "../components/BaseView";
 import CenteredLoadingSpinner from "../components/CenteredLoadingSpinner";
 import {FlatList, StyleSheet} from "react-native";
 import QuestListItem from "../components/quest/QuestListItem";
+import API, {graphqlOperation} from "@aws-amplify/api";
+import {questsByCategory} from "../src/graphql/queries";
+import {QuestCategory} from "../src/API";
 
 export default function QuestSectionListScreen({ route, navigation }) {
     const { sectionId } = route.params;
@@ -11,39 +14,13 @@ export default function QuestSectionListScreen({ route, navigation }) {
 
     useEffect(() => {
         navigation.setOptions({headerTitle: `${sectionId} Quests`});
-        // TODO: fetch section by ID
-        setTimeout(() => {
+
+        async function fetchData() {
+            const quests = await API.graphql(graphqlOperation(questsByCategory, { category : sectionId }));
+            setQuests(quests.data.questsByCategory.items);
             setIsLoading(false);
-            setQuests([
-                {
-                    id: '123',
-                    title: "Sfingks Daily Challenge",
-                    totalPoints: 500,
-                    endDate: new Date(Date.now() + 5000000),
-                    imageUrl: 'https://picsum.photos/300/200',
-                    slotsRemaining: 99,
-                    description: 'Complete the tasks in today\'s Daily Challenge to accumulate points'
-                },
-                {
-                    id: '124',
-                    title: "Apple Code Challenge",
-                    totalPoints: 1123,
-                    endDate: new Date(Date.now() + 5000000),
-                    imageUrl: 'https://picsum.photos/300/200',
-                    slotsRemaining: 99,
-                    description: 'Complete the tasks in today\'s Daily Challenge to accumulate points'
-                },
-                {
-                    id: '125',
-                    title: "Reese's app red blue green",
-                    totalPoints: 123,
-                    endDate: new Date(Date.now() + 5000000),
-                    imageUrl: 'https://picsum.photos/300/200',
-                    slotsRemaining: 99,
-                    description: 'Complete the tasks in today\'s Daily Challenge to accumulate points'
-                }
-            ])
-        }, 500);
+        }
+        fetchData();
 
     }, [sectionId]);
 
@@ -61,7 +38,7 @@ export default function QuestSectionListScreen({ route, navigation }) {
             <FlatList
                 data={quests}
                 renderItem={renderItem}
-                keyExtractor={i => i.id}
+                keyExtractor={i => i.questId}
                 style={styles.list}
             />
         </BaseView>
