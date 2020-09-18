@@ -16,6 +16,14 @@ import { CheckBox } from 'react-native-elements'
 import TermsOfService from '../assets/legal/TermsOfService';
 
 
+export function titleCase(str: string) {
+    str = str.toLowerCase().split(' ');
+    for (var i = 0; i < str.length; i++) {
+        str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+    }
+    return str.join(' ');
+}
+
 export function getMockMessages(): Array<object> {
     const now = Date.now();
     return [

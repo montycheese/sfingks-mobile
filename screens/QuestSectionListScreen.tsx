@@ -5,7 +5,7 @@ import {FlatList, StyleSheet} from "react-native";
 import QuestListItem from "../components/quest/QuestListItem";
 import API, {graphqlOperation} from "@aws-amplify/api";
 import {questsByCategory} from "../src/graphql/queries";
-import {QuestCategory} from "../src/API";
+import {titleCase} from "../utils/Utils";
 
 export default function QuestSectionListScreen({ route, navigation }) {
     const { sectionId } = route.params;
@@ -13,7 +13,7 @@ export default function QuestSectionListScreen({ route, navigation }) {
     const [quests, setQuests] = useState([]);
 
     useEffect(() => {
-        navigation.setOptions({headerTitle: `${sectionId} Quests`});
+        navigation.setOptions({headerTitle: `${titleCase(sectionId)} Quests`});
 
         async function fetchData() {
             const quests = await API.graphql(graphqlOperation(questsByCategory, { category : sectionId }));
