@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import BaseView from "../components/BaseView";
-import Carousel, {Pagination} from 'react-native-snap-carousel';
+import Carousel from 'react-native-snap-carousel';
 import {View, Text, ImageBackground, Dimensions, StyleSheet, TouchableHighlight, Modal, ScrollView} from "react-native";
 import Colors from "../constants/Colors";
 import CenteredLoadingSpinner from "../components/CenteredLoadingSpinner";
@@ -51,6 +51,10 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
 
     const hasSufficientBalance = wallet.balance - item.cost >= 0;
     const purchaseButtonColor = hasSufficientBalance ?  "#2196F3" : Colors.darkGray;
+    let inventoryRemaining = <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 25}}>{`${item.inventoryRemaining}`}</Text>;
+    if (item.inventoryRemaining < 0) {
+        inventoryRemaining = <FontAwesome5 name="infinity" size={25} color="black" />;
+    }
 
     return (
         <BaseView>
@@ -78,7 +82,7 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
                         <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 15, color: Colors.darkGray}}>COST</Text>
                     </View>
                     <View style={{flex: 0.5, alignItems: 'center', borderLeftWidth: '2%', borderTopWidth: '2%', borderBottomWidth: '2%', borderColor: Colors.grayedOut}}>
-                        <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 25}}>{`${item.inventoryRemaining}`}</Text>
+                        {inventoryRemaining}
                         <Text style={{ fontFamily: 'ShareTechMono_400Regular', fontSize: 15, color: Colors.darkGray}}>{`REMAINING`}</Text>
                     </View>
                 </View>
