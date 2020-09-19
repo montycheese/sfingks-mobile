@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import BaseView from "../components/BaseView";
 import {
     Image,
@@ -13,6 +13,10 @@ import Colors from "../constants/Colors";
 import ShopItemDetailsModal from "../components/ShopItemDetailsModal";
 import ShareInviteLinkPane from "../components/ShareInviteLinkPane";
 import {FontAwesome5} from "@expo/vector-icons";
+import CenteredLoadingSpinner from "../components/CenteredLoadingSpinner";
+import API, {graphqlOperation} from "@aws-amplify/api";
+import {getQuest, rewardItemsByCategory} from "../src/graphql/queries";
+import {RewardItemCategory} from "../src/API";
 
 const DATA = [
     {
@@ -92,7 +96,42 @@ const DATA = [
 export default function ShopScreen({ navigation }) {
     //const [modalVisible, setModalVisible] = useState(false);
     //const [selectedItem, setSelectedItem] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [newRewardItems, setNewRewardItems] = useState([]);
     const [shareInvitePaneVisible, setShareInvitePaneVisible] = useState(true);
+
+
+    useEffect(() => {
+
+        async function fetchData() {
+            try {
+                const graphqldata = await API.graphql(graphqlOperation(rewardItemsByCategory, { category: RewardItemCategory.NEW }));
+                console.log(graphqldata);
+                setNewRewardItems(graphqldata.data.rewardItemsByCategory.items);
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Failed to get quest', error);
+            }
+
+        }
+        fetchData();
+    }, []);
+
+
+
+    if (isLoading) {
+        return (
+            <BaseView>
+                <CenteredLoadingSpinner />
+            </BaseView>
+        );
+    }
+
+    const mappedData = [];
+    mappedData.push({
+        title: 'Redeem For Prizes',
+        data: newRewardItems
+    });
 
     return (
         <BaseView>
@@ -106,7 +145,7 @@ export default function ShopScreen({ navigation }) {
             <SafeAreaView style={styles.container}>
                 <SectionList
                     stickySectionHeadersEnabled={false}
-                    sections={DATA}
+                    sections={mappedData}
                     keyExtractor={(item, index) => item.itemId}
                     renderItem={(element) => renderItem(element.item, navigation)}
                     renderSectionHeader={({ section: { title } }) => (
@@ -145,7 +184,7 @@ export default function ShopScreen({ navigation }) {
             <TouchableOpacity onPress={handleOnPress} style={[styles.item]} key={item.id}>
                 <View style={{flexDirection: 'row', flex: 1}}>
                     <Image style={styles.thumbnail}
-                           source={{uri: item.imageUrl}}/>
+                           source={{uri: item['images'][0]}}/>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>{item.title}</Text>
                     </View>
