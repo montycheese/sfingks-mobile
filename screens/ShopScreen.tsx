@@ -106,7 +106,6 @@ export default function ShopScreen({ navigation }) {
         async function fetchData() {
             try {
                 const graphqldata = await API.graphql(graphqlOperation(rewardItemsByCategory, { category: RewardItemCategory.NEW }));
-                console.log(graphqldata);
                 setNewRewardItems(graphqldata.data.rewardItemsByCategory.items);
                 setIsLoading(false);
             } catch (error) {

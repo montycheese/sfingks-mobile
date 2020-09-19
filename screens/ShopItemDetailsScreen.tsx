@@ -7,13 +7,8 @@ import CenteredLoadingSpinner from "../components/CenteredLoadingSpinner";
 import {FontAwesome5} from "@expo/vector-icons";
 import Wallet from "../models/Wallet";
 import WalletBalancePreview from "../components/WalletBalancePreview";
-
-const data = [
-    {
-        imageUrl: "https://picsum.photos/200/200"
-    }
-];
-
+import API, {graphqlOperation} from "@aws-amplify/api";
+import {getRewardItem} from "../src/graphql/queries";
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
@@ -22,7 +17,6 @@ const icon = <FontAwesome5 name="gem" size={20} color="#000" />;
 
 export default function ShopItemDetailsScreen({ route, navigation }) {
     const { itemId } = route.params;
-    const [images, setImages] = useState(data);
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [item, setItem] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -32,18 +26,17 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
     let carousel = null;
 
     useEffect(() => {
-        // TODO: fetch quest by ID
-        setTimeout(() => {
-            setIsLoading(false);
-            setItem({
-            itemId: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-            title: "WE FOLLOW YOU ON TWITTER",
-            cost: 1011,
-            imageUrl: "https://picsum.photos/200/200",
-            inventoryRemaining: 5,
-                description: 'You will be rewarded with a follow from our official Twitter account @Sfingks! Woohoo!'
-            })
-        }, 500);
+        async function fetchData() {
+            try {
+                const graphqldata = await API.graphql(graphqlOperation(getRewardItem, { itemId }));
+                setItem(graphqldata.data.getRewardItem);
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Failed to get quest', error);
+            }
+
+        }
+        fetchData();
 
     }, [itemId]);
 
@@ -65,7 +58,7 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
             <View style={{marginTop: '20%'}}/>
             <Carousel
                 ref={(c) => { carousel = c; }}
-                data={data}
+                data={item.images}
                 renderItem={renderItem}
                 sliderWidth={SLIDER_WIDTH}
                 itemWidth={ITEM_WIDTH}
@@ -110,7 +103,7 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
     function renderItem({item, index}) {
         return (
             <View style={styles.itemContainer}>
-                <ImageBackground style={{height: '100%', width: '100%'}} source={{uri: item.imageUrl}}>
+                <ImageBackground style={{height: '100%', width: '100%'}} source={{uri: item}}>
                 </ImageBackground>
             </View>
         );
