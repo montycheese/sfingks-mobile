@@ -15,6 +15,7 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
     const [isTermsAccepted, setIsTermsAccepted] = useState(false);
     const [isPhoneNumberInputValid, setIsPhoneNumberInputValid] = useState(false);
     const [isPhoneNumberVerified, setIsPhoneNumberVerified] = useState(false);
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     // TODO: Fix issue where if they put the wrong phone number, you can't scroll back. Maybe combine both pages into 1?
     return (
@@ -22,7 +23,7 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
             getOnboardingPages({
                 isNotificationsAllowed, isTermsAccepted,
                 setIsTermsAccepted, isPhoneNumberVerified, setIsPhoneNumberVerified,
-                isPhoneNumberInputValid, setIsPhoneNumberInputValid, signUp
+                isPhoneNumberInputValid, setIsPhoneNumberInputValid, signUp, phoneNumber, setPhoneNumber
             })}
                     titleStyles={{fontFamily: 'ShareTechMono_400Regular'}}
                     subTitleStyles={{fontFamily: 'ShareTechMono_400Regular'}}
@@ -40,6 +41,9 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
         // Have to do notifications this way because the onboarding lib doesn't lazy load each view
         if (pageIndex === NOTIFICATION_PAGE_INDEX) {
             await requestPermissions();
+        } else if (pageIndex === PHONE_NUMBER_VERIFY_INDEX) {
+            const resp = await signUp(phoneNumber);
+            console.log('sign up response', resp);
         }
         setPageIndex(pageIndex);
     }
@@ -86,15 +90,20 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
         });
     }
 
-    async function signUp() {
+    async function signUp(phoneNumber: string) {
+        const fullPhoneNumber = '+1' + phoneNumber
         try {
-            const { user } = await Auth.signUp({
-                username: '+18086333680',
-                password: 'password',
+            const resp = await Auth.signUp({
+                username: fullPhoneNumber,
+                password: Date.now().toString(), // Doesn't matter
             });
-            console.log(user);
+            console.log(resp);
+            const cognitoUser = await Auth.signIn(fullPhoneNumber);
+            console.log(cognitoUser);
+
         } catch (error) {
             console.log('error signing up:', error);
         }
+
     }
 }

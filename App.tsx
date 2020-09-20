@@ -31,9 +31,9 @@ function App() {
         setUserData(user);
         setUserDataFetched(true);
       } catch (error) {
-        console.debug(error);
+        console.debug('Failed to load authentication: ', error);
         setUserDataFetched(true);
-        setUserData({});//TODO remove
+        setUserData(null);//TODO remove
       }
     }
     checkUserState();

@@ -2,6 +2,7 @@
 /* eslint-disable */
 
 exports.handler = (event, context) => {
+  console.log('Request: ', event, context);
   if (event.request.session.length === 2 && event.request.challengeName === 'CUSTOM_CHALLENGE') {
     event.response.publicChallengeParameters = { trigger: 'true' };
 

@@ -102,7 +102,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-sfingks-beta-172658-deployment",
-					"S3Key": "amplify-builds/sfingks3977a5c0CreateAuthChallenge-65416e3859394342394f-build.zip"
+					"S3Key": "amplify-builds/sfingks3977a5c0CreateAuthChallenge-4263674a506350623134-build.zip"
 				}
 			}
 		},

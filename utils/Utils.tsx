@@ -164,17 +164,15 @@ export function mapTaskToDescription(task) {
     }
 }
 
-function PhoneNumberInput({ isPhoneNumberInputValid, setIsPhoneNumberInputValid, signUp }: {isPhoneNumberInputValid: boolean, setIsPhoneNumberInputValid: any}) {
-    const [input, setInput] = useState('');
-
+function PhoneNumberInput({ isPhoneNumberInputValid, setIsPhoneNumberInputValid, phoneNumber, setPhoneNumber }: {isPhoneNumberInputValid: boolean, setIsPhoneNumberInputValid: any}) {
     useEffect(() => {
-        if (input !== '' && input.length === 10) {
+        if (phoneNumber !== '' && phoneNumber.length === 10) {
             setIsPhoneNumberInputValid(true);
         } else {
             setIsPhoneNumberInputValid(false);
         }
 
-    }, [input]);
+    }, [phoneNumber]);
 
     //https://github.com/facebook/react-native/issues/23735
     return (
@@ -184,10 +182,10 @@ function PhoneNumberInput({ isPhoneNumberInputValid, setIsPhoneNumberInputValid,
                 placeholder="(100)SFI-NKGS"
                 onChangeText={(text) => {
                     if (text.length <= 10) {
-                        setInput(text.replace(/[^0-9]/g, ''));
+                        setPhoneNumber(text.replace(/[^0-9]/g, ''));
                     }
                 }}
-                value={input}
+                value={phoneNumber}
                 keyboardType="phone-pad"
             />
             { isPhoneNumberInputValid === true &&
@@ -201,7 +199,7 @@ function PhoneNumberInput({ isPhoneNumberInputValid, setIsPhoneNumberInputValid,
     );
 }
 
-function Verify ({ setIsPhoneNumberVerified, isPhoneNumberVerified }: { setIsPhoneNumberVerified: any, isPhoneNumberVerified: boolean}) {
+function Verify ({ setIsPhoneNumberVerified, isPhoneNumberVerified, phoneNumber}: { setIsPhoneNumberVerified: any, isPhoneNumberVerified: boolean, phoneNumber :number}) {
     const CELL_COUNT = 6;
     const [value, setValue] = useState('');
     const [isVerifying, setIsVerifying] = useState(false);
