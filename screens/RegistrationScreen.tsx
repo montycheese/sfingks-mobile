@@ -16,6 +16,7 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
     const [isPhoneNumberInputValid, setIsPhoneNumberInputValid] = useState(false);
     const [isPhoneNumberVerified, setIsPhoneNumberVerified] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [cognitoUser, setCognitoUser] = useState(null);//TODO move to APP.js
 
     // TODO: Fix issue where if they put the wrong phone number, you can't scroll back. Maybe combine both pages into 1?
     return (
@@ -23,7 +24,7 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
             getOnboardingPages({
                 isNotificationsAllowed, isTermsAccepted,
                 setIsTermsAccepted, isPhoneNumberVerified, setIsPhoneNumberVerified,
-                isPhoneNumberInputValid, setIsPhoneNumberInputValid, signUp, phoneNumber, setPhoneNumber
+                isPhoneNumberInputValid, setIsPhoneNumberInputValid, signUp, phoneNumber, setPhoneNumber, verifyOTP
             })}
                     titleStyles={{fontFamily: 'ShareTechMono_400Regular'}}
                     subTitleStyles={{fontFamily: 'ShareTechMono_400Regular'}}
@@ -42,8 +43,7 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
         if (pageIndex === NOTIFICATION_PAGE_INDEX) {
             await requestPermissions();
         } else if (pageIndex === PHONE_NUMBER_VERIFY_INDEX) {
-            const resp = await signUp(phoneNumber);
-            console.log('sign up response', resp);
+            await signUp(phoneNumber);
         }
         setPageIndex(pageIndex);
     }
@@ -91,19 +91,42 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
     }
 
     async function signUp(phoneNumber: string) {
-        const fullPhoneNumber = '+1' + phoneNumber
+        const fullPhoneNumber = '+1' + phoneNumber;
         try {
             const resp = await Auth.signUp({
                 username: fullPhoneNumber,
-                password: Date.now().toString(), // Doesn't matter
+                password: Date.now().toString(), // This Doesn't matter
             });
-            console.log(resp);
-            const cognitoUser = await Auth.signIn(fullPhoneNumber);
-            console.log(cognitoUser);
-
+            console.log('Signup Response', resp);
         } catch (error) {
-            console.log('error signing up:', error);
+            console.warn('error thrown during sign up:', error);
+            if (error.code !== 'UsernameExistsException') {
+                return Promise.reject(error);
+            } else {
+                console.debug('Phone number already exists, attempting to log in.')
+            }
         }
 
+        try {
+            const cognitoUser = await Auth.signIn(fullPhoneNumber);
+            console.log('sign in Response', cognitoUser);
+            setCognitoUser(cognitoUser);
+            return Promise.resolve(cognitoUser);
+        } catch (error) {
+            console.warn('Failed to sign in with phone number ' + fullPhoneNumber, error);
+            return Promise.reject(error);
+        }
+    }
+
+    async function verifyOTP(otp: string) {
+        try {
+            console.log('Calling send custom challenge answer: '+ otp);
+            const user = await Auth.sendCustomChallengeAnswer(cognitoUser, otp);
+            console.log('verify OTP resp: ', user);
+        } catch (error) {
+            // Handle 3 error thrown for 3 incorrect attempts.
+            console.warn('Failed to verify OTP: ' + otp, error);
+            return Promise.reject(error);
+        }
     }
 }

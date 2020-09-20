@@ -27,6 +27,8 @@ function App() {
 
       try {
         const user = await Auth.currentAuthenticatedUser();
+        console.log(user);
+        user.signOut();
         // https://github.com/aws-amplify/amplify-js/issues/3640 reference later
         setUserData(user);
         setUserDataFetched(true);

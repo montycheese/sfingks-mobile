@@ -13,7 +13,8 @@ import React, {useEffect, useState} from "react";
 import Colors from "../constants/Colors";
 import {CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell} from "react-native-confirmation-code-field";
 import { CheckBox } from 'react-native-elements'
-import TermsOfService from '../assets/legal/TermsOfService';
+import TermsOfService from "../assets/legal/TermsOfService";
+import { Auth } from 'aws-amplify'
 
 
 export function titleCase(str: string) {
@@ -164,7 +165,7 @@ export function mapTaskToDescription(task) {
     }
 }
 
-function PhoneNumberInput({ isPhoneNumberInputValid, setIsPhoneNumberInputValid, phoneNumber, setPhoneNumber }: {isPhoneNumberInputValid: boolean, setIsPhoneNumberInputValid: any}) {
+function PhoneNumberInput({ isPhoneNumberInputValid, setIsPhoneNumberInputValid, phoneNumber, setPhoneNumber }: {isPhoneNumberInputValid: boolean, setIsPhoneNumberInputValid: any, phoneNumber: string, setPhoneNumber: any}) {
     useEffect(() => {
         if (phoneNumber !== '' && phoneNumber.length === 10) {
             setIsPhoneNumberInputValid(true);
@@ -199,7 +200,7 @@ function PhoneNumberInput({ isPhoneNumberInputValid, setIsPhoneNumberInputValid,
     );
 }
 
-function Verify ({ setIsPhoneNumberVerified, isPhoneNumberVerified, phoneNumber}: { setIsPhoneNumberVerified: any, isPhoneNumberVerified: boolean, phoneNumber :number}) {
+function Verify ({ setIsPhoneNumberVerified, isPhoneNumberVerified, phoneNumber, verifyOTP}: { setIsPhoneNumberVerified: any, isPhoneNumberVerified: boolean, phoneNumber :number, verifyOTP: any}) {
     const CELL_COUNT = 6;
     const [value, setValue] = useState('');
     const [isVerifying, setIsVerifying] = useState(false);
@@ -209,14 +210,30 @@ function Verify ({ setIsPhoneNumberVerified, isPhoneNumberVerified, phoneNumber}
         setValue,
     });
 
+    const setInputValue = (input: string) => {
+      if (isVerifying || isPhoneNumberVerified) {
+          return;
+      } else {
+          setValue(input);
+      }
+    };
+
     useEffect(() => {
-        if (value.length === CELL_COUNT) {
-            // TODO: verify OTP
-            setIsVerifying(true);
-            setTimeout(() => {
+        async function verify(otp: string) {
+            try {
+                await verifyOTP(otp);
                 setIsVerifying(false);
-                setIsPhoneNumberVerified(true);
-            }, 2000);}
+                setIsPhoneNumberVerified(true)
+            } catch (error) {
+                console.log('Failed to verify OTP', error);
+                // TODO: do something if we fail verification a certain number of times.
+            }
+        }
+
+        if (value.length === CELL_COUNT) {
+            setIsVerifying(true);
+            verify(value);
+        }
     }, [value]);
 
     let badgeText = 'DIDN\'T GET A CODE? >';
@@ -233,7 +250,7 @@ function Verify ({ setIsPhoneNumberVerified, isPhoneNumberVerified, phoneNumber}
                 ref={ref}
                 {...cellProps}
                 value={value}
-                onChangeText={setValue}
+                onChangeText={setInputValue}
                 cellCount={CELL_COUNT}
                 rootStyle={styles.codeFieldRoot}
                 keyboardType="number-pad"
