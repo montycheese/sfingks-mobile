@@ -27,14 +27,13 @@ function App() {
 
       try {
         const user = await Auth.currentAuthenticatedUser();
-        console.log(user);
-        // https://github.com/aws-amplify/amplify-js/issues/3640 reference later
+        console.log(`Signed in as ${user.username}`);
         setUserData(user);
         setUserDataFetched(true);
       } catch (error) {
         console.debug('Failed to load authentication: ', error);
         setUserDataFetched(true);
-        setUserData(null);//TODO remove
+        setUserData(null);
       }
     }
     checkUserState();
