@@ -41,6 +41,16 @@ Parameters:
   
   
   
+  functionsfingks3977a5c0PreSignupArn: 
+    Type: String
+    Default: functionsfingks3977a5c0PreSignupArn
+  
+  functionsfingks3977a5c0PreSignupName: 
+    Type: String
+    Default: functionsfingks3977a5c0PreSignupName
+  
+  
+  
 
     
   identityPoolName:
@@ -90,10 +100,10 @@ Parameters:
         
   userpoolClientGenerateSecret:
     Type: String
-                
+            
   userpoolClientRefreshTokenValidity:
-    Type: Number
-                  
+    Type: String
+                      
   userpoolClientWriteAttributes:
     Type: CommaDelimitedList
               
@@ -132,7 +142,19 @@ Parameters:
               
   dependsOn:
     Type: CommaDelimitedList
-                
+        
+  thirdPartyAuth:
+    Type: String
+              
+  userPoolGroups:
+    Type: String
+              
+  adminQueries:
+    Type: String
+              
+  hostedUI:
+    Type: String
+                      
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 
@@ -198,6 +220,8 @@ Resources:
         
         
         
+          PreSignUp: !Ref functionsfingks3977a5c0PreSignupArn
+        
         
         
           VerifyAuthChallengeResponse: !Ref functionsfingks3977a5c0VerifyAuthChallengeResponseArn
@@ -206,9 +230,6 @@ Resources:
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
       
-      
-      EmailVerificationMessage: !Ref emailVerificationMessage
-      EmailVerificationSubject: !Ref emailVerificationSubject
             
       Policies:
         PasswordPolicy:
@@ -251,6 +272,15 @@ Resources:
     
     
   
+  
+  UserPoolPreSignupLambdaInvokePermission: 
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties: 
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functionsfingks3977a5c0PreSignupName
+      SourceArn: !GetAtt UserPool.Arn
   
    
   

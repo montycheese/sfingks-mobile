@@ -17,7 +17,8 @@
                 "sfingks3977a5c0CreateAuthChallenge": {
                     "CHALLENGEANSWER": "blah"
                 },
-                "sfingks3977a5c0VerifyAuthChallengeResponse": {}
+                "sfingks3977a5c0VerifyAuthChallengeResponse": {},
+                "sfingks3977a5c0PreSignup": {}
             },
             "auth": {
                 "sfingks3977a5c0": {}

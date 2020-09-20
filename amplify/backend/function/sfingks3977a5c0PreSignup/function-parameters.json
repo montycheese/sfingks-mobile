@@ -1,0 +1,14 @@
+{
+    "trigger": true,
+    "modules": [
+        "custom"
+    ],
+    "parentResource": "sfingks3977a5c0",
+    "functionName": "sfingks3977a5c0PreSignup",
+    "parentStack": "auth",
+    "triggerEnvs": "[]",
+    "triggerTemplate": "PreSignup.json.ejs",
+    "roleName": "sfingks3977a5c0PreSignup",
+    "skipEdit": true,
+    "resourceName": "sfingks3977a5c0PreSignup"
+}

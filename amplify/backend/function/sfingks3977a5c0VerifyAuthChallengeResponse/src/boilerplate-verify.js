@@ -1,8 +1,5 @@
 exports.handler = (event, context) => {
-  if (event.request.privateChallengeParameters.answer === event.request.challengeAnswer) {
-    event.response.answerCorrect = true;
-  } else {
-    event.response.answerCorrect = false;
-  }
+  const expectedAnswer = event.request.privateChallengeParameters.secretLoginCode;
+  event.response.answerCorrect = event.request.challengeAnswer === expectedAnswer;
   context.done(null, event);
 };

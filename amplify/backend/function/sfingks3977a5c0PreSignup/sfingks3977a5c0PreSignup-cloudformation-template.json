@@ -2,7 +2,11 @@
 	"AWSTemplateFormatVersion": "2010-09-09",
 	"Description": "Lambda resource stack creation using Amplify CLI",
 	"Parameters": {
-		"CHALLENGEANSWER": {
+		"DOMAINBLACKLIST": {
+			"Type": "String",
+			"Default": ""
+		},
+		"DOMAINWHITELIST": {
 			"Type": "String",
 			"Default": ""
 		},
@@ -61,12 +65,12 @@
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"sfingks3977a5c0CreateAuthChallenge",
+						"sfingks3977a5c0PreSignup",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"sfingks3977a5c0CreateAuthChallenge",
+									"sfingks3977a5c0PreSignup",
 									"-",
 									{
 										"Ref": "env"
@@ -87,8 +91,11 @@
 						"REGION": {
 							"Ref": "AWS::Region"
 						},
-						"CHALLENGEANSWER": {
-							"Ref": "CHALLENGEANSWER"
+						"DOMAINWHITELIST": {
+							"Ref": "DOMAINWHITELIST"
+						},
+						"DOMAINBLACKLIST": {
+							"Ref": "DOMAINBLACKLIST"
 						}
 					}
 				},
@@ -102,7 +109,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-sfingks-beta-172658-deployment",
-					"S3Key": "amplify-builds/sfingks3977a5c0CreateAuthChallenge-6c664b64344c65415a45-build.zip"
+					"S3Key": "amplify-builds/sfingks3977a5c0PreSignup-2f6e4453587462726f6f-build.zip"
 				}
 			}
 		},
@@ -112,12 +119,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"sfingks3977a5c0CreateAuthChallenge",
+						"sfingks3977a5c0PreSignup",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"sfingks3977a5c0CreateAuthChallenge",
+									"sfingks3977a5c0PreSignup",
 									"-",
 									{
 										"Ref": "env"
@@ -183,13 +190,6 @@
 									}
 								]
 							}
-						},
-						{
-							"Effect": "Allow",
-							"Action": [
-								"sns:Publish"
-							],
-							"Resource": "*"
 						}
 					]
 				}
