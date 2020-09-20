@@ -7,14 +7,13 @@ import {
     Modal,
     TouchableHighlight,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity, Alert
 } from "react-native";
 import React, {useEffect, useState} from "react";
 import Colors from "../constants/Colors";
 import {CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell} from "react-native-confirmation-code-field";
 import { CheckBox } from 'react-native-elements'
 import TermsOfService from "../assets/legal/TermsOfService";
-import { Auth } from 'aws-amplify'
 
 
 export function titleCase(str: string) {
@@ -200,10 +199,11 @@ function PhoneNumberInput({ isPhoneNumberInputValid, setIsPhoneNumberInputValid,
     );
 }
 
-function Verify ({ setIsPhoneNumberVerified, isPhoneNumberVerified, phoneNumber, verifyOTP}: { setIsPhoneNumberVerified: any, isPhoneNumberVerified: boolean, phoneNumber :number, verifyOTP: any}) {
+function Verify ({ setRegistrationFailed, setIsPhoneNumberVerified, isPhoneNumberVerified, phoneNumber, verifyOTP}: { setRegistrationFailed: any, setIsPhoneNumberVerified: any, isPhoneNumberVerified: boolean, phoneNumber :number, verifyOTP: any}) {
     const CELL_COUNT = 6;
     const [value, setValue] = useState('');
     const [isVerifying, setIsVerifying] = useState(false);
+    const [attempts, setAttempts] = useState(0);
     const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
     const [cellProps, getCellOnLayoutHandler] = useClearByFocusCell({
         value,
@@ -225,8 +225,24 @@ function Verify ({ setIsPhoneNumberVerified, isPhoneNumberVerified, phoneNumber,
                 setIsVerifying(false);
                 setIsPhoneNumberVerified(true)
             } catch (error) {
-                console.log('Failed to verify OTP', error);
-                // TODO: do something if we fail verification a certain number of times.
+                console.warn('Failed to verify OTP', error);
+                setAttempts(attempts + 1);
+                let alertMessage = undefined;
+                if (attempts > 3 || error.code === 'NotAuthorizedException') { // code happens when cognito sees 3 failed attempts for OTP
+                    alertMessage = "Too many failed verification attempts";
+                }
+                Alert.alert('Invalid Verification Code', alertMessage,
+                [
+                    {
+                        text: 'Try Again',
+                        onPress: () => {
+                            setValue('');
+                            // TODO: do something if we fail verification a certain number of times.
+                            setRegistrationFailed(true);
+                            setIsVerifying(false);
+                        }
+                    }
+                ]);
             }
         }
 

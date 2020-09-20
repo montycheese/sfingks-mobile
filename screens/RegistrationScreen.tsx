@@ -16,6 +16,7 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
     const [isPhoneNumberInputValid, setIsPhoneNumberInputValid] = useState(false);
     const [isPhoneNumberVerified, setIsPhoneNumberVerified] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [registrationFailed, setRegistrationFailed] = useState(false);
     const [cognitoUser, setCognitoUser] = useState(null);//TODO move to APP.js
 
     // TODO: Fix issue where if they put the wrong phone number, you can't scroll back. Maybe combine both pages into 1?
@@ -24,7 +25,8 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
             getOnboardingPages({
                 isNotificationsAllowed, isTermsAccepted,
                 setIsTermsAccepted, isPhoneNumberVerified, setIsPhoneNumberVerified,
-                isPhoneNumberInputValid, setIsPhoneNumberInputValid, signUp, phoneNumber, setPhoneNumber, verifyOTP
+                isPhoneNumberInputValid, setIsPhoneNumberInputValid, signUp, phoneNumber, setPhoneNumber, setRegistrationFailed,
+                verifyOTP
             })}
                     titleStyles={{fontFamily: 'ShareTechMono_400Regular'}}
                     subTitleStyles={{fontFamily: 'ShareTechMono_400Regular'}}
@@ -119,14 +121,19 @@ export default function RegistrationScreen({ onOnboardingComplete }) {
     }
 
     async function verifyOTP(otp: string) {
+        let user = null;
         try {
             console.log('Calling send custom challenge answer: '+ otp);
-            const user = await Auth.sendCustomChallengeAnswer(cognitoUser, otp);
+            user = await Auth.sendCustomChallengeAnswer(cognitoUser, otp);
             console.log('verify OTP resp: ', user);
         } catch (error) {
             // Handle 3 error thrown for 3 incorrect attempts.
             console.warn('Failed to verify OTP: ' + otp, error);
             return Promise.reject(error);
+        }
+
+        if (!user || user.signInUserSession === null) {
+            return Promise.reject({message: 'Incorrect OTP'});
         }
     }
 }
