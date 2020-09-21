@@ -15,8 +15,9 @@ import ShareInviteLinkPane from "../components/ShareInviteLinkPane";
 import {FontAwesome5} from "@expo/vector-icons";
 import CenteredLoadingSpinner from "../components/CenteredLoadingSpinner";
 import API, {graphqlOperation} from "@aws-amplify/api";
-import {getQuest, rewardItemsByCategory} from "../src/graphql/queries";
+import {rewardItemsByCategory} from "../src/graphql/queries";
 import {RewardItemCategory} from "../src/API";
+import Wallet from "../models/Wallet";
 
 const DATA = [
     {
@@ -93,6 +94,8 @@ const DATA = [
     }
 ];
 
+const wallet = Wallet.getInstance();
+
 export default function ShopScreen({ navigation }) {
     //const [modalVisible, setModalVisible] = useState(false);
     //const [selectedItem, setSelectedItem] = useState(null);
@@ -137,7 +140,7 @@ export default function ShopScreen({ navigation }) {
             <View style={styles.balanceContainer}>
                 <View style={styles.balanceTextWrapper}>
                     <Text style={styles.balanceLabel}>Point Balance</Text>
-                    <Text style={styles.balance}>{100}</Text>
+                    <Text style={styles.balance}>{wallet.balance}</Text>
                 </View>
             </View>
             {shareInvitePaneVisible && <ShareInviteLinkPane onPress={console.log} onClose={() => setShareInvitePaneVisible(false)} />}

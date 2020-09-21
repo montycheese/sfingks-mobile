@@ -60,7 +60,7 @@ type ModuleSpecificMetadata {
 
 type WalletBalance @model
 @versioned
-@auth(rules: [{ allow: public, provider: apiKey }]) {
+@auth(rules: [{ allow: owner, provider: userPools }]) {
   id: ID!
   balance: Int
 }
