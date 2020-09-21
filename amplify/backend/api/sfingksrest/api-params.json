@@ -1,0 +1,41 @@
+{
+    "paths": [
+        {
+            "name": "/reward",
+            "lambdaFunction": "RewardItemHandler",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH"
+                ]
+            },
+            "policyResourceName": "/reward"
+        }
+    ],
+    "resourceName": "sfingksrest",
+    "apiName": "sfingksrest",
+    "functionArns": [
+        {
+            "lambdaFunction": "RewardItemHandler"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "amplify-sfingks-beta-172658-authRole",
+        "unAuthRoleName": "amplify-sfingks-beta-172658-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "RewardItemHandler",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

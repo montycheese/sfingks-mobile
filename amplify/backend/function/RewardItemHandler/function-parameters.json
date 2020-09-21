@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "storage": {
+      "RewardItem:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "WalletBalance:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Transaction:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
