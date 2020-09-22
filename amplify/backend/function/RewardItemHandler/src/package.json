@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "aws-sdk": "^2.757.0",
     "aws-serverless-express": "^3.3.5",
     "body-parser": "^1.17.1",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {},
   "scripts": {

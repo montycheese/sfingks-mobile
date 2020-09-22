@@ -20,6 +20,7 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [item, setItem] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isRedeemInProgress, setIsRedeemInProgress] = useState(false);
 
     const wallet = Wallet.getInstance();
 
@@ -55,6 +56,7 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
     if (item.inventoryRemaining < 0) {
         inventoryRemaining = <FontAwesome5 name="infinity" size={25} color="black" />;
     }
+    let redeemButtonInnerElement = isRedeemInProgress ? <CenteredLoadingSpinner /> : <Text style={styles.modalAcceptTermsText}>{hasSufficientBalance ? 'Redeem' : 'Insufficient Funds'}</Text>;
 
     return (
         <BaseView>
@@ -97,9 +99,8 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
             </ScrollView>
             <TouchableHighlight
                 style={[styles.modalAcceptTermsButton, { backgroundColor: purchaseButtonColor}]}
-                onPress={console.log}
-            >
-                <Text style={styles.modalAcceptTermsText}>{hasSufficientBalance ? 'Redeem' : 'Insufficient Funds'}</Text>
+                onPress={handleRedeemReward}>
+                {redeemButtonInnerElement}
             </TouchableHighlight>
         </BaseView>
     );
@@ -111,6 +112,18 @@ export default function ShopItemDetailsScreen({ route, navigation }) {
                 </ImageBackground>
             </View>
         );
+    }
+
+    async function handleRedeemReward() {
+        setIsRedeemInProgress(true);
+        try {
+            const resp = await API.post('sfingksrest', `/reward/${itemId}/redeem`, {});
+            console.log('redeeem reward response', resp);
+        } catch (error) {
+            console.warn('Failed to redeem reward', error);
+        } finally {
+            setIsRedeemInProgress(false);
+        }
     }
 }
 
